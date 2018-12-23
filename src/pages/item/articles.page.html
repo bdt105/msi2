@@ -1,0 +1,25 @@
+<ion-header>
+    <ion-navbar>
+        <button ion-button menuToggle>
+            <ion-icon name="menu"></ion-icon>
+        </button>
+        <ion-title *ngIf="file">{{file.name}}</ion-title>
+    </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+    <ion-list>
+        <articleComponent #articleComponent [item]="article" [file]="file" *ngFor="let article of items" (deleted)="deleted(article)"
+        (changed)="save()" (saved)="save()"></articleComponent>
+    </ion-list>
+    <ion-fab right top>
+        <button ion-fab color="secondary" (click)="newScan()">
+            <ion-icon name="barcode"></ion-icon>
+        </button>
+    </ion-fab>
+    <ion-fab right bottom>
+        <button ion-fab color="secondary" (click)="neww()">
+            <ion-icon name="add"></ion-icon>
+        </button>
+    </ion-fab>
+</ion-content>

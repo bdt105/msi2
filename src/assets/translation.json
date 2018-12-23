@@ -1,0 +1,359 @@
+[
+    {
+        "key": "Files",
+        "value": {
+            "FR": "Fichiers",
+            "PT": "Ficheiros"
+        }
+    },
+    {
+        "key": "Home",
+        "value": {
+            "FR": "Accueil",
+            "PT": "Inicio"
+        }
+    },
+    {
+        "key": "Login",
+        "value": {
+            "FR": "Connexion",
+            "PT": "Autenticação"
+        }
+    },
+    {
+        "key": "Upload",
+        "value": {
+            "FR": "Charger",
+            "PT": "Carregar"
+        }
+    },
+    {
+        "key": "Search",
+        "value": {
+            "FR": "Chercher",
+            "PT": "Persquisar"
+        }
+    },
+    {
+        "key": "No item found",
+        "value": {
+            "FR": "Pas d'élément trouvé",
+            "PT": "Não elemento encontrado"
+        }
+    },
+    {
+        "key": "Modify",
+        "value": {
+            "FR": "Modfier",
+            "PT": "Modificar"
+        }
+    },
+    {
+        "key": "Edit",
+        "value": {
+            "FR": "Editer",
+            "PT": "Editar"
+        }
+    },
+    {
+        "key": "Delete",
+        "value": {
+            "FR": "Supprimer",
+            "PT": "Apagar"
+        }
+    },
+    {
+        "key": "More",
+        "value": {
+            "FR": "Plus",
+            "PT": "Mais"
+        }
+    },
+    {
+        "key": "Less",
+        "value": {
+            "FR": "Moins",
+            "PT": "Menos"
+        }
+    },
+    {
+        "key": "Configure",
+        "value": {
+            "FR": "Configurer",
+            "PT": "Configurar"
+        }
+    },
+    {
+        "key": "File name",
+        "value": {
+            "FR": "Nom du fichier",
+            "PT": "Nome do ficheiro"
+        }
+    },
+    {
+        "key": "Title",
+        "value": {
+            "FR": "Titre",
+            "PT": "Titulo"
+        }
+    },
+    {
+        "key": "Data saved",
+        "value": {
+            "FR": "Données sauvées",
+            "PT": "Dados salvados"
+        }
+    },
+    {
+        "key": "Data NOT saved",
+        "value": {
+            "FR": "Données NON sauvées",
+            "PT": "Dados NAO salvados"
+        }
+    },
+    {
+        "key": " is now the current file",
+        "value": {
+            "FR": " est maintenant le fichier courant",
+            "PT": " é agora o ficheiro em curso"
+        }
+    },
+    {
+        "key": "Confirm delete",
+        "value": {
+            "FR": "Confirmation de suppression",
+            "PT": "Confirmaçao de supressão"
+        }
+    },
+    {
+        "key": "Do you want to delete this item",
+        "value": {
+            "FR": "Voulez vous supprimer cet item",
+            "PT": "Quer apagar este item"
+        }
+    },
+    {
+        "key": "You are connected as",
+        "value": {
+            "FR": "Vous êtes connecté en tant que",
+            "PT": "Vocé esta conectado como"
+        }
+    },
+    {
+        "key": "Do you want to delete this item? All item attached will be lost forever!",
+        "value": {
+            "FR": "Voulez vous supprimer ce fichier ? Toutes les données attachée seront perdues pour toujours !",
+            "PT": "Vocé quer apagar este feicheiro? Todos os dados ligados serao perdidos por sempre!"
+        }
+    },
+    {
+        "key": "Is current file",
+        "value": {
+            "FR": "Est le fichier courant",
+            "PT": "E o ficheiro corante"
+        }
+    },
+    {
+        "key": "Choose a file",
+        "value": {
+            "FR": "Choisissez un fichier",
+            "PT": "Escolha um ficheiro"
+        }
+    },
+    {
+        "key": "Detail",
+        "value": {
+            "FR": "Détail",
+            "PT": "Detalhe"
+        }
+    },
+    {
+        "key": "Image deleted",
+        "value": {
+            "FR": "Image supprimée",
+            "PT": "Imagem apagagada"
+        }
+    },
+    {
+        "key": "Image uploaded successfully",
+        "value": {
+            "FR": "Image envoyée avec succés",
+            "PT": "Imagem enviada com suceso"
+        }
+    },
+    {
+        "key": "Error uploading image",
+        "value": {
+            "FR": "Image NON envoyée",
+            "PT": "Imagem NAO enviada"
+        }
+    },
+    {
+        "key": "Choose a language",
+        "value": {
+            "FR": "Choisissez une langue",
+            "PT": "Escolha uma idioma"
+        }
+    },
+    {
+        "key": ", after: ",
+        "value": {
+            "FR": " après : ",
+            "PT": " depois: "
+        }
+    },
+    {
+        "key": "Allow notifications",
+        "value": {
+            "FR": "Autoriser les notifications",
+            "PT": "Autorizar notificaçoes"
+        }
+    },
+    {
+        "key": "Name already used",
+        "value": {
+            "FR": "Nom déjà utilisés",
+            "PT": "Nomes jà utilisados"
+        }
+    },
+    {
+        "key": "Type of the data",
+        "value": {
+            "FR": "Type de donnée",
+            "PT": "Typo de dado"
+        }
+    },
+    {
+        "key": "Yes",
+        "value": {
+            "FR": "Oui",
+            "PT": "Sim"
+        }
+    },
+    {
+        "key": "No",
+        "value": {
+            "FR": "Non",
+            "PT": "Não"
+        }
+    },
+    {
+        "key": "Current user",
+        "value": {
+            "FR": "Utilisateur courant",
+            "PT": "Usuário atual"
+        }
+    },
+    {
+        "key": "Uploading...",
+        "value": {
+            "FR": "Téléchargement en cours...",
+            "PT": "A baixar..."
+        }
+    },
+    {
+        "key": "Next",
+        "value": {
+            "FR": "Suivant",
+            "PT": "Seguinte"
+        }
+    },
+    {
+        "key": "Previous",
+        "value": {
+            "FR": "Précédent",
+            "PT": "Anterior"
+        }
+    },
+    {
+        "key": "Edit image",
+        "value": {
+            "FR": "Editer l'image",
+            "PT": "Editar a imagem"
+        }
+    },
+    {
+        "key": "Parameters",
+        "value": {
+            "FR": "Paramètres",
+            "PT": "Parametros"
+        }
+    },
+    {
+        "key": "Take picture",
+        "value": {
+            "FR": "Prendre une photo",
+            "PT": "Tirar uma foto"
+        }
+    },
+    {
+        "key": "Get image",
+        "value": {
+            "FR": "Choisir une image",
+            "PT": "Escolher uma imagem"
+        }
+    },
+    {
+        "key": "Delete image",
+        "value": {
+            "FR": "Supprimer l'image",
+            "PT": "Apagar a imagem"
+        }
+    },
+    {
+        "key": "Key",
+        "value": {
+            "FR": "Clé",
+            "PT": "Chave"
+        }
+    },
+    {
+        "key": "Logout from Google",
+        "value": {
+            "FR": "Se déconnecter de Google",
+            "PT": "Terminar a sesao Goggle"
+        }
+    },
+    {
+        "key": "Choose a file to import",
+        "value": {
+            "FR": "Choisissez un fichier à importer",
+            "PT": "Escolhe um fichiero à importar"
+        }
+    },
+    {
+        "key": "Import",
+        "value": {
+            "FR": "Importer",
+            "PT": "Importar"
+        }
+    },
+    {
+        "key": "Set as current file",
+        "value": {
+            "FR": "Affecter comme fichier courant",
+            "PT": "Afeitar como fichiero corante"
+        }
+    },
+    {
+        "key": "Inactivate",
+        "value": {
+            "FR": "Inactiver",
+            "PT": "Inativar"
+        }
+    },
+    {
+        "key": "Header row number",
+        "value": {
+            "FR": "Numéro de ligne des entêtes",
+            "PT": "Numero de linha dos cabaçalhos"
+        }
+    },
+    {
+        "key": "Create a new file",
+        "value": {
+            "FR": "Créer un nouveau fichier",
+            "PT": "Criar um novo ficheiro"
+        }
+    }
+]

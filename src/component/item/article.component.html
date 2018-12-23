@@ -1,0 +1,34 @@
+<ion-card *ngIf="item">
+	<ion-list *ngIf="item.modify">
+		<ion-item>
+			<ion-label color="primary">{{translate('Code')}}</ion-label>
+			<ion-input type="text" [(ngModel)]="item.code" (change)="onChange()"></ion-input>
+		</ion-item>
+
+		<ion-item>
+			<ion-label color="primary" fixed>{{translate('Value')}}</ion-label>
+			<ion-input type="number" [(ngModel)]="item.value" (change)="onChange()"></ion-input>
+		</ion-item>
+	</ion-list>
+	<div *ngIf="!item.modify">
+		<ion-card-header>
+			{{item.code}}
+		</ion-card-header>
+		<ion-card-content>
+			{{item.value}}
+		</ion-card-content>
+	</div>
+	<ion-item>
+		<button ion-button (click)="confirmDelete()">
+			<ion-icon name="trash"></ion-icon>&nbsp;{{translate('Delete')}}
+		</button>
+		<button ion-button (click)="!item.modify ? toggleModify() : onSave()">
+			<ion-icon *ngIf="!item.modify" name="create"></ion-icon>
+			<ion-icon *ngIf="item.modify" name="checkmark"></ion-icon>&nbsp;{{item.modify ? translate('Save') : translate('Edit')}}
+		</button>
+		<button ion-button (click)="scan(item)">
+			<ion-icon name="barcode"></ion-icon>&nbsp;{{translate('Scan')}}
+		</button>
+	</ion-item>
+
+</ion-card>

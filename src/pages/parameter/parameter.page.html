@@ -1,0 +1,22 @@
+<ion-header>
+	<ion-navbar>
+		<button ion-button menuToggle>
+			<ion-icon name="menu"></ion-icon>
+		</button>
+		<ion-title>{{translate('Parameters')}}</ion-title>
+	</ion-navbar>
+</ion-header>
+
+<ion-content padding>
+	<ion-item>
+		<ion-label color="primary" fixed>{{translate('PDV')}}</ion-label>
+		<ion-input type="text" placeholder="PDV" [(ngModel)]="parameters.pdv" (change)="save()"></ion-input>
+	</ion-item>
+	<div padding>
+		{{translate('Choose a language')}}<br><br>
+		<img src="./assets/imgs/portugal.png" style="width: 30px" (click)="setLanguage('PT')">
+		<img src="./assets/imgs/france.png" style="width: 30px" (click)="setLanguage('FR')">
+		<img src="./assets/imgs/uk.png" style="width: 30px" (click)="setLanguage('')">
+	</div>
+
+</ion-content>

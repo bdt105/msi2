@@ -1,0 +1,7 @@
+{
+  "name": "testvers",
+  "integrations": {
+    "cordova": {}
+  },
+  "type": "ionic-angular"
+}

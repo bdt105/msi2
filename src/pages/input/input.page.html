@@ -1,0 +1,48 @@
+<ion-header>
+    <ion-navbar>
+        <button ion-button menuToggle>
+            <ion-icon name="menu"></ion-icon>
+        </button>
+        <ion-title>{{translate('Input')}}</ion-title>
+    </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+
+    <br>
+    <button ion-button primary (click)="newCode(article)">{{translate('New Article')}}</button>
+    <br>
+    <br>
+
+
+    <div *ngFor="let article of articles">
+        <ion-list>
+            <ion-item>
+                <ion-label color="primary">Code</ion-label>
+                <ion-input type="text" placeholder="Code" [(ngModel)]="article.code"></ion-input>
+            </ion-item>
+
+            <ion-item>
+                <ion-label color="primary" fixed>Quantity</ion-label>
+                <ion-input type="number" placeholder="Quantity" [(ngModel)]="article.quantity"></ion-input>
+            </ion-item>
+            <button ion-button secondary (click)="scan(article)">
+                <ion-icon name="barcode"></ion-icon>&nbsp;&nbsp;Scan
+            </button>
+        </ion-list>
+    </div>
+    <br>
+    <button *ngIf="articles && articles.length > 0" ion-button primary (click)="writeFile('ETIQUETTE', articles)">Share</button>
+    <br>
+    <span *ngIf="fileInfo">{{fileInfo.directory}} -- {{fileInfo.fileName}}</span>
+    <ion-fab right top>
+        <button ion-fab color="secondary" (click)="newCode()">
+            <ion-icon name="add"></ion-icon>
+        </button>
+    </ion-fab>
+    <ion-fab right bottom>
+        <button ion-fab color="secondary" (click)="scan()">
+            <ion-icon name="barcode"></ion-icon>
+        </button>
+    </ion-fab>
+</ion-content>

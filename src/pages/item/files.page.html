@@ -1,0 +1,19 @@
+<ion-header>
+    <ion-navbar>
+        <button ion-button menuToggle>
+            <ion-icon name="menu"></ion-icon>
+        </button>
+        <ion-title>{{translate('Files')}}</ion-title>
+    </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+    <ion-list>
+        <fileComponent [item]="file" *ngFor="let file of items" (deleted)="deleted(file)" (changed)="save()" (saved)="save()"></fileComponent>
+    </ion-list>
+    <ion-fab right bottom>
+        <button ion-fab color="secondary" (click)="neww()">
+            <ion-icon name="add"></ion-icon>
+        </button>
+    </ion-fab>
+</ion-content>
