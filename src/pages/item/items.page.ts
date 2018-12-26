@@ -7,27 +7,37 @@ export class ItemsPage extends GenericComponent {
 
 	items = [];
 
-	fileName: string;
+	key: string;
 
 	constructor(public miscellaneousService: MiscellaneousService, public fileService: FileService, public customService: CustomService) {
 		super(miscellaneousService);
 	}
 
 	ngOnInit() {
-		this.load();
+		this.loadSimple();
 	}
 
-	load() {
+	load(callback: Function) {
+
 		this.fileService.read(
 			(data: any, error: any) => {
 				if (data) {
-					this.items = JSON.parse(data);
+					this.items = data;
 				} else {
 					if (error) {
 						console.error(error);
 					}
 				}
-			}, this.fileName);
+				callback(data, error);
+			}, this.key);
+	}
+
+	loadSimple() {
+		this.load(
+			(data: any, error: any) => {
+
+			}
+		);
 	}
 
 	save() {
@@ -36,17 +46,17 @@ export class ItemsPage extends GenericComponent {
 				if (error) {
 					this.customService.callbackToast(null, this.translate('Could not save files'));
 				} else {
-					this.load();
+
 				}
-			}, this.fileName, JSON.stringify(this.items)
+			}, this.key, this.items
 		)
 	}
 
-	deleted(file: any) {
-		if (file) {
+	deleted(item: any) {
+		if (item) {
 			let found = false;
 			for (var i = 0; i < this.items.length; i++) {
-				if (file.fileName == this.items[i].fileName) {
+				if (item.id == this.items[i].id) {
 					this.items.splice(i, 1);
 					found = true;
 				}

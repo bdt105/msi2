@@ -7,10 +7,10 @@
 	</ion-navbar>
 </ion-header>
 
-<ion-content padding>
-	<ion-item>
+<ion-content>
+	<ion-item *ngIf="items && items.length > 0">
 		<ion-label color="primary" fixed>{{translate('PDV')}}</ion-label>
-		<ion-input type="text" placeholder="PDV" [(ngModel)]="parameters.pdv" (change)="save()"></ion-input>
+		<ion-input type="text" placeholder="PDV" [(ngModel)]="items[0].pdv" (change)="save()"></ion-input>
 	</ion-item>
 	<div padding>
 		{{translate('Choose a language')}}<br><br>

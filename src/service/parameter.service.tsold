@@ -7,8 +7,7 @@ export class ParameterService {
 
     toolbox = new Toolbox();
 
-    private fileName = "parameters.json";
-    private key = "msivirtualParameters";
+    private key = "parameters";
 
     constructor(private fileService: FileService) {
     }
@@ -16,16 +15,8 @@ export class ParameterService {
     load(callback: Function) {
         this.fileService.read(
             (data: any, error: any) => {
-                let dat = null;
-                if (data) {
-                    dat = JSON.parse(data);
-                    this.toolbox.writeToStorage(this.key, dat, true);
-                }else{
-                    console.error(error);
-                }
-                callback(dat, error);
-
-            }, this.fileName)
+                callback(data, error);
+            }, this.key)
     }
 
     save(callback: Function, parameters: any) {

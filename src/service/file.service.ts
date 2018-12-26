@@ -1,13 +1,15 @@
 import { Injectable } from '@angular/core';
-import { File } from '@ionic-native/file';
-import { SocialSharing } from '@ionic-native/social-sharing';
 import { Toolbox } from 'bdt105toolbox/dist';
+import { Storage } from '@ionic/storage';
+import { File } from '@ionic-native/file';
+import { ItemService } from './item.service';
+import { SocialSharing } from '@ionic-native/social-sharing';
 
 @Injectable()
 export class FileService {
 
     toolbox = new Toolbox();
-    constructor(private file: File, private socialSharing: SocialSharing) {
+    constructor(private storage: Storage, private file: File, private socialSharing: SocialSharing, private itemService: ItemService) {
 
     }
 
@@ -15,17 +17,20 @@ export class FileService {
         {
             "name": "label",
             "label": "Label",
-            "fileName": "ETIQUETTE"
+            "fileName": "ETIQUETTE",
+            "icon": "pricetag"
         },
         {
             "name": "inventory",
             "label": "Inventory",
-            "fileName": "INVENTAIRE"
+            "fileName": "INVENTAIRE",
+            "icon": "book"
         },
         {
             "name": "price",
             "label": "Price check",
-            "fileName": "PRIX"
+            "fileName": "PRIX",
+            "icon": "cash"
         }
     ]
 
@@ -38,22 +43,65 @@ export class FileService {
         return pref + value;
     }
 
-    shareLabelFile(type: string, pdv: string, items: any) {
-        let ret = null;
+
+    share(callback, file: any) {
+
+        this.read(
+            (data: any, error: any) => {
+                let params = data;
+                if (params && params.length > 0) {
+                    let items = file.articles;
+                    switch (file.type) {
+                        case "label":
+                            let t: any = this.toolbox.filterArrayOfObjects(this.fileFormats, "name", file.type);
+                            if (t && t.length > 0) {
+                                let type = t[0].fileName;
+                                let pdv = params[0].pdv;
+
+                                this.shareLabelFile(
+                                    (data: any, error: any) => {
+                                        callback(data, error);
+                                    }, type, pdv, items);
+                            }
+                            break;
+
+                        default:
+                            callback(null, null);
+                    }
+                } else {
+                    callback(null, { "message": "PARAM_ERROR" });
+                }
+            }, this.itemService.parametersKey)
+    }
+
+    private shareLabelFile(callback: Function, type: string, pdv: string, items: any) {
+        let dir = this.file.externalDataDirectory;
         if (items) {
             let content = "";
             items.forEach((article: any) => {
                 let value = article.value + "";
                 content += this.prefixValue("0", 13, article.code) + this.prefixValue("0", 4, value) + '\r\n';
             });
-            let fileName = this.getFileName(type, pdv);
-            ret = { "directory": this.dataDirectory(), "fileName": fileName };
-            this.file.writeFile(this.dataDirectory(), fileName, content).then(
+            let typ = this.getFormat(type) ? this.getFormat(type).fileName : type;
+            let fileName = this.getFileName(typ, pdv);
+            let fileUrl = dir + fileName;
+            this.file.writeFile(dir, fileName, content).then(
                 (data: any) => {
-                    this.share(ret);
-                });
+                    this.socialSharing.share(null, null, fileUrl).then(
+                        (data: any) => {
+                            callback(data, null);
+                        }
+                    ).catch(
+                        (error: any) => {
+                            callback(null, {"message": "SHARE_ERROR"});
+                        }
+                    );
+                }).catch(
+                    (error: any) => {
+                        callback(null, error);
+                    }
+                );
         }
-        return ret;
     }
 
     //ETIQUETTE_20181119_132312_SR284C01_ut284C01.traite1
@@ -68,53 +116,32 @@ export class FileService {
         return type + "_" + name + ".traite1";
     }
 
-    private share(fileObject: any) {
-        this.socialSharing.share("test", "test", fileObject.directory + "/" + fileObject.fileName);
-    }
-
-    dataDirectory() {
-        return this.file.externalDataDirectory;
-    }
-
     getNewFileContent(type: string, description: string) {
         return { "description": description, "id": this.toolbox.getUniqueId(), "type": type }
     }
 
-    private writeNewFile(callback: Function, fileName: string, content: any) {
-        this.file.writeFile(this.dataDirectory(), fileName, content).then(
+    write(callback: Function, key: string, content: any) {
+        this.storage.set(key, content).then(
             (data: any) => {
                 callback(data, null);
-            }, (error: any) => {
-                callback(null, error);
-            })
-    }
-
-    write(callback: Function, fileName: string, content: any) {
-        this.file.checkFile(this.dataDirectory(), fileName).then(
-            (data: any) => {
-                if (data == false) {
-                    this.writeNewFile(callback, fileName, content);
-                } else {
-                    this.file.writeExistingFile(this.dataDirectory(), fileName, content).then(
-                        (data: any) => {
-                            callback(data, null);
-                        }, (error: any) => {
-                            callback(null, error);
-                        })
-                }
-            }, (error: any) => {
-                this.writeNewFile(callback, fileName, content);
-                if (error && error.message == "NOT_FOUND_ERR") {
-                    this.writeNewFile(callback, fileName, content);
-                } else {
-                    callback(null, error);
-                }
             }
-        )
+        ).catch((error: any) => {
+            callback(null, error);
+        });
     }
 
-    read(callback: Function, fileName: string) {
-        this.file.readAsText(this.dataDirectory(), fileName).then(
+    read(callback: Function, key: string) {
+        this.storage.get(key).then(
+            (data: any) => {
+                callback(data, null);
+            }
+        ).catch((error: any) => {
+            callback(null, error);
+        });
+    }
+
+    delete(callback: Function, key: string) {
+        this.storage.remove(key).then(
             (data: any) => {
                 callback(data, null);
             }, (error: any) => {
@@ -122,22 +149,12 @@ export class FileService {
             });
     }
 
-    delete(callback: Function, fileName: string) {
-        this.file.removeFile(this.dataDirectory(), fileName).then(
-            (data: any) => {
-                callback(data, null);
-            }, (error: any) => {
-                callback(null, error);
-            });
-    }
-
-    list(callback: Function) {
-        this.file.listDir(this.dataDirectory(), "").then(
-            (data: any) => {
-                callback(data, null);
-            }, (error: any) => {
-                callback(null, error);
-            });
+    getFormat(name: string) {
+        let t = this.toolbox.filterArrayOfObjects(this.fileFormats, "name", name);
+        if (t && t.length > 0) {
+            return t[0];
+        }
+        return null;
     }
 
 }

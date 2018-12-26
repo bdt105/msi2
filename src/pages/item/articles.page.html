@@ -3,14 +3,20 @@
         <button ion-button menuToggle>
             <ion-icon name="menu"></ion-icon>
         </button>
-        <ion-title *ngIf="file">{{file.name}}</ion-title>
+        <ion-title *ngIf="file">{{file.name ? file.name : translate('File')}}&nbsp;<ion-badge *ngIf="items && items.length > 0">{{items.length}}</ion-badge>
+        </ion-title>
+        <ion-buttons end>
+            <button *ngIf="items && items.length > 0" ion-button icon-only (click)="share()">
+                <ion-icon name="share"></ion-icon>
+            </button>
+        </ion-buttons>
     </ion-navbar>
 </ion-header>
 
-<ion-content padding>
+<ion-content>
     <ion-list>
         <articleComponent #articleComponent [item]="article" [file]="file" *ngFor="let article of items" (deleted)="deleted(article)"
-        (changed)="save()" (saved)="save()"></articleComponent>
+            (changed)="save(false)" (saved)="save()"></articleComponent>
     </ion-list>
     <ion-fab right top>
         <button ion-fab color="secondary" (click)="newScan()">

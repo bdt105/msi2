@@ -3,12 +3,45 @@
 		<button ion-button menuToggle>
 			<ion-icon name="menu"></ion-icon>
 		</button>
-		<ion-title>{{translate('Home')}}</ion-title>
+		<ion-title>{{translate('MSI Virtual')}}</ion-title>
 	</ion-navbar>
 </ion-header>
 
 <ion-content padding>
-	<h3>{{translate('MSI Virtual')}}</h3>
-
-
+	<h4 *ngIf="items && items.length > 0" (click)="goToPage('files')">{{translate('See the files alvailable')}}&nbsp;<ion-badge
+		 *ngIf="items.length>0">{{items.length}}</ion-badge>
+	</h4>
+	<h4 *ngIf="!items || items.length == 0">{{translate('No file so far')}}</h4>
+	<h4 *ngIf="customService.getLastFile()" (click)="goToPage('lastFile')">{{translate('Go to last file opened: ') +
+		customService.getLastFile().name}}</h4>
+	<ion-fab right top *ngIf="lastFile">
+		<button ion-fab color="secondary" (click)="newScan()">
+			<ion-icon name="barcode"></ion-icon>
+		</button>
+	</ion-fab>
+	<ion-fab bottom right>
+		<button ion-fab>
+			<ion-icon name="add"></ion-icon>
+		</button>
+		<ion-fab-list>
+			<button ion-fab (click)="newFile('price')">
+				<ion-icon name="pricetag"></ion-icon>
+			</button>
+		</ion-fab-list>
+	</ion-fab>
+	<ion-fab right bottom>
+		<button ion-fab>
+			<ion-icon name="add"></ion-icon>
+		</button>
+		<ion-fab-list side="left">
+			<button ion-fab color="secondary" *ngFor="let fileFormat of fileService.fileFormats" (click)="newFile(fileFormat.name)">
+				<ion-icon name="{{fileFormat.icon}}"></ion-icon>
+			</button>
+		</ion-fab-list>
+	</ion-fab>
+	<!-- <ion-fab right bottom>
+		<button ion-fab color="secondary" (click)="neww()">
+			<ion-icon name="add"></ion-icon>
+		</button>
+	</ion-fab> -->
 </ion-content>

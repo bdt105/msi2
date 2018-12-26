@@ -1,10 +1,13 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { ErrorHandler, NgModule, APP_INITIALIZER } from '@angular/core';
 import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
-import { File } from '@ionic-native/file';
 import { SocialSharing } from '@ionic-native/social-sharing';
 import { BarcodeScanner } from '@ionic-native/barcode-scanner';
 import { HttpModule } from '@angular/http';
+import { IonicStorageModule } from '@ionic/storage';
+import { File } from '@ionic-native/file';
+import { Camera } from '@ionic-native/camera';
+import { PhotoViewer } from '@ionic-native/photo-viewer';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -14,7 +17,6 @@ import { HttpClientModule } from '@angular/common/http';
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home.page';
 import { ListPage } from '../pages/list/list';
-import { InputPage } from '../pages/input/input.page';
 import { ParameterPage } from '../pages/parameter/parameter.page';
 import { FilesPage } from '../pages/item/files.page';
 import { ArticlesPage } from '../pages/item/articles.page';
@@ -26,7 +28,6 @@ import { ConfigurationService } from 'bdt105angularconfigurationservice';
 import { GoogleService } from '../angularShared/services/google.service';
 import { DatabaseService } from '../angularShared/services/database.service';
 import { GooglePlus } from '@ionic-native/google-plus';
-import { ParameterService } from '../service/parameter.service';
 import { FileService } from '../service/file.service';
 import { ItemService } from '../service/item.service';
 import { AppService } from '../angularShared/services/appService';
@@ -51,7 +52,6 @@ export function init(customService: CustomService) {
 		HomePage,
 		ListPage,
 		SafePipe,
-		InputPage,
 		ParameterPage,
 		FilesPage,
 		ArticlesPage,
@@ -65,13 +65,13 @@ export function init(customService: CustomService) {
 		HttpModule,
 		HttpClientModule,
 		IonicModule.forRoot(MyApp),
+		IonicStorageModule.forRoot()
 	],
 	bootstrap: [IonicApp],
 	entryComponents: [
 		MyApp,
 		HomePage,
 		ListPage,
-		InputPage,
 		ParameterPage,
 		FilesPage,
 		ArticlesPage,
@@ -89,8 +89,10 @@ export function init(customService: CustomService) {
 		},		
 		StatusBar,
 		SplashScreen,
-		File,
 		SocialSharing,
+		PhotoViewer,
+		File,
+		Camera,
 		FileService,
 		BarcodeScanner,
 		AppService,
@@ -101,7 +103,6 @@ export function init(customService: CustomService) {
 		GoogleService,
 		DatabaseService,
 		GooglePlus,
-		ParameterService,
 		ItemService,
 		{ provide: ErrorHandler, useClass: IonicErrorHandler }
 	]

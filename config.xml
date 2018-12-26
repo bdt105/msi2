@@ -94,5 +94,7 @@
     <plugin name="cordova-plugin-x-socialsharing" spec="^5.4.3">
         <variable name="ANDROID_SUPPORT_V4_VERSION" value="24.1.1+" />
     </plugin>
+    <plugin name="cordova-sqlite-storage" spec="^2.6.0" />
+    <plugin name="com-sarriaroman-photoviewer" spec="^1.1.18" />
     <engine name="android" spec="7.1.4" />
 </widget>

@@ -4,11 +4,11 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 
 import { HomePage } from '../pages/home/home.page';
-import { InputPage } from '../pages/input/input.page';
 import { ParameterPage } from '../pages/parameter/parameter.page';
 import { GenericComponent } from '../angularShared/components/generic.component';
 import { MiscellaneousService } from '../angularShared/services/miscellaneous.service';
 import { FilesPage } from '../pages/item/files.page';
+import { CustomService } from '../service/custom.service';
 
 @Component({
 	templateUrl: 'app.html'
@@ -18,18 +18,18 @@ export class MyApp  extends GenericComponent{
 
 	rootPage: any = HomePage;
 
-	pages: Array<{ title: string, component: any }>;
+	pages: Array<{ title: string, component: any, icon: string }>;
 
-	constructor(public miscellaneousService: MiscellaneousService, public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen) {
+	constructor(public miscellaneousService: MiscellaneousService, public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen,
+		public customService: CustomService) {
 		super(miscellaneousService);
 		this.initializeApp();
 
 		// used for an example of ngFor and navigation
 		this.pages = [
-			{ title: 'Home', component: HomePage },
-			{ title: 'Input', component: InputPage },
-			{ title: 'Files', component: FilesPage },
-			{ title: 'Parameters', component: ParameterPage }
+			{ title: 'Home', component: HomePage, icon: "home" },
+			{ title: 'Files', component: FilesPage, icon: "folder" },
+			{ title: 'Parameters', component: ParameterPage, icon: "cog" }
 		];
 
 	}

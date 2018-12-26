@@ -355,5 +355,40 @@
             "FR": "Créer un nouveau fichier",
             "PT": "Criar um novo ficheiro"
         }
+    },
+    {
+        "key": "View",
+        "value": {
+            "FR": "Voir",
+            "PT": "Ver"
+        }
+    },
+    {
+        "key": "Share",
+        "value": {
+            "FR": "Partager",
+            "PT": "Patilhar"
+        }
+    },
+    {
+        "key": "Label",
+        "value": {
+            "FR": "Etiquette",
+            "PT": "Etiqueta"
+        }
+    },
+    {
+        "key": "Inventory",
+        "value": {
+            "FR": "Inventaire",
+            "PT": "Inventario"
+        }
+    },
+    {
+        "key": "Price check",
+        "value": {
+            "FR": "Verification de prix",
+            "PT": "Verificaçao de preços"
+        }
     }
 ]

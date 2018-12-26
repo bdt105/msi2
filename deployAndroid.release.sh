@@ -6,6 +6,6 @@ rm -f ./www/msi.apk
 # ionic cordova build --release android
 ionic cordova build --prod --release android
 ##keytool -genkey -v -keystore msi.keystore -alias msi -keyalg RSA -keysize 2048 -validity 10000
-/home/bernard/Android/Sdk/build-tools/28.0.1/zipalign -v 4 /home/bernard/development/msi/platforms/android/app/build/outputs/apk/release/app-release-unsigned.apk ./www/msi.apk
-cp /home/bernard/development/msi/platforms/android/app/build/outputs/apk/release/app-release-unsigned.apk ./www/msi.apk
+/home/bernard/Android/Sdk/build-tools/28.0.2/zipalign -v 4 /home/bernard/development/msi2/platforms/android/app/build/outputs/apk/release/app-release-unsigned.apk ./www/msi.apk
+cp /home/bernard/development/msi2/platforms/android/app/build/outputs/apk/release/app-release-unsigned.apk ./www/msi.apk
 jarsigner -verbose -sigalg SHA1withRSA -digestalg SHA1 -keystore msi.keystore -storepass deregnau72 ./www/msi.apk msi

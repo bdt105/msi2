@@ -6,6 +6,7 @@ import { AlertController } from 'ionic-angular';
 export class ItemComponent extends GenericComponent {
 
 	@Input() item: any;
+	@Input() items: any;
 
 	@Output() changed = new EventEmitter();
 	@Output() deleted = new EventEmitter();
@@ -25,6 +26,7 @@ export class ItemComponent extends GenericComponent {
 
 	onSave() {
 		this.item.modify = false;
+		this.item.modificationDate = this.toolbox.formatDate(new Date());
 		this.saved.emit(this.item);
 	}
 

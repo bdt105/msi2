@@ -1,0 +1,46 @@
+<ion-card *ngIf="item" (click)="onView()">
+	<ion-list *ngIf="item.modify">
+		<ion-item>
+			<ion-label color="primary">{{translate('Name')}}</ion-label>
+			<ion-input type="text" [(ngModel)]="item.name" (change)="onChange()"></ion-input>
+		</ion-item>
+		<ion-item>
+			<ion-label color="primary">{{translate('Description')}}</ion-label>
+			<ion-input type="text" [(ngModel)]="item.description" (change)="onChange()"></ion-input>
+		</ion-item>
+		<ion-item>
+			<ion-label>{{translate('Type')}}</ion-label>
+			<ion-select [(ngModel)]="item.type">
+				<ion-option *ngFor="let type of fileService.fileFormats" [value]="type.name">{{type.label}}</ion-option>
+			</ion-select>
+		</ion-item>
+	</ion-list>
+	<div *ngIf="!item.modify" (press)="presentActionSheet()">
+		<ion-card-header>
+			{{item.name}}
+		</ion-card-header>
+		<ion-card-content>
+			<span *ngIf="item.description">{{item.description}}<br></span>
+			{{item.creationDate}} {{item.type}}
+		</ion-card-content>
+	</div>
+	<ion-item *ngIf="item && !item.type">
+		<small style="color: red">{{translate('Please enter type')}}</small>
+	</ion-item>
+	<ion-item>
+		<button ion-button (click)="confirmDelete()">
+			<ion-icon name="trash"></ion-icon>&nbsp;{{translate('Delete')}}
+		</button>
+		<button ion-button (click)="!item.modify ? toggleModify() : onSave()">
+			<ion-icon *ngIf="!item.modify" name="create"></ion-icon>
+			<ion-icon *ngIf="item.modify" name="checkmark"></ion-icon>&nbsp;{{item.modify ? translate('Save') :
+			translate('Edit')}}
+		</button>
+		<button ion-button (click)="onView()">
+			<ion-icon name="eye"></ion-icon>&nbsp;{{translate('View')}}
+		</button>
+		<button ion-button *ngIf="item && item.type" (click)="share()">
+			<ion-icon name="share"></ion-icon>&nbsp;{{translate('Share')}}
+		</button>
+	</ion-item>
+</ion-card>
