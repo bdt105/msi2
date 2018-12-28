@@ -1,12 +1,11 @@
 import { Component, Input } from '@angular/core';
 import { MiscellaneousService } from '../../angularShared/services/miscellaneous.service';
-import { FileService } from '../../service/file.service';
 import { AlertController, NavController, ActionSheetController } from 'ionic-angular';
 import { ItemComponent } from '../item/item.component';
 import { ArticlesPage } from '../../pages/item/articles.page';
 import { CustomService } from '../../service/custom.service';
 import { PhotoViewer } from '@ionic-native/photo-viewer';
-import { Camera, CameraOptions } from '@ionic-native/camera';
+import { Camera } from '@ionic-native/camera';
 import { File } from '@ionic-native/file';
 import { DomSanitizer } from '@angular/platform-browser';
 
@@ -20,7 +19,7 @@ export class ArticleComponent extends ItemComponent {
 	base64Image: any;
 	image: string;
 
-	constructor(public miscellaneousService: MiscellaneousService, public fileService: FileService, public domSanitizer: DomSanitizer,
+	constructor(public miscellaneousService: MiscellaneousService, public domSanitizer: DomSanitizer,
 		public customService: CustomService, public alertCtrl: AlertController, private navCtrl: NavController,
 		public actionSheetCtrl: ActionSheetController, private photoViewer: PhotoViewer, public camera: Camera, public filee: File) {
 		super(miscellaneousService, alertCtrl);
@@ -138,22 +137,53 @@ export class ArticleComponent extends ItemComponent {
 	}
 
 	viewPhoto() {
-		if (this.item && this.item.imageUrl) {
+		if (this.item && this.item.imageUri) {
 			this.photoViewer.show(this.item.imageUri, this.item.value, { share: true });
 		}
 	}
 
-	deletePicture() {
-		this.filee.removeFile("", this.item.imageUri).then(
-			(data: any) => {
-				this.item.imageUri = null;
-				this.changed.emit(this.item);
-			}
-		).catch(
-			(error: any) => {
-				console.log(error);
-
-			}
-		)
+	confirmDeletePicture() {
+		let alert = this.alertCtrl.create({
+			title: this.translate('Confirm delete'),
+			message: this.translate('Do you want to delete this picture?'),
+			buttons: [
+				{
+					text: this.translate('No'),
+					role: 'cancel',
+					handler: () => {
+						console.log('Cancel clicked');
+					}
+				},
+				{
+					text: this.translate('Yes'),
+					handler: () => {
+						this.deletePicture();
+					}
+				}
+			]
+		});
+		alert.present();
 	}
+
+	deletePicture() {
+		if (this.item && this.item.imageUri) {
+			let filePath: string = this.item.imageUri;
+			let l = filePath.lastIndexOf("/");
+			let dir = filePath.substr(0, l + 1);
+			let fileName = filePath.substr(l + 1, filePath.length - l);
+			// alert(dir + ' === ' + fileName);
+			this.filee.removeFile(dir, fileName).then(
+				(data: any) => {
+					this.item.imageUri = null;
+					this.changed.emit(this.item);
+				}
+			).catch(
+				(error: any) => {
+					console.log(error);
+				}
+			)
+		}
+	}
+
+	
 }

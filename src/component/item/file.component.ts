@@ -1,10 +1,11 @@
 import { Component } from '@angular/core';
 import { MiscellaneousService } from '../../angularShared/services/miscellaneous.service';
-import { FileService } from '../../service/file.service';
 import { AlertController, NavController, ActionSheetController } from 'ionic-angular';
 import { ItemComponent } from './item.component';
 import { ArticlesPage } from '../../pages/item/articles.page';
 import { CustomService } from '../../service/custom.service';
+import { ItemService } from '../../service/item.service';
+import { ShareService } from '../../service/share.service';
 
 @Component({
 	selector: 'fileComponent',
@@ -12,28 +13,34 @@ import { CustomService } from '../../service/custom.service';
 })
 export class FileComponent extends ItemComponent {
 
-	constructor(public miscellaneousService: MiscellaneousService, public fileService: FileService, public customService: CustomService,
-		public alertCtrl: AlertController, private navCtrl: NavController, public actionSheetCtrl: ActionSheetController) {
+	constructor(public miscellaneousService: MiscellaneousService, public itemService: ItemService, public customService: CustomService,
+		private shareService: ShareService, public alertCtrl: AlertController, private navCtrl: NavController, public actionSheetCtrl: ActionSheetController) {
 		super(miscellaneousService, alertCtrl);
 	}
 
 	ngOnInit() {
 	}
 
-	deleteItem() {
-		this.fileService.delete((data: any, error: any) => {
-			if (!error || error.message == "NOT_FOUND_ERR") {
-				this.deleted.emit(this.item);
-			}
-		}, this.item.fileName);
+	onView() {
+		this.itemService.setLastFileId(this.item.id);
+		// if (this.item) {
+		// 	this.customService.callbackToast(null, this.translate('Current file is now: ') + this.item.name)
+		// }
+		this.navCtrl.push(ArticlesPage, { "file": this.item, "files": this.items });
 	}
 
-	onView() {
-		this.customService.setLastFile(this.item);
-		if (this.item) {
-			this.customService.callbackToast(null, this.translate('Current file is now: ') + this.item.name)
-		}
-		this.navCtrl.push(ArticlesPage, { "file": this.item, "files": this.items });
+	share() {
+		this.shareService.share(
+			(data1: any, error1: any) => {
+				if (!error1) {
+					this.item.shareDate = new Date().getTime();
+				}else{
+					if (error1 && error1.message == "PARAM_ERROR"){
+						this.customService.callbackToast(error1, this.translate('Impossible de share. Please set PDV in parameters.'))
+					}
+				}
+			}, this.item
+		)
 	}
 
 	presentActionSheet() {
@@ -44,12 +51,11 @@ export class FileComponent extends ItemComponent {
 					text: this.translate('Share'),
 					icon: 'share',
 					handler: () => {
-						this.fileService.share(
-							(data: any, error: any) => {
-								if (error && error.message == "PARAM_ERROR") {
-									this.customService.callbackToast(data, this.translate('Parameters or PDV not defined! Please set parameters before sharing'))
-								}
-							}, this.item);
+						if (this.item && this.item.articles && this.item.articles.length > 0) {
+							this.share();
+						} else {
+							this.customService.callbackToast(null, this.translate('No article to share'))
+						}
 					}
 				},
 				{

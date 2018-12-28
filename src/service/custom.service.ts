@@ -32,14 +32,21 @@ export class CustomService extends AppService {
             }, "Msi Virtual", miscellaneousService);
     }
 
-    getLastFile() {
-        return this.getSetting("lastFile");
+    smartDate(dateInMilliseconds: number) {
+		if (dateInMilliseconds) {
+			let date = new Date(dateInMilliseconds);
+			return this.toolbox.smartDate(date);
+		}
+		return null;
     }
 
-    setLastFile(file: any) {
-        this.setSetting("lastFile", file);
+    myFormatDate(dateInMilliseconds: number){
+		if (dateInMilliseconds) {
+			let date = new Date(dateInMilliseconds);
+			return this.toolbox.formatDate(date);
+		}
+		return null;
     }
-
     
 
 }

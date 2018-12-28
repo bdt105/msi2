@@ -28,10 +28,12 @@ import { ConfigurationService } from 'bdt105angularconfigurationservice';
 import { GoogleService } from '../angularShared/services/google.service';
 import { DatabaseService } from '../angularShared/services/database.service';
 import { GooglePlus } from '@ionic-native/google-plus';
-import { FileService } from '../service/file.service';
+import { StorageService } from '../service/storage.service';
+import { ShareService } from '../service/share.service';
 import { ItemService } from '../service/item.service';
 import { AppService } from '../angularShared/services/appService';
 import { CustomService } from '../service/custom.service';
+import { ExportService } from '../service/export.service';
 
 // Components
 import { FileUploaderComponent } from '../angularShared/components/fileUploader';
@@ -65,7 +67,10 @@ export function init(customService: CustomService) {
 		HttpModule,
 		HttpClientModule,
 		IonicModule.forRoot(MyApp),
-		IonicStorageModule.forRoot()
+		IonicStorageModule.forRoot({
+			name: 'msivirtual',
+			   driverOrder: ['websql']
+		  })
 	],
 	bootstrap: [IonicApp],
 	entryComponents: [
@@ -93,10 +98,12 @@ export function init(customService: CustomService) {
 		PhotoViewer,
 		File,
 		Camera,
-		FileService,
+		StorageService,
+		ShareService,
 		BarcodeScanner,
 		AppService,
 		CustomService,
+		ExportService,
 		ConfigurationService,
 		MiscellaneousService,
 		ConnexionTokenService,

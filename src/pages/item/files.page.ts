@@ -1,10 +1,9 @@
 import { Component } from '@angular/core';
 import { MiscellaneousService } from '../../angularShared/services/miscellaneous.service';
-import { FileService } from '../../service/file.service';
-import { ItemsPage } from './items.page';
 import { ItemService } from '../../service/item.service';
 import { CustomService } from '../../service/custom.service';
 import { NavParams } from 'ionic-angular';
+import { ItemsPage } from './items.page';
 
 @Component({
 	selector: 'page-files',
@@ -12,31 +11,57 @@ import { NavParams } from 'ionic-angular';
 })
 export class FilesPage extends ItemsPage {
 
-	constructor(public miscellaneousService: MiscellaneousService, public fileService: FileService, public customService: CustomService,
+	constructor(public miscellaneousService: MiscellaneousService, public customService: CustomService,
 		public navParams: NavParams, public itemService: ItemService) {
-		super(miscellaneousService, fileService, customService);
-		this.key = this.itemService.filesKey;
+		super(miscellaneousService);
 	}
 
-	ngOnInit() {
-		this.load((data: any, error: any) => {
-			
-			let newFileType = this.navParams.get('newFileType');
-			if (newFileType) {
-				this.neww(newFileType);
-			}
-
-		})
+	ngOnInit(refresher: any = null) {
+		this.itemService.getFiles(
+			(data: any, error: any) => {
+				if (!error) {
+					this.items = data;
+					if (!this.items){
+						this.items = [];
+					}
+					let newFileType = this.navParams.get('newFileType');
+					if (newFileType) {
+						this.neww(newFileType);
+						this.save();
+					}
+				} else {
+					this.customService.callbackToast(error, this.translate('Impossible to get files'));
+				}
+				if (refresher) {
+					refresher.complete();
+				}
+			})
 	}
 
 	neww(type: string = null) {
 		let file = this.itemService.newFile();
 		file.type = type;
-		let format = this.fileService.getFormat(type);
+		let format = this.itemService.getFormat(type);
 		if (format) {
 			file.name = this.translate(format.label);
 		}
 		this.items.splice(0, 0, file);
 	}
 
+	save() {
+		this.itemService.saveFiles(
+			(data: any, error: any) => {
+				if (error) {
+					this.customService.callbackToast(null, this.translate('Could not save files'));
+				}
+			}, this.items
+		)
+	}
+
+	delete(file: any) {
+		this.itemService.deleteFile(
+			(data: any, error: any) => {
+			}, file, this.items
+		)
+	}
 }

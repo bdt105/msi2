@@ -7,18 +7,36 @@
 	</ion-navbar>
 </ion-header>
 
-<ion-content padding>
-	<h4 *ngIf="items && items.length > 0" (click)="goToPage('files')">{{translate('See the files alvailable')}}&nbsp;<ion-badge
-		 *ngIf="items.length>0">{{items.length}}</ion-badge>
-	</h4>
-	<h4 *ngIf="!items || items.length == 0">{{translate('No file so far')}}</h4>
-	<h4 *ngIf="customService.getLastFile()" (click)="goToPage('lastFile')">{{translate('Go to last file opened: ') +
-		customService.getLastFile().name}}</h4>
-	<ion-fab right top *ngIf="lastFile">
-		<button ion-fab color="secondary" (click)="newScan()">
-			<ion-icon name="barcode"></ion-icon>
-		</button>
-	</ion-fab>
+<ion-content nopadding>
+
+	<h1 padding *ngIf="!items || items.length == 0" (click)="goToPage('files')">
+		<ion-icon name="bug"></ion-icon>&nbsp;{{translate('Sorry, no file so far')}}
+	</h1>
+	<div *ngIf="items && items.length > 0">
+		<ion-card (click)="goToPage('files')">
+			<ion-card-header>
+				<div>
+					<h1 color="primary">
+						<ion-badge style="font-size: 2em">{{items.length}}</ion-badge>
+					</h1>
+					<br>
+					<h5 *ngIf="items.length > 1">{{translate('Files available')}}</h5>
+					<h5 *ngIf="items.length == 1">{{translate('File available')}}</h5>
+				</div>
+			</ion-card-header>
+		</ion-card>
+		<ion-card nopadding *ngIf="lastFile">
+			<ion-card-header>
+				<h5>{{translate('Last file accessed')}}</h5>
+				<fileComponent [item]="lastFile" [items]="items"></fileComponent>
+			</ion-card-header>
+		</ion-card>
+		<ion-fab right top *ngIf="lastFile">
+			<button ion-fab color="secondary" (click)="newScan()">
+				<ion-icon name="barcode"></ion-icon>
+			</button>
+		</ion-fab>
+	</div>
 	<ion-fab bottom right>
 		<button ion-fab>
 			<ion-icon name="add"></ion-icon>
@@ -34,14 +52,14 @@
 			<ion-icon name="add"></ion-icon>
 		</button>
 		<ion-fab-list side="left">
-			<button ion-fab color="secondary" *ngFor="let fileFormat of fileService.fileFormats" (click)="newFile(fileFormat.name)">
+			<button ion-fab color="secondary" *ngFor="let fileFormat of itemService.fileFormats" (click)="newFile(fileFormat.name)">
 				<ion-icon name="{{fileFormat.icon}}"></ion-icon>
 			</button>
 		</ion-fab-list>
 	</ion-fab>
-	<!-- <ion-fab right bottom>
-		<button ion-fab color="secondary" (click)="neww()">
-			<ion-icon name="add"></ion-icon>
-		</button>
-	</ion-fab> -->
+
+	<ion-refresher (ionRefresh)="load($event)">
+		<ion-refresher-content></ion-refresher-content>
+	</ion-refresher>
+
 </ion-content>

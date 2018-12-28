@@ -1,12 +1,13 @@
 import { Component } from '@angular/core';
 import { MiscellaneousService } from '../../angularShared/services/miscellaneous.service';
-import { FileService } from '../../service/file.service';
+import { StorageService } from '../../service/storage.service';
 import { ItemsPage } from '../item/items.page';
-import { CustomService } from '../../service/custom.service';
 import { NavController } from 'ionic-angular';
 import { FilesPage } from '../item/files.page';
 import { ArticlesPage } from '../item/articles.page';
 import { ItemService } from '../../service/item.service';
+import { ParameterPage } from '../parameter/parameter.page';
+import { CustomService } from '../../service/custom.service';
 
 @Component({
 	selector: 'page-home',
@@ -14,34 +15,54 @@ import { ItemService } from '../../service/item.service';
 })
 export class HomePage extends ItemsPage {
 
-	articles = [];
 	pdv: string;
+	refresher: any;
 
 	lastFile: any;
 
 	fileInfo: { "directory": string; "fileName": never; };
-	constructor(public miscellaneousService: MiscellaneousService, public fileService: FileService, customService: CustomService,
-		public navController: NavController, public itemService: ItemService) {
-		super(miscellaneousService, fileService, customService);
-		this.key = this.itemService.filesKey;
+	constructor(public miscellaneousService: MiscellaneousService, public storageService: StorageService,
+		public navController: NavController, public itemService: ItemService, public customService: CustomService) {
+		super(miscellaneousService);
 	}
 
-	ngOnInit() {
-		this.lastFile = this.customService.getLastFile();
-		this.load((data: any, error: any) => {
-
-		});
+	ionViewDidEnter() {
+		this.load();
 	}
+
+	load(refresher: any = null){
+		this.itemService.getFiles(
+			(data: any, error: any) => {
+				this.items = data;
+				if (this.items) {
+					let lastId = this.itemService.getLastFileId();
+					if (lastId) {
+						for (var i = 0; i < this.items.length; i++) {
+							if (lastId == this.items[i].id) {
+								this.lastFile = this.items[i];
+							}
+						}
+					}
+				}
+				if (refresher){
+					refresher.complete();
+				}
+			}
+		)
+	}
+
+	// ngOnInit(refresher: any = null) {
+	// 	this.load(refresher);
+	// }
 
 	goToPage(page: string) {
-		let lastFile = this.customService.getLastFile();
 		switch (page) {
-			case "lastFile":
-				this.navController.setRoot(ArticlesPage, { "file": lastFile })
+			case "files":
+				this.navController.push(FilesPage)
 				break;
 
-			case "files":
-				this.navController.setRoot(FilesPage)
+			case "params":
+				this.navController.push(ParameterPage)
 				break;
 
 			default:
@@ -53,12 +74,12 @@ export class HomePage extends ItemsPage {
 		let file = this.itemService.newFile();
 		file.type = type;
 
-		this.navController.setRoot(FilesPage, {"newFileType": type});
+		this.navController.push(FilesPage, { "newFileType": type });
 	}
 
-	newScan(){
-		let lastFile = this.customService.getLastFile();
-		this.navController.setRoot(ArticlesPage, { "file": lastFile, "scan": true})
+	newScan() {
+		let lastFileId = this.itemService.getLastFileId();
+		this.navController.push(ArticlesPage, { "fileId": lastFileId, "scan": true })
 	}
 
 

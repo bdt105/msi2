@@ -11,21 +11,19 @@
 <ion-content>
 
     <ion-list>
-        <fileComponent [item]="file" [items]="items" *ngFor="let file of items" (deleted)="deleted(file)" (changed)="save()" (saved)="save()"></fileComponent>
+        <fileComponent [item]="file" [items]="items" *ngFor="let file of items" (deleted)="delete(file)" (changed)="save()" (saved)="save()"></fileComponent>
     </ion-list>
     <ion-fab right bottom>
         <button ion-fab>
             <ion-icon name="add"></ion-icon>
         </button>
         <ion-fab-list side="left">
-            <button ion-fab color="secondary" *ngFor="let fileFormat of fileService.fileFormats" (click)="neww(fileFormat.name)">
+            <button ion-fab color="secondary" *ngFor="let fileFormat of itemService.fileFormats" (click)="neww(fileFormat.name)">
                 <ion-icon name="{{fileFormat.icon}}"></ion-icon>
             </button>
         </ion-fab-list>
     </ion-fab>
-    <!-- <ion-fab right bottom>
-        <button ion-fab color="secondary" (click)="neww()">
-            <ion-icon name="add"></ion-icon>
-        </button>
-    </ion-fab> -->
+	<ion-refresher (ionRefresh)="ngOnInit($event)">
+		<ion-refresher-content></ion-refresher-content>
+	</ion-refresher>
 </ion-content>

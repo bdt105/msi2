@@ -7,16 +7,17 @@
 	</ion-navbar>
 </ion-header>
 
-<ion-content>
+<ion-content padding>
 	<ion-item *ngIf="items && items.length > 0">
 		<ion-label color="primary" fixed>{{translate('PDV')}}</ion-label>
 		<ion-input type="text" placeholder="PDV" [(ngModel)]="items[0].pdv" (change)="save()"></ion-input>
 	</ion-item>
 	<div padding>
-		{{translate('Choose a language')}}<br><br>
+		<span (press)="toggleAllData()">{{translate('Choose a language')}}</span><br><br>
 		<img src="./assets/imgs/portugal.png" style="width: 30px" (click)="setLanguage('PT')">
 		<img src="./assets/imgs/france.png" style="width: 30px" (click)="setLanguage('FR')">
 		<img src="./assets/imgs/uk.png" style="width: 30px" (click)="setLanguage('')">
 	</div>
-
+	<button ion-button (click)="confirmDelete()"><ion-icon name="trash" ></ion-icon>&nbsp;{{translate('Clear all files')}}</button>	
+	<div *ngIf="showStorage" [innerHTML]="allElements"></div>
 </ion-content>

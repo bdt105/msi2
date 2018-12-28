@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
 import { MiscellaneousService } from '../../angularShared/services/miscellaneous.service';
 import { CustomService } from '../../service/custom.service';
-import { Events } from 'ionic-angular';
+import { Events, AlertController } from 'ionic-angular';
 import { ItemsPage } from '../item/items.page';
-import { FileService } from '../../service/file.service';
+import { StorageService } from '../../service/storage.service';
 import { ItemService } from '../../service/item.service';
 
 @Component({
@@ -12,36 +12,94 @@ import { ItemService } from '../../service/item.service';
 })
 export class ParameterPage extends ItemsPage {
 
-	parameters: any = {};
+	allElements: any;
+	showStorage = false;
 
-	constructor(public miscellaneousService: MiscellaneousService, public fileService: FileService, public itemService: ItemService, public customService: CustomService, public events: Events) {
-		super(miscellaneousService, fileService, customService);
-		this.key = this.itemService.parametersKey;
+	constructor(public miscellaneousService: MiscellaneousService, public storageService: StorageService,
+		public itemService: ItemService, public customService: CustomService, public events: Events, public alertCtrl: AlertController) {
+		super(miscellaneousService);
 	}
 
 	ngOnInit() {
-		this.load((data: any, error: any) => {
-			if (!error) {
-				if (data) {
+		this.items = null;
+		this.itemService.getParameters(
+			(data: any, error: any) => {
+				if (!error) {
 					this.items = data;
-					if (data.length == 0) {
-						let param: any = {};
-						this.items.push(param);	
+					if (!this.items) {
+						this.items = [{}];
 					}
-				}else{
-					let param: any = {};
-					this.items.push(param);
 				}
-			}
-		});
+			});
+		this.getAllData();
 	}
 
 	setLanguage(lang: string) {
-		this.parameters.lang = lang;
 		this.customService.setLanguage(lang);
 		this.customService.setVar(this.miscellaneousService);
 		this.events.publish('user:language', lang);
-		this.save();
 	}
 
+	getAllData() {
+		this.storageService.showAll(
+			(data: any, error: any) => {
+				if (!error) {
+					var prettyHtml = require('json-pretty-html').default;
+					this.allElements = prettyHtml(data);
+				}
+			}
+		)
+	}
+
+	toggleAllData() {
+		this.showStorage = !this.showStorage;
+		if (this.showStorage) {
+			this.getAllData();
+		}
+	}
+
+	private clearFiles() {
+		this.storageService.delete(
+			(data: any, error: any) => {
+				if (!error) {
+					this.customService.callbackToast(null, this.translate('All files and data deleted!'));
+				} else {
+					this.customService.callbackToast(null, this.translate('All files and data NOT deleted!'));
+				}
+			}, this.itemService.filesKey
+		)
+	}
+
+	confirmDelete() {
+		let alert = this.alertCtrl.create({
+			title: this.translate('Confirm delete'),
+			message: this.translate('Do you want to delete all files? All items attached will be lost forever!'),
+			buttons: [
+				{
+					text: this.translate('No'),
+					role: 'cancel',
+					handler: () => {
+						console.log('Cancel clicked');
+					}
+				},
+				{
+					text: this.translate('Yes'),
+					handler: () => {
+						this.clearFiles();
+					}
+				}
+			]
+		});
+		alert.present();
+	}
+
+	save(){
+		this.itemService.saveParameters(
+			(data: any, error: any) => {
+				if (error){
+					this.customService.callbackToast(error, this.translate('Could not save parameters'));
+				}
+			}, this.items
+		)
+	}
 }

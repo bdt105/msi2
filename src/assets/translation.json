@@ -140,10 +140,10 @@
         }
     },
     {
-        "key": "Do you want to delete this item? All item attached will be lost forever!",
+        "key": "Do you want to delete this item? All items attached will be lost forever!",
         "value": {
             "FR": "Voulez vous supprimer ce fichier ? Toutes les données attachée seront perdues pour toujours !",
-            "PT": "Vocé quer apagar este feicheiro? Todos os dados ligados serao perdidos por sempre!"
+            "PT": "Vocé quer apagar este ficheiro? Todos os dados ligados serao perdidos por sempre!"
         }
     },
     {
@@ -389,6 +389,125 @@
         "value": {
             "FR": "Verification de prix",
             "PT": "Verificaçao de preços"
+        }
+    },
+    {
+        "key": "Name",
+        "value": {
+            "FR": "Nom",
+            "PT": "Nome"
+        }
+    },
+    {
+        "key": "Description",
+        "value": {
+            "FR": "Description",
+            "PT": "Descripçao"
+        }
+    },
+    {
+        "key": "Type",
+        "value": {
+            "FR": "Type",
+            "PT": "Tipo"
+        }
+    },
+    {
+        "key": "Save",
+        "value": {
+            "FR": "Sauver",
+            "PT": "Salvar"
+        }
+    },
+    {
+        "key": "Delivery",
+        "value": {
+            "FR": "Livraison",
+            "PT": "Entraga"
+        }
+    },
+    {
+        "key": "delivery",
+        "value": {
+            "FR": "livraison",
+            "PT": "entrega"
+        }
+    },
+    {
+        "key": "label",
+        "value": {
+            "FR": "étiquette",
+            "PT": "etiqueta"
+        }
+    },
+    {
+        "key": "Files available",
+        "value": {
+            "FR": "Fichiers disponibles",
+            "PT": "Fichieros disponiveis"
+        }
+    },
+    {
+        "key": "Last file accessed",
+        "value": {
+            "FR": "Dernier fichier",
+            "PT": "Ultimo ficheiro"
+        }
+    },
+    {
+        "key": "",
+        "value": {
+            "FR": "",
+            "PT": ""
+        }
+    },
+    {
+        "key": "Delete picture",
+        "value": {
+            "FR": "Supprimer l'image",
+            "PT": "Apagar a imagem"
+        }
+    },
+    {
+        "key": "Code",
+        "value": {
+            "FR": "Code",
+            "PT": "Codigo"
+        }
+    },
+    {
+        "key": "Value",
+        "value": {
+            "FR": "Valeur",
+            "PT": "Valor"
+        }
+    },
+    {
+        "key": "Comment",
+        "value": {
+            "FR": "Commentaire",
+            "PT": "Comentario"
+        }
+    },
+    {
+        "key": "Order",
+        "value": {
+            "FR": "Commande",
+            "PT": "Encomenda"
+        }
+    },
+    {
+        "key": "Clear all files",
+        "value": {
+            "FR": "Supprimer tous les fichiers",
+            "PT": "Apagar todos os ficheiros"
+        }
+    },
+    {
+        "key": "Do you want to delete all files? All items attached will be lost forever!",
+        "value": {
+            "FR": "Voulez vous supprimer tous les fichiers ? Tous les items associés seront perdus pour toujours!",
+            "PT": "Quer apagar todos os ficheiros? Todos os items asociados serao perdidos para sempre!"
         }
     }
 ]

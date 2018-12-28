@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
 import { MiscellaneousService } from '../../angularShared/services/miscellaneous.service';
-import { FileService } from '../../service/file.service';
 import { ItemsPage } from './items.page';
 import { NavParams, AlertController } from 'ionic-angular';
 import { ItemService } from '../../service/item.service';
 import { CustomService } from '../../service/custom.service';
+import { ShareService } from '../../service/share.service';
 
 @Component({
 	selector: 'page-articles',
@@ -16,23 +16,20 @@ export class ArticlesPage extends ItemsPage {
 	files: any;
 	scan = false;
 
-	constructor(public miscellaneousService: MiscellaneousService, public fileService: FileService, public customService: CustomService,
+	constructor(public miscellaneousService: MiscellaneousService, public customService: CustomService, private shareService: ShareService,
 		public navParams: NavParams, public itemService: ItemService, public alertCtrl: AlertController) {
-		super(miscellaneousService, fileService, customService);
+		super(miscellaneousService);
 	}
 
 	ngOnInit() {
-		this.file = this.navParams.get('file');
 		this.files = this.navParams.get('files');
+		this.file = this.navParams.get('file');
 		if (this.file) {
 			if (!this.file.articles) {
 				this.file.articles = [];
 			}
-
 			this.items = this.file.articles;
-
 			this.scan = this.navParams.get('scan');
-
 			if (this.scan) {
 				this.newScan();
 			}
@@ -42,19 +39,25 @@ export class ArticlesPage extends ItemsPage {
 	neww() {
 		let article = this.itemService.newArticle();
 		this.items.splice(0, 0, article);
+		this.itemService.touchFile(this.file);
 	}
 
-
 	save() {
-		this.fileService.write(
+		this.itemService.saveFiles(
 			(data: any, error: any) => {
 				if (error) {
 					this.customService.callbackToast(null, this.translate('Could not save files'));
 				} else {
-
+					this.itemService.touchFile(this.file);
+					this.ngOnInit();
 				}
-			}, this.itemService.filesKey, this.files
+			}, this.files
 		)
+	}
+
+	delete(article: any) {
+		this.toolbox.deleteObjectInList(this.file.articles, "id", article.id);
+		this.save();
 	}
 
 	newScan() {
@@ -106,17 +109,12 @@ export class ArticlesPage extends ItemsPage {
 	}
 
 	share() {
-		this.fileService.read(
-			(data: any, error: any) => {
-				if (data) {
-					this.fileService.share(
-						(data: any, error: any) => {
-							if (error && error.message == "PARAM_ERROR"){
-								this.customService.callbackToast(data, this.translate('No PDV set, please set a PDV in parameters'))
-							}
-						}, this.file);
+		this.shareService.share(
+			(data1: any, error1: any) => {
+				if (!error1) {
+					this.file.shareDate = new Date().getTime();
 				}
-			}, this.itemService.parametersKey
+			}, this.file
 		)
 	}
 

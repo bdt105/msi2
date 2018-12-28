@@ -7,6 +7,7 @@ export class ItemComponent extends GenericComponent {
 
 	@Input() item: any;
 	@Input() items: any;
+	@Input() allowMenu = true;
 
 	@Output() changed = new EventEmitter();
 	@Output() deleted = new EventEmitter();
@@ -26,7 +27,7 @@ export class ItemComponent extends GenericComponent {
 
 	onSave() {
 		this.item.modify = false;
-		this.item.modificationDate = this.toolbox.formatDate(new Date());
+		this.item.modificationDate = new Date().getTime();
 		this.saved.emit(this.item);
 	}
 
@@ -45,7 +46,7 @@ export class ItemComponent extends GenericComponent {
 	confirmDelete() {
 		let alert = this.alertCtrl.create({
 			title: this.translate('Confirm delete'),
-			message: this.translate('Do you want to delete this item? All item attached will be lost forever!'),
+			message: this.translate('Do you want to delete this item? All items attached will be lost forever!'),
 			buttons: [
 				{
 					text: this.translate('No'),

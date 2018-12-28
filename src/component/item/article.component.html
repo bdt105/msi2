@@ -18,12 +18,9 @@
 		</ion-item>
 		<ion-item>
 			<ion-label color="primary" fixed>{{translate('Comment')}}</ion-label>
-			<ion-input type="number" [(ngModel)]="item.comment" (change)="onChange()"></ion-input>
+			<ion-input type="text" [(ngModel)]="item.comment" (change)="onChange()"></ion-input>
 		</ion-item>
 		<ion-item>
-			<button ion-button (click)="confirmDelete()">
-				<ion-icon name="trash"></ion-icon>&nbsp;{{translate('Delete')}}
-			</button>
 			<button ion-button (click)="!item.modify ? toggleModify() : onSave()">
 				<ion-icon *ngIf="!item.modify" name="create"></ion-icon>
 				<ion-icon *ngIf="item.modify" name="checkmark"></ion-icon>&nbsp;{{item.modify ? translate('Save') :
@@ -32,12 +29,16 @@
 			<button ion-button (click)="scan(item)">
 				<ion-icon name="barcode"></ion-icon>&nbsp;{{translate('Scan')}}
 			</button>
-			<button ion-button (click)="takePicture()">
-				<ion-icon name="camera"></ion-icon>&nbsp;{{translate('Take')}}
+			<button ion-button (click)="confirmDelete()">
+				<ion-icon name="trash"></ion-icon>&nbsp;{{translate('Delete')}}
 			</button>
-			<!-- <button ion-button (click)="deletePicture()">
-				<ion-icon name="camera"></ion-icon>&nbsp;{{translate('Delete')}}
-			</button> -->
+			<br>
+			<button ion-button (click)="takePicture()">
+				<ion-icon name="camera"></ion-icon>&nbsp;{{translate('Take picture')}}
+			</button>
+			<button ion-button (click)="confirmDeletePicture()">
+				<ion-icon name="trash"></ion-icon>&nbsp;{{translate('Delete picture')}}
+			</button>
 		</ion-item>
 	</ion-list>
 </ion-card>
@@ -47,8 +48,18 @@
 			<img [src]="image" />
 		</span>
 	</ion-avatar>
-	{{item.code}}<br>
-	{{item.value}}
+	<span>
+		<ion-icon name="barcode"></ion-icon> {{item.code}}<br>
+		<span style="font-size: 1.1em">{{item.value}}</span>
+	</span>
 	<small *ngIf="item.comment"><br>{{item.comment}}</small>
-	<small><br>{{item.modificationDate}}</small>
+	<div item-end style="height: 100%;margin-top: 30px;">
+		<small>
+			<ion-icon name="create"></ion-icon>&nbsp;{{customService.smartDate(item.modificationDate)}}
+		</small>
+		<small *ngIf="item.shareDate">
+			<br>
+			<ion-icon name="share"></ion-icon>&nbsp;{{customService.smartDate(item.shareDate)}}
+		</small>
+	</div>
 </ion-item>
