@@ -42,7 +42,7 @@
 		</ion-item>
 	</ion-list>
 </ion-card>
-<ion-item *ngIf="item && !item.modify" (press)="presentActionSheet()">
+<ion-item *ngIf="item && !item.modify" (press)="presentActionSheet()" [ngStyle]="{'background-color': selected ? '#fff0f0' : 'transparent'}" >
 	<ion-avatar item-start *ngIf="item.imageUri && customService.isMobileDevice()">
 		<span *ngIf="customService.isMobileDevice()" (click)="viewPhoto()">
 			<img [src]="image" />

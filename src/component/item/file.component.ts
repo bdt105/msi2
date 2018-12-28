@@ -12,6 +12,7 @@ import { ShareService } from '../../service/share.service';
 	templateUrl: 'file.component.html'
 })
 export class FileComponent extends ItemComponent {
+	selected = false;
 
 	constructor(public miscellaneousService: MiscellaneousService, public itemService: ItemService, public customService: CustomService,
 		private shareService: ShareService, public alertCtrl: AlertController, private navCtrl: NavController, public actionSheetCtrl: ActionSheetController) {
@@ -44,6 +45,8 @@ export class FileComponent extends ItemComponent {
 	}
 
 	presentActionSheet() {
+		this.selected = true;
+
 		const actionSheet = this.actionSheetCtrl.create({
 			title: this.translate('Choose your action'),
 			buttons: [
@@ -51,6 +54,7 @@ export class FileComponent extends ItemComponent {
 					text: this.translate('Share'),
 					icon: 'share',
 					handler: () => {
+						this.selected = false;
 						if (this.item && this.item.articles && this.item.articles.length > 0) {
 							this.share();
 						} else {
@@ -62,6 +66,7 @@ export class FileComponent extends ItemComponent {
 					text: this.translate('Edit'),
 					icon: 'create',
 					handler: () => {
+						this.selected = false;
 						if (!this.item.modify) {
 							this.toggleModify()
 						} else {
@@ -73,6 +78,7 @@ export class FileComponent extends ItemComponent {
 					text: this.translate('Delete'),
 					icon: 'trash',
 					handler: () => {
+						this.selected = false;
 						this.confirmDelete();
 					}
 				},
@@ -80,6 +86,7 @@ export class FileComponent extends ItemComponent {
 					text: 'Cancel',
 					role: 'cancel',
 					handler: () => {
+						this.selected = false;
 						console.log('Cancel clicked');
 					}
 				}

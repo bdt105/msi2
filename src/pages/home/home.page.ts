@@ -30,7 +30,7 @@ export class HomePage extends ItemsPage {
 		this.load();
 	}
 
-	load(refresher: any = null){
+	load(refresher: any = null) {
 		this.itemService.getFiles(
 			(data: any, error: any) => {
 				this.items = data;
@@ -44,7 +44,7 @@ export class HomePage extends ItemsPage {
 						}
 					}
 				}
-				if (refresher){
+				if (refresher) {
 					refresher.complete();
 				}
 			}
@@ -78,9 +78,7 @@ export class HomePage extends ItemsPage {
 	}
 
 	newScan() {
-		let lastFileId = this.itemService.getLastFileId();
-		this.navController.push(ArticlesPage, { "fileId": lastFileId, "scan": true })
+		this.navController.push(ArticlesPage, { "file": this.lastFile, "files": this.items, "scan": true })
 	}
-
 
 }

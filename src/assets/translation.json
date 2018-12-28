@@ -509,5 +509,12 @@
             "FR": "Voulez vous supprimer tous les fichiers ? Tous les items associés seront perdus pour toujours!",
             "PT": "Quer apagar todos os ficheiros? Todos os items asociados serao perdidos para sempre!"
         }
+    },
+    {
+        "key": "Sorry no file so far, click on the button below to create one",
+        "value": {
+            "FR": "Désolé il n'y a pas encore de fichier, cliquez sur le bouton ci-dessous pour en créer un",
+            "PT": "Desculpe, não há nenhum fichiero ainda, clique no botão abaixo para criar um"
+        }
     }
 ]

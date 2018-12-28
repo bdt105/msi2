@@ -25,14 +25,20 @@ export class ArticlesPage extends ItemsPage {
 		this.files = this.navParams.get('files');
 		this.file = this.navParams.get('file');
 		if (this.file) {
-			if (!this.file.articles) {
-				this.file.articles = [];
-			}
-			this.items = this.file.articles;
+			this.load();
 			this.scan = this.navParams.get('scan');
 			if (this.scan) {
 				this.newScan();
 			}
+		}
+	}
+
+	load(){
+		if (this.file) {
+			if (!this.file.articles) {
+				this.file.articles = [];
+			}
+			this.items = this.file.articles;
 		}
 	}
 
@@ -49,7 +55,7 @@ export class ArticlesPage extends ItemsPage {
 					this.customService.callbackToast(null, this.translate('Could not save files'));
 				} else {
 					this.itemService.touchFile(this.file);
-					this.ngOnInit();
+					this.load();
 				}
 			}, this.files
 		)
@@ -76,7 +82,7 @@ export class ArticlesPage extends ItemsPage {
 	}
 
 	promptValue(article: any) {
-		let callbackSave = (data) => {
+		let callbackSave = (data: any) => {
 			if (data) {
 				article.value = data['0'];
 				article.modify = false;

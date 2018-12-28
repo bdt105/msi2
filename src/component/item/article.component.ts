@@ -19,6 +19,7 @@ export class ArticleComponent extends ItemComponent {
 	base64Image: any;
 	image: string;
 
+	selected = false;
 	constructor(public miscellaneousService: MiscellaneousService, public domSanitizer: DomSanitizer,
 		public customService: CustomService, public alertCtrl: AlertController, private navCtrl: NavController,
 		public actionSheetCtrl: ActionSheetController, private photoViewer: PhotoViewer, public camera: Camera, public filee: File) {
@@ -53,13 +54,16 @@ export class ArticleComponent extends ItemComponent {
 	}
 
 	presentActionSheet() {
-		const actionSheet = this.actionSheetCtrl.create({
+		this.selected = true;
+		let actionSheet = this.actionSheetCtrl.create({
 			title: this.translate('Choose your action'),
 			buttons: [
 				{
 					text: this.translate('Scan'),
 					icon: 'barcode',
 					handler: () => {
+						this.selected = false;
+
 						this.scan(this.item);
 					}
 				},
@@ -67,6 +71,7 @@ export class ArticleComponent extends ItemComponent {
 					text: this.translate('Edit'),
 					icon: 'create',
 					handler: () => {
+						this.selected = false;
 						if (!this.item.modify) {
 							this.toggleModify()
 						} else {
@@ -78,6 +83,7 @@ export class ArticleComponent extends ItemComponent {
 					text: this.translate('Delete'),
 					icon: 'trash',
 					handler: () => {
+						this.selected = false;
 						this.confirmDelete();
 					}
 				},
@@ -85,6 +91,7 @@ export class ArticleComponent extends ItemComponent {
 					text: 'Cancel',
 					role: 'cancel',
 					handler: () => {
+						this.selected = false;
 						console.log('Cancel clicked');
 					}
 				}
