@@ -10,10 +10,21 @@
 
 <ion-content>
     <h4 padding *ngIf="!items || items.length == 0" (click)="goToPage('files')">
-        <ion-icon name="information-circle"></ion-icon>&nbsp;{{translate('Sorry no file so far, click on the button below to create
-        one')}}
+        <ion-icon name="information-circle"></ion-icon>&nbsp;{{translate('Sorry no file so far, click on the + button
+        below
+        to create one')}}
     </h4>
-
+    <ion-card *ngIf="!items || items.length == 0">
+        <ion-card-header>{{translate('Types of file available')}}</ion-card-header>
+        <ion-item *ngFor="let fileFormat of itemService.fileFormats">
+            <button item-start ion-fab mini color="secondary" (click)="newFile(fileFormat.name)" style="width: 20px; height: 20px">
+                <ion-icon style="font-size: 1em" name="{{fileFormat.icon}}"></ion-icon>
+            </button>
+            <span>
+                {{translate(fileFormat.label)}}
+            </span>
+        </ion-item>
+    </ion-card>
     <ion-list>
         <fileComponent [item]="file" [items]="items" *ngFor="let file of items" (deleted)="delete(file)" (changed)="save()"
             (saved)="save()"></fileComponent>

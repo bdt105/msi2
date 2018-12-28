@@ -9,9 +9,6 @@
 
 <ion-content nopadding>
 
-	<h4 padding *ngIf="!items || items.length == 0" (click)="goToPage('files')">
-		<ion-icon name="information-circle"></ion-icon>&nbsp;{{translate('Sorry no file so far, click on the button below to create one')}}
-	</h4>
 	<div *ngIf="items && items.length > 0">
 		<ion-card (click)="goToPage('files')">
 			<ion-card-header>
@@ -37,6 +34,22 @@
 			</button>
 		</ion-fab>
 	</div>
+	<h4 padding *ngIf="!items || items.length == 0" (click)="goToPage('files')">
+		<ion-icon name="information-circle"></ion-icon>&nbsp;{{translate('Sorry no file so far, click on the + button below
+		to create one')}}
+	</h4>
+	<ion-card>
+		<ion-card-header>{{translate('Types of file available')}}</ion-card-header>
+		<ion-item *ngFor="let fileFormat of itemService.fileFormats">
+			<button item-start ion-fab mini color="secondary" (click)="newFile(fileFormat.name)" style="width: 20px; height: 20px">
+				<ion-icon style="font-size: 1em" name="{{fileFormat.icon}}"></ion-icon>
+			</button>
+			<span>
+				{{translate(fileFormat.label)}}
+			</span>
+		</ion-item>
+	</ion-card>
+
 	<ion-fab bottom right>
 		<button ion-fab>
 			<ion-icon name="add"></ion-icon>

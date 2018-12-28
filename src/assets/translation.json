@@ -511,10 +511,17 @@
         }
     },
     {
-        "key": "Sorry no file so far, click on the button below to create one",
+        "key": "Sorry no file so far, click on the + button below to create one",
         "value": {
             "FR": "Désolé il n'y a pas encore de fichier, cliquez sur le bouton ci-dessous pour en créer un",
             "PT": "Desculpe, não há nenhum fichiero ainda, clique no botão abaixo para criar um"
+        }
+    },
+    {
+        "key": "Types of file available",
+        "value": {
+            "FR": "Type de fichier disponibles",
+            "PT": "Tipos de ficheiros dsponiveis"
         }
     }
 ]
