@@ -513,8 +513,8 @@
     {
         "key": "Sorry no file so far, click on the + button below to create one",
         "value": {
-            "FR": "Désolé il n'y a pas encore de fichier, cliquez sur le bouton ci-dessous pour en créer un",
-            "PT": "Desculpe, não há nenhum fichiero ainda, clique no botão abaixo para criar um"
+            "FR": "Désolé il n'y a pas encore de fichier, cliquez sur le bouton + ci-dessous pour en créer un",
+            "PT": "Desculpe, não há nenhum fichiero ainda, clique no botão + abaixo para criar um"
         }
     },
     {
