@@ -36,8 +36,9 @@
 	</ion-list>
 </ion-card>
 
-<ion-item *ngIf="item && !item.modify" (press)="allowMenu ? presentActionSheet() : onView()" (click)="onView()" [ngStyle]="{'background-color': selected ? '#fff0f0' : 'transparent'}">
-	<button item-start ion-fab mini style="margin-right: 16px;">
+<ion-item *ngIf="item && !item.modify" (press)="allowMenu ? presentActionSheet() : onView()" (click)="onView()"
+	 [ngStyle]="{'background-color': selected ? '#fff0f0' : 'transparent'}">
+	<button item-start ion-fab mini style="margin-right: 16px;" [ngStyle]="{background: itemService.getFormat(item.type) ? itemService.getFormat(item.type).color : ''}">
 		<ion-icon *ngIf="itemService.getFormat(item.type)" name="{{itemService.getFormat(item.type).icon}}"></ion-icon>
 		<span *ngIf="!itemService.getFormat(item.type)" style="font-size: 1.5em; font-weight: lighter">
 			{{item.name ? customService.getFirstLetter(item.name) : '?'}}

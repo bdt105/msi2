@@ -16,31 +16,36 @@ export class ItemService {
             "name": "label",
             "label": "Label",
             "fileName": "ETIQUETTE",
-            "icon": "pricetag"
+            "icon": "pricetag",
+            "color": "#6700ff"
         },
         {
             "name": "inventory",
             "label": "Inventory",
             "fileName": "INVENTAIRE",
-            "icon": "clipboard"
+            "icon": "clipboard",
+            "color": "#005d38"
         },
         {
             "name": "price",
             "label": "Price check",
             "fileName": "PRIX",
-            "icon": "cash"
+            "icon": "cash",
+            "color": "#ea0000"
         },
         {
             "name": "delivery",
             "label": "Delivery",
             "fileName": "LIVRAISON",
-            "icon": "bicycle"
+            "icon": "bicycle",
+            "color": "#101000"
         },
         {
             "name": "order",
             "label": "Order",
             "fileName": "COMMANDE",
-            "icon": "call"
+            "icon": "call",
+            "color": "#bcc300"
         }
     ]
 

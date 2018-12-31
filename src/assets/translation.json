@@ -523,5 +523,12 @@
             "FR": "Type de fichier disponibles",
             "PT": "Tipos de ficheiros dsponiveis"
         }
+    },
+    {
+        "key": "File available",
+        "value": {
+            "FR": "Fichier disponible",
+            "PT": "Ficheiro disponivel"
+        }
     }
 ]

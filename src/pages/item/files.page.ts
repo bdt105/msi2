@@ -26,7 +26,7 @@ export class FilesPage extends ItemsPage {
 					}
 					let newFileType = this.navParams.get('newFileType');
 					if (newFileType) {
-						this.neww(newFileType);
+						this.newFile(newFileType);
 						this.save();
 					}
 				} else {
@@ -38,7 +38,7 @@ export class FilesPage extends ItemsPage {
 			})
 	}
 
-	neww(type: string = null) {
+	newFile(type: string)  {
 		let file = this.itemService.newFile();
 		file.type = type;
 		let format = this.itemService.getFormat(type);

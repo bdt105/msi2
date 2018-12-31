@@ -15,8 +15,9 @@
     <ion-card *ngIf="!items || items.length == 0">
         <ion-card-header>{{translate('Types of file available')}}</ion-card-header>
         <ion-item *ngFor="let fileFormat of itemService.fileFormats">
-            <button item-start ion-fab mini color="secondary" (click)="newFile(fileFormat.name)" style="width: 20px; height: 20px">
-                <ion-icon style="font-size: 1em" name="{{fileFormat.icon}}"></ion-icon>
+            <button item-start ion-fab mini color="secondary" [ngStyle]="{background: fileFormat.color}" 
+            (click)="newFile(fileFormat.name)">
+                <ion-icon name="{{fileFormat.icon}}"></ion-icon>
             </button>
             <span>
                 {{translate(fileFormat.label)}}
@@ -32,7 +33,7 @@
             <ion-icon name="add"></ion-icon>
         </button>
         <ion-fab-list side="left">
-            <button ion-fab color="secondary" *ngFor="let fileFormat of itemService.fileFormats" (click)="neww(fileFormat.name)">
+            <button ion-fab color="secondary" [ngStyle]="{background: fileFormat.color}" *ngFor="let fileFormat of itemService.fileFormats" (click)="neww(fileFormat.name)">
                 <ion-icon name="{{fileFormat.icon}}"></ion-icon>
             </button>
         </ion-fab-list>
