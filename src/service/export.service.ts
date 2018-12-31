@@ -11,6 +11,10 @@ export class ExportService {
 
     }
 
+    private getDirectory(){
+        return this.file.externalDataDirectory;
+    }
+
     private completeValue(text: string, totalSize: number, value: string, before: boolean = true) {
         let prefixSize = totalSize - value.length;
         let pref = "";
@@ -36,7 +40,7 @@ export class ExportService {
     }
 
     labelFile(callback: Function, type: string, pdv: string, items: any) {
-        let dir = this.file.externalDataDirectory;
+        let dir = this.getDirectory();
         if (items) {
             let content = "";
             items.forEach((article: any) => {
@@ -48,7 +52,7 @@ export class ExportService {
     }
 
     orderFile(callback: Function, type: string, pdv: string, items: any) {
-        let dir = this.file.externalDataDirectory;
+        let dir = this.getDirectory();
         if (items) {
             let content = "";
             items.forEach((article: any) => {
@@ -60,7 +64,7 @@ export class ExportService {
     }
 
     listFile(callback: Function, type: string, pdv: string, items: any) {
-        let dir = this.file.externalDataDirectory;
+        let dir = this.getDirectory();
         if (items) {
             let content = "";
             items.forEach((article: any) => {
@@ -71,7 +75,7 @@ export class ExportService {
     }
 
     templateFile(callback: Function, type: string, pdv: string, items: any, prefix: string, intSize: number, decSize: number) {
-        let dir = this.file.externalDataDirectory;
+        let dir = this.getDirectory();
         if (items) {
             let content = "";
             items.forEach((article: any) => {

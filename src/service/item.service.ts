@@ -186,6 +186,7 @@ export class ItemService {
             file.modificationDate = new Date().getTime();
         }
     }
+    
     deleteArticle(callback: Function, article: any, file: any, files: any) {
         let articles = file.articles;
         let found = false;
