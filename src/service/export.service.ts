@@ -2,17 +2,21 @@ import { Injectable } from '@angular/core';
 import { Toolbox } from 'bdt105toolbox/dist';
 import { File } from '@ionic-native/file';
 import { ItemService } from './item.service';
+//import { Platform } from 'ionic-angular';
 
 @Injectable()
 export class ExportService {
 
     toolbox = new Toolbox();
-    constructor(private file: File, private itemService: ItemService) {
+    constructor(private file: File, private itemService: ItemService/*, public platform: Platform*/) {
 
     }
 
     private getDirectory(){
-        return this.file.externalDataDirectory;
+//        if (this.platform.is('ios')){
+            return this.file.tempDirectory;
+//        }
+//        return this.file.externalDataDirectory;
     }
 
     private completeValue(text: string, totalSize: number, value: string, before: boolean = true) {

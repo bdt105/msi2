@@ -8,6 +8,7 @@ import { IonicStorageModule } from '@ionic/storage';
 import { File } from '@ionic-native/file';
 import { Camera } from '@ionic-native/camera';
 import { PhotoViewer } from '@ionic-native/photo-viewer';
+//import { Platform } from 'ionic-angular';
 
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
