@@ -38,7 +38,7 @@ export class ItemService {
             "label": "Delivery",
             "fileName": "LIVRAISON",
             "icon": "bicycle",
-            "color": "#101000"
+            "color": "#677171"
         },
         {
             "name": "order",

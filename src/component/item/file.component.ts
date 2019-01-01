@@ -35,6 +35,7 @@ export class FileComponent extends ItemComponent {
 			(data1: any, error1: any) => {
 				if (!error1) {
 					this.item.shareDate = new Date().getTime();
+					this.changed.emit(this.item);
 				}else{
 					if (error1 && error1.message == "PARAM_ERROR"){
 						this.customService.callbackToast(error1, this.translate('Impossible de share. Please set PDV in parameters.'))

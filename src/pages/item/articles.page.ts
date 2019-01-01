@@ -119,6 +119,7 @@ export class ArticlesPage extends ItemsPage {
 			(data1: any, error1: any) => {
 				if (!error1) {
 					this.file.shareDate = new Date().getTime();
+					this.save();
 				}else{
 					if (error1 && error1.message == "PARAM_ERROR"){
 						this.customService.callbackToast(error1, this.translate('Impossible de share. Please set PDV in parameters.'))

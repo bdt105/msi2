@@ -9,7 +9,7 @@
 
 <ion-content padding>
 	<ion-item *ngIf="items && items.length > 0">
-		<ion-label color="primary" fixed>{{translate('PDV')}}</ion-label>
+		<ion-label fixed>{{translate('PDV')}}</ion-label>
 		<ion-input type="text" placeholder="PDV" [(ngModel)]="items[0].pdv" (change)="save()"></ion-input>
 	</ion-item>
 	<div padding>

@@ -8,15 +8,15 @@
 			</ion-avatar>
 		</ion-item>
 		<ion-item>
-			<ion-label color="primary">{{translate('Code')}}</ion-label>
+			<ion-label>{{translate('Code')}}</ion-label>
 			<ion-input type="text" [(ngModel)]="item.code" (change)="onChange()"></ion-input>
 		</ion-item>
 		<ion-item>
-			<ion-label color="primary" fixed>{{translate('Value')}}</ion-label>
+			<ion-label fixed>{{translate('Value')}}</ion-label>
 			<ion-input type="number" [(ngModel)]="item.value" (change)="onChange()"></ion-input>
 		</ion-item>
 		<ion-item>
-			<ion-label color="primary" fixed>{{translate('Comment')}}</ion-label>
+			<ion-label fixed>{{translate('Comment')}}</ion-label>
 			<ion-input type="text" [(ngModel)]="item.comment" (change)="onChange()"></ion-input>
 		</ion-item>
 		<ion-item>

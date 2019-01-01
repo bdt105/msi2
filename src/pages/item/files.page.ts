@@ -88,7 +88,6 @@ export class FilesPage extends ItemsPage {
 		)
 	}
 
-
 	showFilter() {
 		let callbackOk = (data: any) => {
 			if (data) {
