@@ -11,7 +11,6 @@
 			<ion-label color="primary">{{translate('Code')}}</ion-label>
 			<ion-input type="text" [(ngModel)]="item.code" (change)="onChange()"></ion-input>
 		</ion-item>
-
 		<ion-item>
 			<ion-label color="primary" fixed>{{translate('Value')}}</ion-label>
 			<ion-input type="number" [(ngModel)]="item.value" (change)="onChange()"></ion-input>
@@ -42,8 +41,8 @@
 		</ion-item>
 	</ion-list>
 </ion-card>
-<ion-item *ngIf="item && !item.modify" (press)="presentActionSheet()" [ngStyle]="{'background-color': selected ? '#fff0f0' : 'transparent'}" >
-	<ion-avatar item-start *ngIf="item.imageUri && customService.isMobileDevice()">
+<ion-item *ngIf="item && !item.modify" (press)="presentActionSheet()" [ngStyle]="{'background-color': selected ? '#fff0f0' : 'transparent'}">
+	<ion-avatar item-end *ngIf="item.imageUri && customService.isMobileDevice()">
 		<span *ngIf="customService.isMobileDevice()" (click)="viewPhoto()">
 			<img [src]="image" />
 		</span>

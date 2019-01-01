@@ -22,7 +22,7 @@
     <ion-card padding *ngIf="fileTypeFilter">
         {{translate('Current filter')}}&nbsp;
 
-        <ion-chip #chip1  color="primary">
+        <ion-chip #chip1 color="primary">
             <ion-label>
                 <ion-icon name="{{itemService.getFormat(fileTypeFilter).icon}}"></ion-icon>&nbsp;{{translate(itemService.getFormat(fileTypeFilter).label)}}
             </ion-label>

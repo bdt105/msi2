@@ -34,7 +34,7 @@ export class FilesPage extends ItemsPage {
 		return ret;
 	}
 
-	private getFiles(refresher: any = null) {
+	private getFiles(refresher: any, newFileType: string){
 		this.itemService.getFiles(
 			(data: any, error: any) => {
 				if (!error) {
@@ -44,7 +44,6 @@ export class FilesPage extends ItemsPage {
 					if (!this.items) {
 						this.items = [];
 					}
-					let newFileType = this.navParams.get('newFileType');
 					if (newFileType) {
 						this.newFile(newFileType);
 						this.save();
@@ -59,7 +58,7 @@ export class FilesPage extends ItemsPage {
 	}
 
 	ngOnInit(refresher: any = null) {
-		this.getFiles(refresher);
+		this.getFiles(refresher, this.navParams.get('newFileType'));
 	}
 
 	newFile(type: string) {
@@ -95,7 +94,7 @@ export class FilesPage extends ItemsPage {
 			if (data) {
 				this.fileTypeFilterPrevious = this.fileTypeFilter;
 				this.fileTypeFilter = data.value;
-				this.getFiles(null);
+				this.getFiles(null, null);
 			}
 		};
 		let callbackCancel = (data: any) => {
@@ -131,7 +130,7 @@ export class FilesPage extends ItemsPage {
 
 	deleteFilter(){
 		this.fileTypeFilter = null;
-		this.getFiles();
+		this.getFiles(null, null);
 	}
 
 }

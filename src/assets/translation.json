@@ -551,5 +551,26 @@
             "FR": "Pas de filtre",
             "PT": "Sem filtro"
         }
+    },
+    {
+        "key": "Current filter",
+        "value": {
+            "FR": "Filtre actif",
+            "PT": "Filtro ativo"
+        }
+    },
+    {
+        "key": "Filter",
+        "value": {
+            "FR": "Filtrer",
+            "PT": "Filtrar"
+        }
+    },
+    {
+        "key": "Cancel",
+        "value": {
+            "FR": "Annuler",
+            "PT": "Cancelar"
+        }
     }
 ]
