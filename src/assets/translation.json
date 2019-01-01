@@ -530,5 +530,26 @@
             "FR": "Fichier disponible",
             "PT": "Ficheiro disponivel"
         }
+    },
+    {
+        "key": "Choose a type of file",
+        "value": {
+            "FR": "Choisissez un type de fichier",
+            "PT": "Esquole um tipo de ficheiro"
+        }
+    },
+    {
+        "key": "Impossible de share. Please set PDV in parameters.",
+        "value": {
+            "FR": "Impossible de partager. Vérifiez le paramètre PDV",
+            "PT": "Impossivel de partilhar, verifique a parametro PDV"
+        }
+    },
+    {
+        "key": "No filter",
+        "value": {
+            "FR": "Pas de filtre",
+            "PT": "Sem filtro"
+        }
     }
 ]

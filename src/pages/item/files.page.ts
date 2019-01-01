@@ -16,12 +16,32 @@ export class FilesPage extends ItemsPage {
 		super(miscellaneousService);
 	}
 
-	ngOnInit(refresher: any = null) {
+	public fileTypeFilter = null;
+	public fileTypeFilterPrevious = null;
+
+	private filter(data: any) {
+		let ret = data;
+		
+		if (this.fileTypeFilter) {
+			ret = this.toolbox.filterArrayOfObjects(data, "type", this.fileTypeFilter, false, true, true, false);
+			if (ret && ret.length == 0) {
+				this.customService.callbackToast(null, this.translate("No file found of this type..."));
+				this.fileTypeFilter = this.fileTypeFilterPrevious;
+				ret = this.filter(data);
+			}
+		}
+
+		return ret;
+	}
+
+	private getFiles(refresher: any = null) {
 		this.itemService.getFiles(
 			(data: any, error: any) => {
 				if (!error) {
-					this.items = data;
-					if (!this.items){
+
+					this.items = this.filter(data);
+
+					if (!this.items) {
 						this.items = [];
 					}
 					let newFileType = this.navParams.get('newFileType');
@@ -38,7 +58,11 @@ export class FilesPage extends ItemsPage {
 			})
 	}
 
-	newFile(type: string)  {
+	ngOnInit(refresher: any = null) {
+		this.getFiles(refresher);
+	}
+
+	newFile(type: string) {
 		let file = this.itemService.newFile();
 		file.type = type;
 		let format = this.itemService.getFormat(type);
@@ -64,4 +88,50 @@ export class FilesPage extends ItemsPage {
 			}, file, this.items
 		)
 	}
+
+
+	showFilter() {
+		let callbackOk = (data: any) => {
+			if (data) {
+				this.fileTypeFilterPrevious = this.fileTypeFilter;
+				this.fileTypeFilter = data.value;
+				this.getFiles(null);
+			}
+		};
+		let callbackCancel = (data: any) => {
+			console.log("Filter canceled");
+		};
+
+		let values = [];
+		values.push({
+			"type": "radio",
+			"value": null,
+			"label": this.translate("No filter"),
+			"checked": false
+		})
+		for (var i = 0; i < this.itemService.fileFormats.length; i++) {
+			values.push(
+				{
+					"type": "radio",
+					"value": this.itemService.fileFormats[i].name,
+					"label": this.translate(this.itemService.fileFormats[i].label),
+					"checked": this.itemService.fileFormats[i].name == this.fileTypeFilter
+				}
+			)
+		}
+
+		this.customService.showAlertForm(
+			this.translate('Choose a type of file'),
+			[
+				{ "label": this.translate('Filter'), "callback": callbackOk }, { "label": this.translate('Cancel'), "callback": callbackCancel }
+			],
+			values
+		);
+	}
+
+	deleteFilter(){
+		this.fileTypeFilter = null;
+		this.getFiles();
+	}
+
 }

@@ -3,20 +3,38 @@
         <button ion-button menuToggle>
             <ion-icon name="menu"></ion-icon>
         </button>
-        <ion-title>{{translate('Files')}}&nbsp;<ion-badge *ngIf="items && items.length > 0">{{items.length}}</ion-badge>
+        <ion-title>
+            {{translate('Files')}}&nbsp;<ion-badge *ngIf="items && items.length > 0">{{items.length}}</ion-badge>
         </ion-title>
+        <ion-buttons end>
+            <button *ngIf="items && items.length > 0" ion-button icon-only (click)="showFilter()">
+                <ion-icon name="funnel"></ion-icon>
+            </button>
+        </ion-buttons>
     </ion-navbar>
 </ion-header>
 
 <ion-content>
     <h4 padding *ngIf="!items || items.length == 0" (click)="goToPage('files')">
-        <ion-icon name="information-circle"></ion-icon>&nbsp;{{translate('Sorry no file so far, click on the + button below to create one')}}
+        <ion-icon name="information-circle"></ion-icon>&nbsp;{{translate('Sorry no file so far, click on the + button
+        below to create one')}}
     </h4>
+    <ion-card padding *ngIf="fileTypeFilter">
+        {{translate('Current filter')}}&nbsp;
+
+        <ion-chip #chip1  color="primary">
+            <ion-label>
+                <ion-icon name="{{itemService.getFormat(fileTypeFilter).icon}}"></ion-icon>&nbsp;{{translate(itemService.getFormat(fileTypeFilter).label)}}
+            </ion-label>
+            <button ion-button clear color="light" (click)="deleteFilter()">
+                <ion-icon name="close-circle"></ion-icon>
+            </button>
+        </ion-chip>
+    </ion-card>
     <ion-card *ngIf="!items || items.length == 0">
         <ion-card-header>{{translate('Types of file available')}}</ion-card-header>
         <ion-item *ngFor="let fileFormat of itemService.fileFormats">
-            <button item-start ion-fab mini color="secondary" [ngStyle]="{background: fileFormat.color}" 
-            (click)="newFile(fileFormat.name)">
+            <button item-start ion-fab mini color="secondary" [ngStyle]="{background: fileFormat.color}" (click)="newFile(fileFormat.name)">
                 <ion-icon name="{{fileFormat.icon}}"></ion-icon>
             </button>
             <span>
@@ -33,7 +51,8 @@
             <ion-icon name="add"></ion-icon>
         </button>
         <ion-fab-list side="left">
-            <button ion-fab color="secondary" [ngStyle]="{background: fileFormat.color}" *ngFor="let fileFormat of itemService.fileFormats" (click)="neww(fileFormat.name)">
+            <button ion-fab color="secondary" [ngStyle]="{background: fileFormat.color}" *ngFor="let fileFormat of itemService.fileFormats"
+                (click)="newFile(fileFormat.name)">
                 <ion-icon name="{{fileFormat.icon}}"></ion-icon>
             </button>
         </ion-fab-list>

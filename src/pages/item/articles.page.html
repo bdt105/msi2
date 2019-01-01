@@ -6,7 +6,6 @@
         <ion-title *ngIf="file">
             <ion-icon *ngIf="itemService.getFormat(file.type)" name="{{itemService.getFormat(file.type).icon}}"></ion-icon>&nbsp;
             {{file.name ? file.name : translate('File')}}&nbsp;<ion-badge *ngIf="items && items.length > 0">{{items.length}}</ion-badge>
-
         </ion-title>
         <ion-buttons end>
             <button *ngIf="items && items.length > 0" ion-button icon-only (click)="share()">

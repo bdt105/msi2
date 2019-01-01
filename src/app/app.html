@@ -1,10 +1,17 @@
 <ion-menu [content]="content">
 	<ion-header>
-		<ion-toolbar style="height: 117px">
-			<ion-item nopadding style="border-bottom: 0px !important; background: transparent;" >
-				<img src="./assets/imgs/icon.png" style="width: 100px; " item-start>
-				<ion-title style="border-bottom: 0px; padding: 0px; margin-top: 20px" item-end>{{translate(customService.getApplicationName())}}</ion-title>
-			</ion-item>
+		<ion-toolbar>
+			<ion-grid>
+				<ion-row>
+					<ion-col col-5>
+						<img src="./assets/imgs/icon.png" style="width: 100px; ">
+					</ion-col>
+					<ion-col col-7>
+						<br>
+						<h1 style="color: white">{{translate(customService.getApplicationName())}}</h1>
+					</ion-col>
+				</ion-row>
+			</ion-grid>
 		</ion-toolbar>
 	</ion-header>
 
