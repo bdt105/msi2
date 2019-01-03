@@ -32,7 +32,7 @@
         </ion-chip>
     </ion-card>
     <ion-card *ngIf="!items || items.length == 0">
-        <ion-card-header>{{translate('Types of file available')}}</ion-card-header>
+        <ion-item>{{translate('Types of file available')}}</ion-item>
         <ion-item *ngFor="let fileFormat of itemService.fileFormats">
             <button item-start ion-fab mini color="secondary" [ngStyle]="{background: fileFormat.color}" (click)="newFile(fileFormat.name)">
                 <ion-icon name="{{fileFormat.icon}}"></ion-icon>
