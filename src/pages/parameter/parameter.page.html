@@ -9,8 +9,12 @@
 
 <ion-content padding>
 	<ion-item *ngIf="items && items.length > 0">
-		<ion-label fixed>{{translate('PDV')}}</ion-label>
-		<ion-input type="text" placeholder="PDV" [(ngModel)]="items[0].pdv" (change)="save()"></ion-input>
+		<ion-label fixed>{{translate('Station')}}</ion-label>
+		<ion-input type="text" placeholder="{{translate('Station')}}" [(ngModel)]="items[0].station" (change)="save()"></ion-input>
+	</ion-item>
+	<ion-item *ngIf="items && items.length > 0">
+		<ion-label fixed>{{translate('User')}}</ion-label>
+		<ion-input type="text" placeholder="{{translate('User')}}" [(ngModel)]="items[0].user" (change)="save()"></ion-input>
 	</ion-item>
 	<div padding>
 		<span (press)="toggleAllData()">{{translate('Choose a language')}}</span><br><br>

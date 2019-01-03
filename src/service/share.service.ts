@@ -30,8 +30,8 @@ export class ShareService {
         }
     }
 
-    private shareFile(callback: Function, file: any, pdv: string) {
-        if (pdv) {
+    private shareFile(callback: Function, file: any, station: string, user: string) {
+        if (station && user) {
             let items = file.articles;
             let t: any = this.toolbox.filterArrayOfObjects(this.itemService.fileFormats, "name", file.type);
             if (t && t.length > 0) {
@@ -41,7 +41,7 @@ export class ShareService {
                         this.exportService.labelFile(
                             (data: any, error: any) => {
                                 this.goShare(callback, data, error);
-                            }, type, pdv, items);
+                            }, type, station, user, items);
 
                         break;
 
@@ -49,7 +49,7 @@ export class ShareService {
                         this.exportService.templateFile(
                             (data: any, error: any) => {
                                 this.goShare(callback, data, error);
-                            }, type, pdv, items, "000000000000", 5, 3);
+                            }, type, station, user, items, "000000000000", 5, 3);
 
                         break;
 
@@ -57,7 +57,7 @@ export class ShareService {
                         this.exportService.orderFile(
                             (data: any, error: any) => {
                                 this.goShare(callback, data, error);
-                            }, type, pdv, items);
+                            }, type, station, user, items);
 
                         break;
 
@@ -65,7 +65,7 @@ export class ShareService {
                         this.exportService.listFile(
                             (data: any, error: any) => {
                                 this.goShare(callback, data, error);
-                            }, type, pdv, items);
+                            }, type, station, user, items);
 
                         break;
 
@@ -73,7 +73,7 @@ export class ShareService {
                         this.exportService.templateFile(
                             (data: any, error: any) => {
                                 this.goShare(callback, data, error);
-                            }, type, pdv, items, "", 5, 3);
+                            }, type, station, user, items, "", 5, 3);
 
                         break;
 
@@ -92,14 +92,15 @@ export class ShareService {
             (data: any, error: any) => {
                 if (!error && data) {
                     if (data && data.length > 0) {
-                        let pdv = data[0].pdv;
+                        let station = data[0].station;
+                        let user = data[0].user;
                         this.shareFile(
                             (data1: any, error1: any) => {
                                 if (!error1) {
                                     file.shareDate = new Date().getTime();
                                 }
                                 callback(data1, error1);
-                            }, file, pdv
+                            }, file, station, user
                         )
                     } else {
                         callback(data, error);

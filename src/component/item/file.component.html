@@ -1,11 +1,11 @@
 <ion-card *ngIf="item && item.modify">
 	<ion-list>
 		<ion-item>
-			<ion-label color="primary">{{translate('Name')}}</ion-label>
+			<ion-label>{{translate('Name')}}</ion-label>
 			<ion-input type="text" [(ngModel)]="item.name" (change)="onChange()"></ion-input>
 		</ion-item>
 		<ion-item>
-			<ion-label color="primary">{{translate('Description')}}</ion-label>
+			<ion-label>{{translate('Description')}}</ion-label>
 			<ion-input type="text" [(ngModel)]="item.description" (change)="onChange()"></ion-input>
 		</ion-item>
 		<ion-item>

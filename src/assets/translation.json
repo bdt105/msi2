@@ -539,10 +539,10 @@
         }
     },
     {
-        "key": "Impossible de share. Please set PDV in parameters.",
+        "key": "Impossible de share. Please set station and user in parameters.",
         "value": {
-            "FR": "Impossible de partager. Vérifiez le paramètre PDV",
-            "PT": "Impossivel de partilhar, verifique a parametro PDV"
+            "FR": "Impossible de partager. Vérifiez les paramètres station et utilisateur",
+            "PT": "Impossivel de partilhar, verifique os parametros estaçao e utilisador"
         }
     },
     {

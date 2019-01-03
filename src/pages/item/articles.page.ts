@@ -122,7 +122,7 @@ export class ArticlesPage extends ItemsPage {
 					this.save();
 				}else{
 					if (error1 && error1.message == "PARAM_ERROR"){
-						this.customService.callbackToast(error1, this.translate('Impossible de share. Please set PDV in parameters.'))
+						this.customService.callbackToast(error1, this.translate('Impossible de share. Please set station and user in parameters.'))
 					}
 				}
 			}, this.file

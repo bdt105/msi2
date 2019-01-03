@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { Nav, Platform } from 'ionic-angular';
+import { Nav, Platform, Events } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 
@@ -13,15 +13,16 @@ import { CustomService } from '../service/custom.service';
 @Component({
 	templateUrl: 'app.html'
 })
-export class MyApp  extends GenericComponent{
+export class MyApp extends GenericComponent {
 	@ViewChild(Nav) nav: Nav;
 
 	rootPage: any = HomePage;
 
 	pages: Array<{ title: string, component: any, icon: string }>;
-
+	
+	theme:String = 'blue-theme';//keep default theme as blue
 	constructor(public miscellaneousService: MiscellaneousService, public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen,
-		public customService: CustomService) {
+		public customService: CustomService, public event: Events) {
 		super(miscellaneousService);
 		this.initializeApp();
 
@@ -31,7 +32,22 @@ export class MyApp  extends GenericComponent{
 			{ title: 'Files', component: FilesPage, icon: "folder" },
 			{ title: 'Parameters', component: ParameterPage, icon: "cog" }
 		];
+		platform.ready().then(() => {
 
+			event.subscribe('theme:toggle', () => {
+				this.toggleTheme();
+			});
+
+		});
+
+	}
+
+	toggleTheme() {
+		if (this.theme === 'blue-theme') {
+			this.theme = 'red-theme';
+		} else {
+			this.theme = 'blue-theme';
+		}
 	}
 
 	initializeApp() {
@@ -48,4 +64,5 @@ export class MyApp  extends GenericComponent{
 		// we wouldn't want the back button to show in this scenario
 		this.nav.setRoot(page.component);
 	}
+
 }

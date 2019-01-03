@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { MiscellaneousService } from '../../angularShared/services/miscellaneous.service';
 import { StorageService } from '../../service/storage.service';
 import { ItemsPage } from '../item/items.page';
-import { NavController } from 'ionic-angular';
+import { NavController, Events } from 'ionic-angular';
 import { FilesPage } from '../item/files.page';
 import { ArticlesPage } from '../item/articles.page';
 import { ItemService } from '../../service/item.service';
@@ -15,13 +15,12 @@ import { CustomService } from '../../service/custom.service';
 })
 export class HomePage extends ItemsPage {
 
-	pdv: string;
 	refresher: any;
 
 	lastFile: any;
 
 	fileInfo: { "directory": string; "fileName": never; };
-	constructor(public miscellaneousService: MiscellaneousService, public storageService: StorageService,
+	constructor(public miscellaneousService: MiscellaneousService, public storageService: StorageService, public event: Events,
 		public navController: NavController, public itemService: ItemService, public customService: CustomService) {
 		super(miscellaneousService);
 	}
@@ -79,6 +78,10 @@ export class HomePage extends ItemsPage {
 
 	newScan() {
 		this.navController.push(ArticlesPage, { "file": this.lastFile, "files": this.items, "scan": true })
+	}
+
+	changeTheme() {
+		this.event.publish('theme:toggle');
 	}
 
 }

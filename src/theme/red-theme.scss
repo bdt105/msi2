@@ -1,0 +1,31 @@
+:root {
+    --main-bg-color: coral;  
+}
+
+
+.red-theme {
+    $toolbar-background: #b70002;
+    $toolbar-border-color: #b70002;
+    $toolbar-text-color: #b70002;
+    $toolbar-active-color: #b70002;
+    $toolbar-inactive-color: #b70002;
+    
+    ion-content {
+        background: var(--main-bg-color); 
+    //     background: -webkit-linear-gradient(to right, #ed213a, #93291e); 
+    //     background: linear-gradient(to right, #ed213a, #93291e);
+    //     -webkit-background-size: cover;
+    //   -moz-background-size: cover;
+      background-size: cover;
+    }
+
+    ion-card{
+        background: var(--main-bg-color);
+    }
+  
+    ion-item{
+        background: var(--main-bg-color);
+    }
+
+}
+

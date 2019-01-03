@@ -8,7 +8,10 @@
 </ion-header>
 
 <ion-content nopadding>
-
+	<!-- <button ion-button full icon-left (click)="changeTheme()">
+		<ion-icon name="color-palette"></ion-icon>
+		Change Theme
+	</button> -->
 	<div *ngIf="items && items.length > 0">
 		<ion-card (click)="goToPage('files')">
 			<ion-card-header>
@@ -18,8 +21,8 @@
 					</h1>
 					<br>
 					<ion-item>
-						<h5 *ngIf="items.length > 1">{{translate('Files available')}}</h5>
-						<h5 *ngIf="items.length == 1">{{translate('File available')}}</h5>
+						<ion-label *ngIf="items.length > 1">{{translate('Files available')}}</ion-label>
+						<ion-label *ngIf="items.length == 1">{{translate('File available')}}</ion-label>
 					</ion-item>
 				</div>
 			</ion-card-header>
@@ -27,7 +30,7 @@
 		<ion-card nopadding *ngIf="lastFile">
 			<ion-card-header>
 				<ion-item>
-					<h5>{{translate('Last file accessed')}}</h5>
+					<ion-label>{{translate('Last file accessed')}}</ion-label>
 				</ion-item>
 				<fileComponent [item]="lastFile" [items]="items"></fileComponent>
 			</ion-card-header>

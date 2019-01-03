@@ -29,9 +29,9 @@ export class ExportService {
         return before ? pref + value : value + pref;
     }
 
-    private send(callback: Function, type: string, pdv: string, dir: string, content: string) {
+    private send(callback: Function, type: string, station: string, user: string, dir: string, content: string) {
         let typ = this.itemService.getFormat(type) ? this.itemService.getFormat(type).fileName : type;
-        let fileName = this.getFileName(typ, pdv);
+        let fileName = this.getFileName(typ, station, user);
         this.file.writeFile(dir, fileName, content).then(
             (data: any) => {
                 data.dir = dir;
@@ -44,7 +44,7 @@ export class ExportService {
             );
     }
 
-    labelFile(callback: Function, type: string, pdv: string, items: any) {
+    labelFile(callback: Function, type: string, station: string, user: string, items: any) {
         let dir = this.getDirectory();
         if (items) {
             let content = "";
@@ -52,11 +52,11 @@ export class ExportService {
                 let value = article.value + "";
                 content += this.completeValue("0", 13, article.code) + this.completeValue("0", 4, value) + '\r\n';
             });
-            this.send(callback, type, pdv, dir, content);
+            this.send(callback, type, station, user, dir, content);
         }
     }
 
-    orderFile(callback: Function, type: string, pdv: string, items: any) {
+    orderFile(callback: Function, type: string, station: string, user: string, items: any) {
         let dir = this.getDirectory();
         if (items) {
             let content = "";
@@ -64,22 +64,22 @@ export class ExportService {
                 let value = (article.value > 99 ? 0 : article.value) + "";
                 content += this.completeValue("0", 13, article.code) + this.completeValue("0", 2, value) + '\r\n';
             });
-            this.send(callback, type, pdv, dir, content);
+            this.send(callback, type, station, user, dir, content);
         }
     }
 
-    listFile(callback: Function, type: string, pdv: string, items: any) {
+    listFile(callback: Function, type: string, station: string, user: string, items: any) {
         let dir = this.getDirectory();
         if (items) {
             let content = "";
             items.forEach((article: any) => {
                 content += this.completeValue("0", 13, article.code) + '\r\n';
             });
-            this.send(callback, type, pdv, dir, content);
+            this.send(callback, type, station, user, dir, content);
         }
     }
 
-    templateFile(callback: Function, type: string, pdv: string, items: any, prefix: string, intSize: number, decSize: number) {
+    templateFile(callback: Function, type: string, station: string, user: string, items: any, prefix: string, intSize: number, decSize: number) {
         let dir = this.getDirectory();
         if (items) {
             let content = "";
@@ -91,19 +91,19 @@ export class ExportService {
                 let qte = i + d;
                 content += prefix + this.completeValue("0", 13, article.code) + qte + '\r\n';
             });
-            this.send(callback, type, pdv, dir, content);
+            this.send(callback, type, station, user, dir, content);
         }
     }
 
     //ETIQUETTE_20181119_132312_SR284C01_ut284C01.traite1
-    getFileName(type: string, pdv: string, date: Date = null) {
+    getFileName(type: string, station: string, user: string, date: Date = null) {
         let name = "";
         if (date == null) {
             date = new Date();
         }
         let d = date.getFullYear() + this.completeValue("0", 2, (date.getMonth() + 1) + "") + this.completeValue("0", 2, date.getDate() + "") + "_" +
             this.completeValue("0", 2, date.getHours() + "") + this.completeValue("0", 2, date.getMinutes() + "") + this.completeValue("0", 2, date.getSeconds() + "");
-        name = d + "_ST" + pdv + "01_ut" + pdv + "01";
+        name = d + "_" + station + "_" + user + "01";
         return type + "_" + name + ".traite1";
     }
 
