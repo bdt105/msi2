@@ -572,5 +572,19 @@
             "FR": "Annuler",
             "PT": "Cancelar"
         }
+    },
+    {
+        "key": "Station",
+        "value": {
+            "FR": "Station",
+            "PT": "Estaçao"
+        }
+    },
+    {
+        "key": "User",
+        "value": {
+            "FR": "Utilisateur",
+            "PT": "Utilisador"
+        }
     }
 ]

@@ -103,7 +103,7 @@ export class ExportService {
         }
         let d = date.getFullYear() + this.completeValue("0", 2, (date.getMonth() + 1) + "") + this.completeValue("0", 2, date.getDate() + "") + "_" +
             this.completeValue("0", 2, date.getHours() + "") + this.completeValue("0", 2, date.getMinutes() + "") + this.completeValue("0", 2, date.getSeconds() + "");
-        name = d + "_" + station + "_" + user + "01";
+        name = d + "_" + station + "_" + user;
         return type + "_" + name + ".traite1";
     }
 
