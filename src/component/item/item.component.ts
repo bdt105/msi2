@@ -13,6 +13,7 @@ export class ItemComponent extends GenericComponent {
 	@Output() deleted = new EventEmitter();
 	@Output() saved = new EventEmitter();
 	@Output() edited = new EventEmitter();
+	@Output() shared = new EventEmitter();
 
 	constructor(public miscellaneousService: MiscellaneousService, public alertCtrl: AlertController) {
 		super(miscellaneousService);
@@ -27,7 +28,7 @@ export class ItemComponent extends GenericComponent {
 
 	onSave() {
 		this.item.modify = false;
-		this.item.modificationDate = new Date().getTime();
+		this.item.technicalModificationDate = new Date().getTime();
 		this.saved.emit(this.item);
 	}
 

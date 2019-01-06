@@ -12,30 +12,36 @@
 			<ion-input type="text" [(ngModel)]="item.code" (change)="onChange()"></ion-input>
 		</ion-item>
 		<ion-item>
-			<ion-label fixed>{{translate('Value')}}</ion-label>
-			<ion-input type="number" [(ngModel)]="item.value" (change)="onChange()"></ion-input>
+			<ion-label fixed>
+				{{translate('Value')}}
+			</ion-label>
+			<ion-input type="number" [(ngModel)]="item.value" (change)="onChangee()" placeholder="{{customService.getFileFormat(file.type).valuePlaceHolder}}"></ion-input>
+		</ion-item>
+		<ion-item>
+			<small *ngIf="customService.getFileFormat(file.type).valueMessage">{{customService.getFileFormat(file.type).valueMessage}}</small>
 		</ion-item>
 		<ion-item>
 			<ion-label fixed>{{translate('Comment')}}</ion-label>
 			<ion-input type="text" [(ngModel)]="item.comment" (change)="onChange()"></ion-input>
 		</ion-item>
 		<ion-item>
-			<button ion-button (click)="!item.modify ? toggleModify() : onSave()">
-				<ion-icon *ngIf="!item.modify" name="create"></ion-icon>
-				<ion-icon *ngIf="item.modify" name="checkmark"></ion-icon>&nbsp;{{item.modify ? translate('Save') :
-				translate('Edit')}}
+			<!-- <button ion-button *ngIf="!item.modify" (click)="toggleModify()">
+				<ion-icon name="create"></ion-icon>&nbsp;{{translate('Edit')}}
+			</button> -->
+			<button ion-button *ngIf="item.modify && isValid()" (click)="onSave()">
+				<ion-icon name="checkmark"></ion-icon>&nbsp;{{translate('Save')}}
 			</button>
 			<button ion-button (click)="scan(item)">
 				<ion-icon name="barcode"></ion-icon>&nbsp;{{translate('Scan')}}
 			</button>
-			<button ion-button (click)="confirmDelete()">
+			<button ion-button (click)="confirmmDelete()">
 				<ion-icon name="trash"></ion-icon>&nbsp;{{translate('Delete')}}
 			</button>
 			<br>
 			<button ion-button (click)="takePicture()">
 				<ion-icon name="camera"></ion-icon>&nbsp;{{translate('Take picture')}}
 			</button>
-			<button ion-button (click)="confirmDeletePicture()">
+			<button ion-button (click)="confirmDeletePicture()" *ngIf="item.imageUri">
 				<ion-icon name="trash"></ion-icon>&nbsp;{{translate('Delete picture')}}
 			</button>
 		</ion-item>

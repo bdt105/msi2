@@ -47,6 +47,8 @@ export function init(customService: CustomService) {
 	return () => {
 		customService.loadConfiguration();
 		customService.loadTranslation();
+		customService.loadFileFormat();
+		customService.loadFileFormatMenu();
 	}
 }
 @NgModule({

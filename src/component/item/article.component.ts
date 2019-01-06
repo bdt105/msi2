@@ -8,6 +8,7 @@ import { PhotoViewer } from '@ionic-native/photo-viewer';
 import { Camera } from '@ionic-native/camera';
 import { File } from '@ionic-native/file';
 import { DomSanitizer } from '@angular/platform-browser';
+import { ItemService } from '../../service/item.service';
 
 @Component({
 	selector: 'articleComponent',
@@ -18,15 +19,17 @@ export class ArticleComponent extends ItemComponent {
 
 	base64Image: any;
 	image: string;
+	fileFormat: any;
 
 	selected = false;
-	constructor(public miscellaneousService: MiscellaneousService, public domSanitizer: DomSanitizer,
+	constructor(public miscellaneousService: MiscellaneousService, public domSanitizer: DomSanitizer, public itemService: ItemService,
 		public customService: CustomService, public alertCtrl: AlertController, private navCtrl: NavController,
 		public actionSheetCtrl: ActionSheetController, private photoViewer: PhotoViewer, public camera: Camera, public filee: File) {
 		super(miscellaneousService, alertCtrl);
 	}
 
 	ngOnInit() {
+		this.fileFormat = this.customService.getFileFormat(this.file.type);
 		if (this.item && this.item.imageUri) {
 			this.loadImage(this.item.imageUri);
 		}
@@ -50,6 +53,14 @@ export class ArticleComponent extends ItemComponent {
 					console.log("Could not Scan");
 				}
 			});
+		}
+	}
+
+	confirmmDelete() {
+		if (this.item && (this.item.code || this.item.value || this.item.comment)) {
+			this.confirmDelete();
+		} else {
+			this.deleteItem();
 		}
 	}
 
@@ -84,7 +95,7 @@ export class ArticleComponent extends ItemComponent {
 					icon: 'trash',
 					handler: () => {
 						this.selected = false;
-						this.confirmDelete();
+						this.confirmmDelete();
 					}
 				},
 				{
@@ -150,26 +161,28 @@ export class ArticleComponent extends ItemComponent {
 	}
 
 	confirmDeletePicture() {
-		let alert = this.alertCtrl.create({
-			title: this.translate('Confirm delete'),
-			message: this.translate('Do you want to delete this picture?'),
-			buttons: [
-				{
-					text: this.translate('No'),
-					role: 'cancel',
-					handler: () => {
-						console.log('Cancel clicked');
+		if (this.item && this.item.imageUri) {
+			let alert = this.alertCtrl.create({
+				title: this.translate('Confirm delete'),
+				message: this.translate('Do you want to delete this picture?'),
+				buttons: [
+					{
+						text: this.translate('No'),
+						role: 'cancel',
+						handler: () => {
+							console.log('Cancel clicked');
+						}
+					},
+					{
+						text: this.translate('Yes'),
+						handler: () => {
+							this.deletePicture();
+						}
 					}
-				},
-				{
-					text: this.translate('Yes'),
-					handler: () => {
-						this.deletePicture();
-					}
-				}
-			]
-		});
-		alert.present();
+				]
+			});
+			alert.present();
+		}
 	}
 
 	deletePicture() {
@@ -192,5 +205,15 @@ export class ArticleComponent extends ItemComponent {
 		}
 	}
 
-	
+
+	onChangee(){
+		if (this.isValid()){
+			this.onChange();
+		}
+	}
+
+	isValid(){
+		return this.itemService.isArticleValid(this.fileFormat, this.item); 
+	}
+
 }

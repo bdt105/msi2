@@ -15,6 +15,15 @@ export class CustomService extends AppService {
 
     toolbox: Toolbox = new Toolbox();
 
+    private customKeys = {
+        configurationKey: "configurationMsiv",
+        translateKey: "translateMsiv",
+        connexionKey: "connexionMsiv",
+        settingKey: "settingsMsiv",
+        fileFormatKey: "fileFormatMsiv",
+        fileFormatMenuKey: "fileFormatMenuMsiv"
+    }
+
     constructor(public http: HttpClient, public configurationService: ConfigurationService, public toastController: ToastController,
         public platform: Platform, public miscellaneousService: MiscellaneousService, public barcodeScanner: BarcodeScanner,
         public loadingCtrl: LoadingController, public alertCtrl: AlertController, public camera: Camera) {
@@ -23,30 +32,57 @@ export class CustomService extends AppService {
     }
 
     setVar(miscellaneousService: MiscellaneousService) {
-        this.setVariable(
-            {
-                configurationKey: "configurationMsiv",
-                translateKey: "translateMsiv",
-                connexionKey: "connexionMsiv",
-                settingKey: "settingsMsiv"
-            }, "Msi Virtual", miscellaneousService);
+        this.setVariable(this.customKeys, "Msi Virtual", miscellaneousService);
     }
 
     smartDate(dateInMilliseconds: number) {
-		if (dateInMilliseconds) {
-			let date = new Date(dateInMilliseconds);
-			return this.toolbox.smartDate(date);
-		}
-		return null;
+        if (dateInMilliseconds) {
+            let date = new Date(dateInMilliseconds);
+            return this.toolbox.smartDate(date);
+        }
+        return null;
     }
 
-    myFormatDate(dateInMilliseconds: number){
-		if (dateInMilliseconds) {
-			let date = new Date(dateInMilliseconds);
-			return this.toolbox.formatDate(date);
-		}
-		return null;
+    myFormatDate(dateInMilliseconds: number) {
+        if (dateInMilliseconds) {
+            let date = new Date(dateInMilliseconds);
+            return this.toolbox.formatDate(date);
+        }
+        return null;
     }
-    
+
+    loadFileFormat() {
+        this.configurationService.load(this.customKeys.fileFormatKey, "./assets/fileFormat.json", false);
+    }
+
+    loadFileFormatMenu() {
+        return this.configurationService.load(this.customKeys.fileFormatMenuKey, "./assets/fileFormatMenu.json", false);
+    }
+
+    getFileFormats() {
+        return this.toolbox.readFromStorage(this.customKeys.fileFormatKey);
+    }
+
+    getFileFormatMenus() {
+        return this.toolbox.readFromStorage(this.customKeys.fileFormatMenuKey, true);
+    }
+
+    getFileFormat(name: string) {
+        let fileFormats = this.getFileFormats();
+        if (fileFormats) {
+            let t = this.toolbox.filterArrayOfObjects(fileFormats, "name", name);
+            if (t && t.length > 0) {
+                return t[0];
+            }
+        }
+        return null;
+    }
+
+
+    checkRegEx(value: string, regex: string) {
+        var patt = new RegExp(regex/*"^[0-9]{1,5}.[0-9]$"*/);
+        return patt.test(value);
+    }
+
 
 }

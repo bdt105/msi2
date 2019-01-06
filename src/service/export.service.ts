@@ -1,21 +1,21 @@
 import { Injectable } from '@angular/core';
 import { Toolbox } from 'bdt105toolbox/dist';
 import { File } from '@ionic-native/file';
-import { ItemService } from './item.service';
 import { Platform } from 'ionic-angular';
+import { CustomService } from './custom.service';
 
 @Injectable()
 export class ExportService {
 
     toolbox = new Toolbox();
-    constructor(private file: File, private itemService: ItemService, public platform: Platform) {
+    constructor(private file: File, private customService: CustomService, public platform: Platform) {
 
     }
 
-    private getDirectory(){
+    private getDirectory() {
         let ret = this.file.externalDataDirectory;
-        if (this.platform.is('ios')){
-            ret =  this.file.tempDirectory;
+        if (this.platform.is('ios')) {
+            ret = this.file.tempDirectory;
         }
         return ret;
     }
@@ -30,7 +30,7 @@ export class ExportService {
     }
 
     private send(callback: Function, type: string, station: string, user: string, dir: string, content: string) {
-        let typ = this.itemService.getFormat(type) ? this.itemService.getFormat(type).fileName : type;
+        let typ = this.customService.getFileFormat(type) ? this.customService.getFileFormat(type).fileName : type;
         let fileName = this.getFileName(typ, station, user);
         this.file.writeFile(dir, fileName, content).then(
             (data: any) => {
@@ -43,7 +43,7 @@ export class ExportService {
                 }
             );
     }
-
+/*
     labelFile(callback: Function, type: string, station: string, user: string, items: any) {
         let dir = this.getDirectory();
         if (items) {
@@ -94,8 +94,9 @@ export class ExportService {
             this.send(callback, type, station, user, dir, content);
         }
     }
+*/
 
-    //ETIQUETTE_20181119_132312_SR284C01_ut284C01.traite1
+//ETIQUETTE_20181119_132312_SR284C01_ut284C01.traite1
     getFileName(type: string, station: string, user: string, date: Date = null) {
         let name = "";
         if (date == null) {
@@ -105,6 +106,66 @@ export class ExportService {
             this.completeValue("0", 2, date.getHours() + "") + this.completeValue("0", 2, date.getMinutes() + "") + this.completeValue("0", 2, date.getSeconds() + "");
         name = d + "_" + station + "_" + user;
         return type + "_" + name + ".traite1";
+    }
+
+    /*
+    "fileFormat": [
+        {
+            "length": 13,
+            "fillWith": "0",
+            "field": "code",
+            "insertBefore": true
+        },
+        {
+            "length": 5,
+            "fillWith": "0",
+            "field": "valueInteger",
+            "insertBefore": true
+        },
+        {
+            "length": 5,
+            "fillWith": "0",
+            "field": "valueDecimal",
+            "insertBefore": false
+        }
+    ]
+    */
+    private getFileContentLine(article: any, fileFormat: any) {
+        let ret = "";
+        if (article && fileFormat) {
+            fileFormat.forEach((element: any) => {
+                let value = "";
+                if (element.field == "code") {
+                    value = this.completeValue("0", element.length, article.code);
+                }
+                if (element.field == "valueInteger") {
+                    let v = article.value.toString();
+                    let ar = v.split(".");
+                    value = this.completeValue("0", element.length, ar[0]);
+                }
+                if (element.field == "valueDecimal") {
+                    let v = article.value.toString();
+                    let ar = v.split(".");
+                    value = this.completeValue("0", element.length, ar.length > 1 ? ar[1] : "", false);
+                }
+                ret += this.completeValue(element.fillWith, element.length, value, element.insertBefore);
+            });
+        }
+        return ret;
+    }
+
+    shareFile(callback: Function, file: any, station: string, user: string) {
+        let dir = this.getDirectory();
+        if (file && file.articles) {
+            let content = "";
+            let fileFormat = this.customService.getFileFormat(file.type);
+            file.articles.forEach((article: any) => {
+                content += this.getFileContentLine(article, fileFormat.fileFormat) + '\r\n';
+            });
+            this.send(callback, file.type, station, user, dir, content);
+        }else{
+            callback(null, "No file or article");
+        }
     }
 
 }

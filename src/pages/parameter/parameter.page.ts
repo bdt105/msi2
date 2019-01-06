@@ -58,6 +58,7 @@ export class ParameterPage extends ItemsPage {
 		}
 	}
 
+/*
 	private clearFiles() {
 		this.storageService.delete(
 			(data: any, error: any) => {
@@ -92,7 +93,8 @@ export class ParameterPage extends ItemsPage {
 		});
 		alert.present();
 	}
-
+*/
+	
 	save(){
 		this.itemService.saveParameters(
 			(data: any, error: any) => {

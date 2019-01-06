@@ -1,0 +1,75 @@
+[
+    {
+        "name": "article",
+        "title": "Article",
+        "iconName": "barcode",
+        "subMenus": [
+            {
+                "name": "label",
+                "title": "Label",
+                "format": "label"
+            },
+            {
+                "name": "list",
+                "title": "List",
+                "format": "list"
+            }
+        ]
+    },
+    {
+        "name": "procurement",
+        "title": "Procurement",
+        "iconName": "basket",
+        "subMenus": [
+            {
+                "name": "order",
+                "title": "Order",
+                "format": "order"
+            },
+            {
+                "name": "delivery",
+                "title": "Delivery",
+                "format": "delivery"
+            }
+        ]
+    },
+    {
+        "name": "stock",
+        "title": "Stock",
+        "iconName": "archive",
+        "subMenus": [
+            {
+                "name": "entry",
+                "title": "Entry",
+                "format": "entry"
+            },
+            {
+                "name": "waste",
+                "title": "Waste",
+                "format": "waste"
+            },
+            {
+                "name": "inventory",
+                "title": "Inventory",
+                "format": "inventory"
+            }
+        ]
+    },
+    {
+        "name": "tariff",
+        "title": "Tarif",
+        "iconName": "pricetags",
+        "subMenus": [
+            {
+                "name": "sale",
+                "title": "Sale",
+                "format": "sale"
+            },
+            {
+                "name": "price",
+                "title": "Price check",
+                "format": "price"
+            }
+        ]
+    }
+]

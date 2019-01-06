@@ -49,9 +49,9 @@ export class StorageService {
 
     showAll(callback: Function) {
         let list = [];
-        this.storage.forEach((value, key, index) => {
+        this.storage.forEach((value: any, key: string, index: number) => {
             list.push({ "key": key, "value": value, "index": index });
-        }).then((d) => {
+        }).then((data: any) => {
             callback(list, null)
         }).catch((error: any) => {
             callback(null, error);

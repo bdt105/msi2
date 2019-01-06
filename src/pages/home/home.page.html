@@ -8,31 +8,38 @@
 </ion-header>
 
 <ion-content nopadding>
-	<!-- <button ion-button full icon-left (click)="changeTheme()">
-		<ion-icon name="color-palette"></ion-icon>
-		Change Theme
-	</button> -->
-	<div *ngIf="items && items.length > 0">
-		<ion-card (click)="goToPage('files')">
-			<ion-card-header>
-				<div>
-					<h1 color="primary">
-						<ion-badge style="font-size: 2em">{{items.length}}</ion-badge>
-					</h1>
-					<br>
-					<ion-item>
-						<ion-label *ngIf="items.length > 1">{{translate('Files available')}}</ion-label>
-						<ion-label *ngIf="items.length == 1">{{translate('File available')}}</ion-label>
-					</ion-item>
-				</div>
-			</ion-card-header>
-		</ion-card>
-		<ion-card nopadding *ngIf="lastFile">
-			<ion-card-header>
+	<h4 padding *ngIf="countNotSent() == 0">
+		<ion-icon name="information-circle"></ion-icon>&nbsp;{{translate('No file to send!')}}
+	</h4>
+	<div>
+		<ion-card style="padding: 0" *ngIf="countNotSent() > 0">
+			<ion-card-header style="padding: 0">
 				<ion-item>
-					<ion-label>{{translate('Last file accessed')}}</ion-label>
+					<ion-label>
+						<ion-icon name="mail-open"></ion-icon>&nbsp;{{translate('Files not sent')}}
+					</ion-label>
 				</ion-item>
-				<fileComponent [item]="lastFile" [items]="items"></fileComponent>
+			</ion-card-header>
+			<span *ngFor="let element of countFiles" >
+				<ion-item *ngIf="element.data && element.data.notSent && element.data.notSent.length > 0" (click)="goToFiles(element.type)">
+					{{element | json }}
+					<ion-label>
+						<small>
+							{{translate(this.customService.getFileFormat(element.type).label)}}&nbsp;
+							<ion-badge *ngIf="element.data && element.data.notSent">{{element.data.notSent.length}}/{{element.length}}</ion-badge>
+						</small>
+					</ion-label>
+				</ion-item>
+			</span>
+		</ion-card>
+		<ion-card style="padding: 0" *ngIf="lastFile">
+			<ion-card-header style="padding: 0">
+				<ion-item>
+					<ion-label>
+						<ion-icon name="eye"></ion-icon>&nbsp;{{translate('Last file accessed')}}
+					</ion-label>
+				</ion-item>
+				<fileComponent [item]="lastFile" [items]="items" [allowMenu]="false"></fileComponent>
 			</ion-card-header>
 		</ion-card>
 		<ion-fab right top *ngIf="lastFile">
@@ -41,48 +48,6 @@
 			</button>
 		</ion-fab>
 	</div>
-	<h4 padding *ngIf="!items || items.length == 0" (click)="goToPage('files')">
-		<ion-icon name="information-circle"></ion-icon>&nbsp;{{translate('Sorry no file so far, click on the + button below to create one')}}
-	</h4>
-	<ion-card>
-		<ion-card-header>
-			<ion-item>
-				{{translate('Types of file available')}}
-			</ion-item>
-		</ion-card-header>
-		<ion-item *ngFor="let fileFormat of itemService.fileFormats">
-			<button item-start ion-fab mini color="primary" [ngStyle]="{background: fileFormat.color}" (click)="newFile(fileFormat.name)"
-			 [ngStyle]="{background: fileFormat.color}">
-				<ion-icon name="{{fileFormat.icon}}"></ion-icon>
-			</button>
-			<span>
-				{{translate(fileFormat.label)}}
-			</span>
-		</ion-item>
-	</ion-card>
-
-	<ion-fab bottom right>
-		<button ion-fab>
-			<ion-icon name="add"></ion-icon>
-		</button>
-		<ion-fab-list>
-			<button ion-fab (click)="newFile('price')">
-				<ion-icon name="pricetag"></ion-icon>
-			</button>
-		</ion-fab-list>
-	</ion-fab>
-	<ion-fab right bottom>
-		<button ion-fab>
-			<ion-icon name="add"></ion-icon>
-		</button>
-		<ion-fab-list side="left">
-			<button ion-fab color="primary" [ngStyle]="{background: fileFormat.color}" *ngFor="let fileFormat of itemService.fileFormats"
-			 (click)="newFile(fileFormat.name)">
-				<ion-icon name="{{fileFormat.icon}}"></ion-icon>
-			</button>
-		</ion-fab-list>
-	</ion-fab>
-
 	<ion-refresher (ionRefresh)="load($event)">
 		<ion-refresher-content></ion-refresher-content>
 	</ion-refresher>

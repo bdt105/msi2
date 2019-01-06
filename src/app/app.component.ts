@@ -18,27 +18,55 @@ export class MyApp extends GenericComponent {
 
 	rootPage: any = HomePage;
 
-	pages: Array<{ title: string, component: any, icon: string }>;
-	
-	theme:String = 'blue-theme';//keep default theme as blue
+	pages: any;
+
+	theme: String = 'blue-theme';//keep default theme as blue
+
 	constructor(public miscellaneousService: MiscellaneousService, public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen,
 		public customService: CustomService, public event: Events) {
 		super(miscellaneousService);
 		this.initializeApp();
 
-		// used for an example of ngFor and navigation
-		this.pages = [
-			{ title: 'Home', component: HomePage, icon: "home" },
-			{ title: 'Files', component: FilesPage, icon: "folder" },
-			{ title: 'Parameters', component: ParameterPage, icon: "cog" }
-		];
-		platform.ready().then(() => {
 
+		// used for an example of ngFor and navigation
+		platform.ready().then(() => {
+			this.createMenus();
 			event.subscribe('theme:toggle', () => {
 				this.toggleTheme();
 			});
 
 		});
+
+	}
+
+	private createMenus() {
+		this.pages = [
+			{ title: 'Home', component: HomePage, iconName: "home" }
+		];
+
+		let fileFormatMenus = this.customService.getFileFormatMenus();
+		fileFormatMenus.forEach((fileFormatMenu: any) => {
+			let page: any = {
+				title: fileFormatMenu.title,
+				iconName: fileFormatMenu.iconName
+			}
+			if (fileFormatMenu.subMenus) {
+				fileFormatMenu.subMenus.forEach((subMenu: any) => {
+					if (!page.subMenus) {
+						page.subMenus = [];
+					}
+					let fileFormat = this.customService.getFileFormat(subMenu.format);
+					let subPage: any = {
+						title: subMenu.title, component: FilesPage, parameter: { fileFormat: fileFormat }
+					}
+					page.subMenus.push(subPage);
+				});
+			}
+			this.pages.push(page);
+		});
+
+		this.pages.push({ title: 'Parameters', component: ParameterPage, iconName: "cog" });
+
 
 	}
 
@@ -59,10 +87,10 @@ export class MyApp extends GenericComponent {
 		});
 	}
 
-	openPage(page) {
+	openPage(page: any, parameter: any) {
 		// Reset the content nav to have just this page
 		// we wouldn't want the back button to show in this scenario
-		this.nav.setRoot(page.component);
+		this.nav.setRoot(page.component, parameter);
 	}
 
 }

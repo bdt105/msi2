@@ -15,6 +15,7 @@ export class ArticlesPage extends ItemsPage {
 	file: any;
 	files: any;
 	scan = false;
+	fileFormat: any;
 
 	constructor(public miscellaneousService: MiscellaneousService, public customService: CustomService, private shareService: ShareService,
 		public navParams: NavParams, public itemService: ItemService, public alertCtrl: AlertController) {
@@ -25,6 +26,7 @@ export class ArticlesPage extends ItemsPage {
 		this.files = this.navParams.get('files');
 		this.file = this.navParams.get('file');
 		if (this.file) {
+			this.fileFormat = this.customService.getFileFormat(this.file.type);
 			this.load();
 			this.scan = this.navParams.get('scan');
 			if (this.scan) {
@@ -33,7 +35,7 @@ export class ArticlesPage extends ItemsPage {
 		}
 	}
 
-	load(){
+	load() {
 		if (this.file) {
 			if (!this.file.articles) {
 				this.file.articles = [];
@@ -54,15 +56,19 @@ export class ArticlesPage extends ItemsPage {
 				if (error) {
 					this.customService.callbackToast(null, this.translate('Could not save files'));
 				} else {
-					this.itemService.touchFile(this.file);
 					this.load();
 				}
-			}, this.files
+			}, this.files, this.file.type
 		)
 	}
 
+	change(){
+		this.itemService.touchFile(this.file);
+	}
+	
 	delete(article: any) {
 		this.toolbox.deleteObjectInList(this.file.articles, "id", article.id);
+		this.itemService.touchFile(this.file);
 		this.save();
 	}
 
@@ -73,7 +79,7 @@ export class ArticlesPage extends ItemsPage {
 					if (!data.cancelled) {
 						let article = this.itemService.newArticle();
 						article.code = data.text;
-						this.items.splice(0, 0, article);
+						this.itemService.touchFile(this.file);
 						this.promptValue(article);
 					}
 				}
@@ -83,29 +89,37 @@ export class ArticlesPage extends ItemsPage {
 
 	promptValue(article: any) {
 		let callbackSave = (data: any) => {
-			if (data) {
-				article.value = data['0'];
+			article.value = data['0'];
+			if (data && this.itemService.isArticleValid(this.fileFormat, article)) {
 				article.modify = false;
+				this.items.splice(0, 0, article);
 				this.save();
-			};
+			} else {
+				alert(this.translate(this.fileFormat.valueMessage));
+				this.promptValue(article);
+			}
 		}
 
 		let callbackSaveScan = (data: any) => {
-			if (data) {
-				article.value = data['0'];
+			article.value = data['0'];
+			if (data && this.itemService.isArticleValid(this.fileFormat, article)) {
 				article.modify = false;
+				this.items.splice(0, 0, article);
 				this.save();
 				this.newScan();
-			};
+			} else {
+				alert(this.translate(this.fileFormat.valueMessage));
+				this.promptValue(article);
+			}
 		}
 
 		let callbackNok = (data: any) => {
-			console.log("Filter canceled");
 		}
 
 		let values = [
-			{ "type": "number", "value": null, "label": this.translate('Value'), "checked": false }
+			{ "type": "number", "value": null, "label": this.translate('Value'), "checked": false, "placeholder": this.fileFormat.placeholder }
 		];
+
 		this.customService.showAlertForm(
 			this.translate('Value'),
 			[{ "label": this.translate('Save'), "callback": callbackSave },
@@ -120,9 +134,11 @@ export class ArticlesPage extends ItemsPage {
 				if (!error1) {
 					this.file.shareDate = new Date().getTime();
 					this.save();
-				}else{
-					if (error1 && error1.message == "PARAM_ERROR"){
+				} else {
+					if (error1 && error1.message == "PARAM_ERROR") {
 						this.customService.callbackToast(error1, this.translate('Impossible de share. Please set station and user in parameters.'))
+					} else {
+						this.customService.callbackToast(error1, error1);
 					}
 				}
 			}, this.file

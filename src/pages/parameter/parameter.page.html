@@ -22,6 +22,6 @@
 		<img src="./assets/imgs/france.png" style="width: 30px" (click)="setLanguage('FR')">
 		<img src="./assets/imgs/uk.png" style="width: 30px" (click)="setLanguage('')">
 	</div>
-	<button ion-button (click)="confirmDelete()"><ion-icon name="trash" ></ion-icon>&nbsp;{{translate('Clear all files')}}</button>	
+	<!-- <button ion-button (click)="confirmDelete()"><ion-icon name="trash" ></ion-icon>&nbsp;{{translate('Clear all files')}}</button>	 -->
 	<div *ngIf="showStorage" [innerHTML]="allElements"></div>
 </ion-content>

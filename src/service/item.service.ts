@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Toolbox } from 'bdt105toolbox/dist';
 import { StorageService } from './storage.service';
-import { AppService } from '../angularShared/services/appService';
+import { CustomService } from './custom.service';
 
 @Injectable()
 export class ItemService {
@@ -11,61 +11,15 @@ export class ItemService {
     filesKey = "files";
     parametersKey = "parameters";
 
-    fileFormats = [
-        {
-            "name": "label",
-            "label": "Label",
-            "fileName": "ETIQUETTE",
-            "icon": "pricetag",
-            "color": "#6700ff"
-        },
-        {
-            "name": "inventory",
-            "label": "Inventory",
-            "fileName": "INVENTAIRE",
-            "icon": "clipboard",
-            "color": "#005d38"
-        },
-        {
-            "name": "price",
-            "label": "Price check",
-            "fileName": "PRIX",
-            "icon": "cash",
-            "color": "#ea0000"
-        },
-        {
-            "name": "delivery",
-            "label": "Delivery",
-            "fileName": "LIVRAISON",
-            "icon": "bicycle",
-            "color": "#677171"
-        },
-        {
-            "name": "order",
-            "label": "Order",
-            "fileName": "COMMANDE",
-            "icon": "call",
-            "color": "#bcc300"
-        }
-    ]
-
-    constructor(public storageService: StorageService, private appService: AppService) {
+    constructor(public storageService: StorageService, private customService: CustomService) {
 
     }
 
-    getFormat(name: string) {
-        let t = this.toolbox.filterArrayOfObjects(this.fileFormats, "name", name);
-        if (t && t.length > 0) {
-            return t[0];
-        }
-        return null;
-    }
-
-
-    newFile() {
+    newFile(type: string) {
         let file: any = {};
         file.id = this.toolbox.getUniqueId();
         file.fileName = this.toolbox.getUniqueId() + ".json";
+        file.type = type;
         file.name = "";
         file.description = "";
         file.creationDate = new Date().getTime();
@@ -100,31 +54,77 @@ export class ItemService {
         )
     }
 
-    private deletedItem(callback: Function, key: string, item: any, items: any) {
-        if (item) {
-            let found = false;
-            for (var i = 0; i < items.length; i++) {
-                if (item.id == items[i].id) {
-                    items.splice(i, 1);
-                    found = true;
-                }
-            }
-            if (found) {
-                this.saveItem(
-                    (data: any, error: any) => {
-                        callback(data, error);
-                    }, key, items
-                );
-            }
+    private deletedItem(callback: Function, storageKey: string, field: string, value: string, equal: boolean, items: any) {
+        let deleted = this.toolbox.deleteObjectsInList(items, field, value, equal);
+        if (deleted > 0) {
+            this.saveItem(
+                (data: any, error: any) => {
+                    callback(data, error);
+                }, storageKey, items
+            );
+        } else {
+            callback(null, null);
         }
     }
 
-    getFiles(callback: Function) {
+    getFiles(callback: Function, type: string) {
         this.getItem(
             (data: any, error: any) => {
                 callback(data, error);
-            }, this.filesKey
+            }, this.filesKey + "_" + type
         )
+    }
+
+    saveFiles(callback: Function, files: any, type: string) {
+        this.saveItem(
+            (data: any, error: any) => {
+                callback(data, error);
+            }, this.filesKey + "_" + type, files
+        )
+    }
+
+    deleteFile(callback: Function, files: any, type: string, field: string, value: string, equal: boolean) {
+        this.deletedItem(
+            (data: any, error: any) => {
+                callback(data, error);
+            }, this.filesKey + "_" + type, field, value, equal, files
+        )
+    }
+
+    deleteAllFile(callback: Function, type: string) {
+        this.storageService.delete(
+            (data: any, error: any) => {
+                callback(data, error);
+            }, this.filesKey + "_" + type
+        )
+    }
+
+    touchFile(file: any) {
+        if (file) {
+            file.modificationDate = new Date().getTime();
+        }
+    }
+
+    deleteArticle(callback: Function, article: any, file: any, files: any) {
+        let articles = file.articles;
+        let found = false;
+        for (var i = 0; i < articles.length; i++) {
+            if (articles[i].id = article.id) {
+                articles.splice(i, 1);
+            }
+        }
+
+        if (found) {
+            this.saveFiles(callback, files, file.type);
+        }
+    }
+
+    getLastFile() {
+        return this.customService.getSetting("lastFile");
+    }
+
+    setLastFile(file: any) {
+        this.customService.setSetting("lastFile", file);
     }
 
     getParameters(callback: Function) {
@@ -147,22 +147,44 @@ export class ItemService {
         )
     }
 
-    getFile(callback: Function, id: string) {
-        this.getFiles(
+    splitSentFiles(files: any) {
+        let ret: any = {};
+        if (files) {
+            files.forEach((file: any) => {
+                if (!ret.sent) {
+                    ret.sent = [];
+                }
+                if (!ret.notSent) {
+                    ret.notSent = [];
+                }
+                if (file.shareDate) {
+                    ret.sent.push(file);
+                } else {
+                    ret.notSent.push(file);
+                }
+            });
+        }
+        return ret;
+    }
+
+    countFiles(callback: Function) {
+        this.storageService.showAll(
             (data: any, error: any) => {
-                if (!error) {
-                    if (data) {
-                        let filee = null;
-                        for (var i = 0; i < data.length; i++) {
-                            if (data[i].id == id) {
-                                filee = data[i];
-                                break;
-                            }
+                if (!error && data) {
+                    let ret = [];
+                    data.forEach((element: any) => {
+                        if (element.value && element.key.startsWith(this.filesKey)) {
+                            let split = this.splitSentFiles(element.value);
+                            ret.push(
+                                {
+                                    "type": element.key.replace(this.filesKey + "_", ""),
+                                    "data": split,
+                                    "length": element.value.length
+                                }
+                            );
                         }
-                        callback(filee, null);
-                    } else {
-                        callback(data, error);
-                    }
+                    });
+                    callback(ret, null);
                 } else {
                     callback(null, error);
                 }
@@ -170,48 +192,12 @@ export class ItemService {
         )
     }
 
-    saveFiles(callback: Function, files: any) {
-        this.saveItem(
-            (data: any, error: any) => {
-                callback(data, error);
-            }, this.filesKey, files
-        )
-    }
-
-    deleteFile(callback: Function, file: any, files: any) {
-        this.deletedItem(
-            (data: any, error: any) => {
-                callback(data, error);
-            }, this.filesKey, file, files
-        )
-    }
-
-    touchFile(file: any){
-        if (file){
-            file.modificationDate = new Date().getTime();
+    isArticleValid(fileFormat: any, article: any) {
+        let ret = true;
+        if (fileFormat && fileFormat.valueRegex) {
+            ret = this.customService.checkRegEx(article.value, fileFormat.valueRegex);
         }
-    }
-    
-    deleteArticle(callback: Function, article: any, file: any, files: any) {
-        let articles = file.articles;
-        let found = false;
-        for (var i = 0; i < articles.length; i++) {
-            if (articles[i].id = article.id) {
-                articles.splice(i, 1);
-            }
-        }
-
-        if (found) {
-            this.saveFiles(callback, files);
-        }
-    }
-
-    getLastFileId() {
-        return this.appService.getSetting("lastFileId");
-    }
-
-    setLastFileId(file: any) {
-        this.appService.setSetting("lastFileId", file);
+        return ret && article.code;
     }
 
 }

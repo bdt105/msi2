@@ -23,10 +23,7 @@ export class FileComponent extends ItemComponent {
 	}
 
 	onView() {
-		this.itemService.setLastFileId(this.item.id);
-		// if (this.item) {
-		// 	this.customService.callbackToast(null, this.translate('Current file is now: ') + this.item.name)
-		// }
+		this.itemService.setLastFile(this.item);
 		this.navCtrl.push(ArticlesPage, { "file": this.item, "files": this.items });
 	}
 
@@ -35,10 +32,15 @@ export class FileComponent extends ItemComponent {
 			(data1: any, error1: any) => {
 				if (!error1) {
 					this.item.shareDate = new Date().getTime();
-					this.changed.emit(this.item);
+					this.shared.emit(this.item);
 				}else{
+					// For test only
+					// this.item.shareDate = new Date().getTime();
+					// this.shared.emit(this.item);
 					if (error1 && error1.message == "PARAM_ERROR"){
 						this.customService.callbackToast(error1, this.translate('Impossible de share. Please set station and user in parameters.'))
+					}else{
+						this.customService.callbackToast(error1, error1);
 					}
 				}
 			}, this.item
