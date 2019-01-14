@@ -24,7 +24,7 @@
 				<ion-item *ngIf="element.data && element.data.notSent && element.data.notSent.length > 0" (click)="goToFiles(element.type)">
 					{{element | json }}
 					<ion-label>
-						<small>
+						<small *ngIf="this.customService.getFileFormat(element.type)">
 							{{translate(this.customService.getFileFormat(element.type).label)}}&nbsp;
 							<ion-badge *ngIf="element.data && element.data.notSent">{{element.data.notSent.length}}/{{element.length}}</ion-badge>
 						</small>

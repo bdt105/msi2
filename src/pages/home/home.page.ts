@@ -7,6 +7,7 @@ import { FilesPage } from '../item/files.page';
 import { ArticlesPage } from '../item/articles.page';
 import { ItemService } from '../../service/item.service';
 import { CustomService } from '../../service/custom.service';
+import { ExportService } from '../../service/export.service';
 
 @Component({
 	selector: 'page-home',
@@ -22,7 +23,7 @@ export class HomePage extends ItemsPage {
 
 	fileInfo: { "directory": string; "fileName": never; };
 	constructor(public miscellaneousService: MiscellaneousService, public storageService: StorageService, public event: Events,
-		public navController: NavController, public itemService: ItemService, public customService: CustomService) {
+		public navController: NavController, public itemService: ItemService, public customService: CustomService, public exportService: ExportService) {
 		super(miscellaneousService);
 	}
 

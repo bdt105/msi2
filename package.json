@@ -25,7 +25,7 @@
     "@ionic-native/camera": "^4.18.0",
     "@ionic-native/core": "^4.18.0",
     "@ionic-native/file": "3.4.4",
-    "@ionic-native/file-transfer": "^4.18.0",
+    "@ionic-native/file-transfer": "^4.19.0",
     "@ionic-native/google-plus": "^4.18.0",
     "@ionic-native/photo-viewer": "^4.18.0",
     "@ionic-native/social-sharing": "^4.18.0",

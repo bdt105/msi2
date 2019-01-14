@@ -16,6 +16,14 @@
 		<ion-label fixed>{{translate('User')}}</ion-label>
 		<ion-input type="text" placeholder="{{translate('User')}}" [(ngModel)]="items[0].user" (change)="save()"></ion-input>
 	</ion-item>
+	<ion-item *ngIf="items && items.length > 0">
+		<ion-label>{{translate('Share to url')}}</ion-label>
+		<ion-toggle [(ngModel)]="items[0].shateToUrl"></ion-toggle>
+	</ion-item>
+	<ion-item *ngIf="items && items.length > 0 && items[0].shateToUrl">
+		<ion-label fixed>{{translate('Url')}}</ion-label>
+		<ion-input type="text" placeholder="{{translate('Destination url')}}" [(ngModel)]="items[0].destinationUrl" (change)="save()"></ion-input>
+	</ion-item>
 	<div padding>
 		<span (press)="toggleAllData()">{{translate('Choose a language')}}</span><br><br>
 		<img src="./assets/imgs/portugal.png" style="width: 30px" (click)="setLanguage('PT')">

@@ -133,12 +133,13 @@ export class ArticlesPage extends ItemsPage {
 			(data1: any, error1: any) => {
 				if (!error1) {
 					this.file.shareDate = new Date().getTime();
+					this.customService.callbackToast(null, this.translate('File shared with success!'));
 					this.save();
 				} else {
 					if (error1 && error1.message == "PARAM_ERROR") {
-						this.customService.callbackToast(error1, this.translate('Impossible de share. Please set station and user in parameters.'))
+						this.customService.callbackToast(error1, this.translate('Impossible de share. Please set station and user in parameters.'), 3000)
 					} else {
-						this.customService.callbackToast(error1, error1);
+						this.customService.callbackToast(error1, this.translate("Error sharing! Please check server.") + " " + (error1.exception ? error1.exception : ""), 3000);
 					}
 				}
 			}, this.file

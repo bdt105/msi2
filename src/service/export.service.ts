@@ -3,6 +3,7 @@ import { Toolbox } from 'bdt105toolbox/dist';
 import { File } from '@ionic-native/file';
 import { Platform } from 'ionic-angular';
 import { CustomService } from './custom.service';
+import { FileTransfer, FileUploadOptions, FileTransferObject } from '@ionic-native/file-transfer';
 
 @Injectable()
 export class ExportService {
@@ -43,60 +44,60 @@ export class ExportService {
                 }
             );
     }
-/*
-    labelFile(callback: Function, type: string, station: string, user: string, items: any) {
-        let dir = this.getDirectory();
-        if (items) {
-            let content = "";
-            items.forEach((article: any) => {
-                let value = article.value + "";
-                content += this.completeValue("0", 13, article.code) + this.completeValue("0", 4, value) + '\r\n';
-            });
-            this.send(callback, type, station, user, dir, content);
+    /*
+        labelFile(callback: Function, type: string, station: string, user: string, items: any) {
+            let dir = this.getDirectory();
+            if (items) {
+                let content = "";
+                items.forEach((article: any) => {
+                    let value = article.value + "";
+                    content += this.completeValue("0", 13, article.code) + this.completeValue("0", 4, value) + '\r\n';
+                });
+                this.send(callback, type, station, user, dir, content);
+            }
         }
-    }
-
-    orderFile(callback: Function, type: string, station: string, user: string, items: any) {
-        let dir = this.getDirectory();
-        if (items) {
-            let content = "";
-            items.forEach((article: any) => {
-                let value = (article.value > 99 ? 0 : article.value) + "";
-                content += this.completeValue("0", 13, article.code) + this.completeValue("0", 2, value) + '\r\n';
-            });
-            this.send(callback, type, station, user, dir, content);
+    
+        orderFile(callback: Function, type: string, station: string, user: string, items: any) {
+            let dir = this.getDirectory();
+            if (items) {
+                let content = "";
+                items.forEach((article: any) => {
+                    let value = (article.value > 99 ? 0 : article.value) + "";
+                    content += this.completeValue("0", 13, article.code) + this.completeValue("0", 2, value) + '\r\n';
+                });
+                this.send(callback, type, station, user, dir, content);
+            }
         }
-    }
-
-    listFile(callback: Function, type: string, station: string, user: string, items: any) {
-        let dir = this.getDirectory();
-        if (items) {
-            let content = "";
-            items.forEach((article: any) => {
-                content += this.completeValue("0", 13, article.code) + '\r\n';
-            });
-            this.send(callback, type, station, user, dir, content);
+    
+        listFile(callback: Function, type: string, station: string, user: string, items: any) {
+            let dir = this.getDirectory();
+            if (items) {
+                let content = "";
+                items.forEach((article: any) => {
+                    content += this.completeValue("0", 13, article.code) + '\r\n';
+                });
+                this.send(callback, type, station, user, dir, content);
+            }
         }
-    }
-
-    templateFile(callback: Function, type: string, station: string, user: string, items: any, prefix: string, intSize: number, decSize: number) {
-        let dir = this.getDirectory();
-        if (items) {
-            let content = "";
-            items.forEach((article: any) => {
-                let v = article.value.toString();
-                let ar = v.split(".");
-                let i = this.completeValue("0", intSize, ar[0]);
-                let d = this.completeValue("0", decSize, ar.length > 1 ? ar[1] : "", false);
-                let qte = i + d;
-                content += prefix + this.completeValue("0", 13, article.code) + qte + '\r\n';
-            });
-            this.send(callback, type, station, user, dir, content);
+    
+        templateFile(callback: Function, type: string, station: string, user: string, items: any, prefix: string, intSize: number, decSize: number) {
+            let dir = this.getDirectory();
+            if (items) {
+                let content = "";
+                items.forEach((article: any) => {
+                    let v = article.value.toString();
+                    let ar = v.split(".");
+                    let i = this.completeValue("0", intSize, ar[0]);
+                    let d = this.completeValue("0", decSize, ar.length > 1 ? ar[1] : "", false);
+                    let qte = i + d;
+                    content += prefix + this.completeValue("0", 13, article.code) + qte + '\r\n';
+                });
+                this.send(callback, type, station, user, dir, content);
+            }
         }
-    }
-*/
+    */
 
-//ETIQUETTE_20181119_132312_SR284C01_ut284C01.traite1
+    //ETIQUETTE_20181119_132312_SR284C01_ut284C01.traite1
     getFileName(type: string, station: string, user: string, date: Date = null) {
         let name = "";
         if (date == null) {
@@ -163,9 +164,31 @@ export class ExportService {
                 content += this.getFileContentLine(article, fileFormat.fileFormat) + '\r\n';
             });
             this.send(callback, file.type, station, user, dir, content);
-        }else{
+        } else {
             callback(null, "No file or article");
         }
     }
+
+    // sendToUrl(callback: Function, directory: string, fileName: string, url: string) {
+    //     let dir = this.getDirectory();
+    //     let fileName = "test.txt";
+    //     this.file.writeExistingFile(dir, fileName, "hello world").then(
+    //         (data: any) => {
+    //             data.dir = dir;
+    //             data.fileName = fileName;
+    //             let fileTransfer: FileTransferObject = this.fileTransfer.create();
+    //             fileTransfer.upload(data.dir + "/" + data.fileName, "http://192.168.1.216:8009/upload").then((val: any) => {
+    //                 let x = 0;
+    //             }).catch((errror: any) => {
+    //                 let y = 0;
+    //             });
+    //             callback(data, null);
+    //         }).catch(
+    //             (error: any) => {
+    //                 callback(null, error);
+    //             }
+    //         );
+
+    // }
 
 }
