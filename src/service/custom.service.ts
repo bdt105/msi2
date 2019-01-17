@@ -81,7 +81,8 @@ export class CustomService extends AppService {
 
     checkRegEx(value: string, regex: string) {
         var patt = new RegExp(regex/*"^[0-9]{1,5}.[0-9]$"*/);
-        return patt.test(value);
+        let ret = patt.test(value);
+        return ret;
     }
 
 

@@ -5,8 +5,8 @@
         "iconName": "",
         "iconColor": "#6700ff",
         "valueRegex": "^[0-9]{1,4}$",
-        "valueMessage": "Please enter an integer <= 9999",
-        "valuePlaceHolder": "integer <= 9999",
+        "valueMessage": "Please number <= 9999",
+        "valuePlaceHolder": "0000",
         "fileName": "ETIQUETTE",
         "fileFormat": [
             {
@@ -44,9 +44,10 @@
         "fileName": "INVENTAIRE",
         "iconName": "",
         "iconColor": "#005d38",
-        "valueRegex": "^[0-9]{1,5}.[0-9]{1,3}$",
+        "valueRegex2": "[0-9]{0,5}.?[0-9]{0,2}",
+        "valueRegex": "^[0-9]{1,3}(\\.[0-9]{1,2})?$",
         "valuePlaceHolder": "00000.000",
-        "valueMessage": "Please enter an integer or decimal of type 00000.00",
+        "valueMessage": "Please enter a number of type 00000.00",
         "fileFormat": [
             {
                 "length": 13,
@@ -71,7 +72,7 @@
         "fileName": "LIVRAISON",
         "iconName": "",
         "iconColor": "#677171",
-        "valueRegex": "^[0-9]{1,4}.[0-9]{1,4}$",
+        "valueRegex": "^[0-9]{1,4}(\\.[0-9]{1,4})?$",
         "valuePlaceHolder": "0000.0000",
         "valueMessage": "Please enter a number of type 0000.0000",
         "fileFormat": [
@@ -105,7 +106,7 @@
         "iconColor": "#bcc300",
         "valueRegex": "^[0-9]{1,2}$",
         "valuePlaceHolder": "00",
-        "valueMessage": "Please enter an integer of type 00",
+        "valueMessage": "Please enter a number of type 00",
         "fileFormat": [
             {
                 "length": 13,
@@ -125,7 +126,7 @@
         "fileName": "ENTREE",
         "iconName": "",
         "iconColor": "#bcc300",
-        "valueRegex": "^[0-9]{1,6}.[0-9]{1,3}$",
+        "valueRegex": "^[0-9]{1,6}(\\.[0-9]{1,3})?$",
         "valuePlaceHolder": "000000.000",
         "valueMessage": "Please enter an number of type 000000.000",
         "fileFormat": [
@@ -152,8 +153,8 @@
         "fileName": "DEMARQUE",
         "iconName": "",
         "iconColor": "#bcc300",
-        "valueRegex": "^[0-9]{1,6}.[0-9]{1,3}$",
-        "valuePlaceHolder": "Integer 1 or 2 or 12",
+        "valueRegex": "^[0-9]{1,6}(\\.[0-9]{1,3})?$",
+        "valuePlaceHolder": "000000.000",
         "valueMessage": "Please enter an number of type 000000.000",
         "fileFormat": [
             {
@@ -179,7 +180,7 @@
         "fileName": "PROMOCAO",
         "iconName": "",
         "iconColor": "#bcc300",
-        "valueRegex": "^[0-9]{1,5}.[0-9]{1,2}$",
+        "valueRegex": "^[0-9]{1,5}(\\.[0-9]{1,2})?$",
         "valuePlaceHolder": "00000.00",
         "valueMessage": "Please enter a number of type 00000.00",
         "fileFormat": [
@@ -206,7 +207,7 @@
         "fileName": "CTRLPRIX",
         "iconName": "",
         "iconColor": "#bcc300",
-        "valueRegex": "^[0-9]{1,5}.[0-9]{1,2}$",
+        "valueRegex": "^[0-9]{1,5}(\\.[0-9]{1,2})?$",
         "valuePlaceHolder": "00000.00",
         "valueMessage": "Please enter a number of type 00000.00",
         "fileFormat": [

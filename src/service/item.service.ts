@@ -197,7 +197,7 @@ export class ItemService {
         if (fileFormat && fileFormat.valueRegex) {
             ret = this.customService.checkRegEx(article.value, fileFormat.valueRegex);
         }
-        return ret && article.code;
+        return ret && (article.code != null && article.code != undefined);
     }
 
 }
