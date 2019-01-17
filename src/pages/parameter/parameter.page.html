@@ -7,7 +7,7 @@
 	</ion-navbar>
 </ion-header>
 
-<ion-content padding>
+<ion-content nopadding>
 	<ion-item *ngIf="items && items.length > 0">
 		<ion-label fixed>{{translate('Station')}}</ion-label>
 		<ion-input type="text" placeholder="{{translate('Station')}}" [(ngModel)]="items[0].station" (change)="save()"></ion-input>
@@ -17,12 +17,16 @@
 		<ion-input type="text" placeholder="{{translate('User')}}" [(ngModel)]="items[0].user" (change)="save()"></ion-input>
 	</ion-item>
 	<ion-item *ngIf="items && items.length > 0">
-		<ion-label>{{translate('Share to url')}}</ion-label>
+		<ion-label>{{translate('Share to server')}}</ion-label>
 		<ion-toggle [(ngModel)]="items[0].shateToUrl"></ion-toggle>
 	</ion-item>
 	<ion-item *ngIf="items && items.length > 0 && items[0].shateToUrl">
-		<ion-label fixed>{{translate('Url')}}</ion-label>
-		<ion-input type="text" placeholder="{{translate('Destination url')}}" [(ngModel)]="items[0].destinationUrl" (change)="save()"></ion-input>
+		<ion-label fixed>{{translate('Name or IP')}}</ion-label>
+		<ion-input type="text" placeholder="{{translate('Server name or IP')}}" [(ngModel)]="items[0].serverUrl" (change)="save()"></ion-input>
+	</ion-item>
+	<ion-item *ngIf="items && items.length > 0 && items[0].shateToUrl">
+		<ion-label fixed>{{translate('Port')}}</ion-label>
+		<ion-input type="number" placeholder="{{translate('Server port')}}" [(ngModel)]="items[0].port" (change)="save()"></ion-input>
 	</ion-item>
 	<div padding>
 		<span (press)="toggleAllData()">{{translate('Choose a language')}}</span><br><br>

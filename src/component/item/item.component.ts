@@ -44,10 +44,10 @@ export class ItemComponent extends GenericComponent {
 		this.deleted.emit(this.item);
 	}
 
-	confirmDelete() {
+	confirmDelete(message: string = "Do you want to delete this item? All items attached will be lost forever!") {
 		let alert = this.alertCtrl.create({
 			title: this.translate('Confirm delete'),
-			message: this.translate('Do you want to delete this item? All items attached will be lost forever!'),
+			message: this.translate(message),
 			buttons: [
 				{
 					text: this.translate('No'),

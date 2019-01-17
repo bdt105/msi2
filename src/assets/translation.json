@@ -586,5 +586,35 @@
             "FR": "Utilisateur",
             "PT": "Utilisador"
         }
+    },
+    {
+        "key": "Has the file been shared with success? If yes, do you want to delete it now?",
+        "value": {
+            "FR": "Le fichier a-t-il été partagé avec succès ? Si oui  voulez vousle supprimer?",
+            "PT": "O fichieiro foi partilhado com sucesso? Se sim quer apagar ele?"
+        }
+    },
+    {
+        "key": "Share to server",
+        "value": {
+            "FR": "Partager avec un serveur",
+            "PT": "Partilhar com um servidor"
+        }
+    },
+    {
+        "key": "Name or IP",
+        "value": {
+            "FR": "Nom ou IP",
+            "PT": "Nome ou IP"
+        }
+    },
+    {
+        "key": "Port",
+        "value": {
+            "FR": "Port",
+            "PT": "Porta"
+        }
     }
+
+        
 ]

@@ -52,14 +52,14 @@ export class ShareService {
             this.exportService.shareFile(
                 (data: any, error: any) => {
                     if (destinationUrl) {
-                       // let more = {"fileName": data.fileName, "station": station, "user": user};
+                        // let more = {"fileName": data.fileName, "station": station, "user": user};
                         var uploadOptions = {
                             fileKey: "file", // change fileKey
                             chunkedMode: false, // add chunkedMode
                             mimeType: "multipart/form-data", // add mimeType
                             fileName: data.fileName,
-                            params : { 'fileName': data.fileName, "station": station, "user":user }
-                          };
+                            params: { 'fileName': data.fileName, "station": station, "user": user }
+                        };
                         this.goSendToUrl(callback, data.dir + data.fileName, uploadOptions, destinationUrl)
                     } else {
                         if (!error) {
@@ -83,7 +83,9 @@ export class ShareService {
                         let station = data[0].station;
                         let user = data[0].user;
                         let shateToUrl = data[0].shateToUrl;
-                        let destinationUrl = shateToUrl ? data[0].destinationUrl : "";
+                        let destinationUrl = shateToUrl ?
+                            "http://" + data[0].serverUrl + ":" + data[0].port + "/upload" :
+                            "";
                         this.shareFile(
                             (data1: any, error1: any) => {
                                 callback(data1, error1);

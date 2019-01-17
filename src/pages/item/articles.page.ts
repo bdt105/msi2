@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { MiscellaneousService } from '../../angularShared/services/miscellaneous.service';
 import { ItemsPage } from './items.page';
-import { NavParams, AlertController } from 'ionic-angular';
+import { NavParams, AlertController, NavController } from 'ionic-angular';
 import { ItemService } from '../../service/item.service';
 import { CustomService } from '../../service/custom.service';
 import { ShareService } from '../../service/share.service';
@@ -18,7 +18,7 @@ export class ArticlesPage extends ItemsPage {
 	fileFormat: any;
 
 	constructor(public miscellaneousService: MiscellaneousService, public customService: CustomService, private shareService: ShareService,
-		public navParams: NavParams, public itemService: ItemService, public alertCtrl: AlertController) {
+		public navParams: NavParams, public itemService: ItemService, public alertCtrl: AlertController, public navController: NavController) {
 		super(miscellaneousService);
 	}
 
@@ -135,6 +135,7 @@ export class ArticlesPage extends ItemsPage {
 					this.file.shareDate = new Date().getTime();
 					this.customService.callbackToast(null, this.translate('File shared with success!'));
 					this.save();
+					this.confirmDeleteFile();
 				} else {
 					if (error1 && error1.message == "PARAM_ERROR") {
 						this.customService.callbackToast(error1, this.translate('Impossible de share. Please set station and user in parameters.'), 3000)
@@ -144,6 +145,41 @@ export class ArticlesPage extends ItemsPage {
 				}
 			}, this.file
 		)
+	}
+
+
+	deleteFile(){
+		this.itemService.deleteFile(
+			(data: any, error: any) => {
+				if (!error){
+					this.customService.callbackToast(null, this.translate('File deleted with success'));
+					this.navController.pop();
+				}
+			}, this.files, this.fileFormat.name, "id", this.file.id, true 
+		)
+	}
+
+	confirmDeleteFile() {
+		let alert = this.alertCtrl.create({
+			title: this.translate('Confirm delete'),
+			message: this.translate('Has the file been shared with success? If yes, do you want to delete it now?'),
+			buttons: [
+				{
+					text: this.translate('No'),
+					role: 'cancel',
+					handler: () => {
+						console.log('Cancel clicked');
+					}
+				},
+				{
+					text: this.translate('Yes'),
+					handler: () => {
+						this.deleteFile();
+					}
+				}
+			]
+		});
+		alert.present();
 	}
 
 }

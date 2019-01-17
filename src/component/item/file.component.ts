@@ -15,11 +15,9 @@ export class FileComponent extends ItemComponent {
 	selected = false;
 
 	constructor(public miscellaneousService: MiscellaneousService, public itemService: ItemService, public customService: CustomService,
-		private shareService: ShareService, public alertCtrl: AlertController, private navCtrl: NavController, public actionSheetCtrl: ActionSheetController) {
+		private shareService: ShareService, public alertCtrl: AlertController, private navCtrl: NavController, 
+		public actionSheetCtrl: ActionSheetController, public navController: NavController) {
 		super(miscellaneousService, alertCtrl);
-	}
-
-	ngOnInit() {
 	}
 
 	onView() {
@@ -34,6 +32,7 @@ export class FileComponent extends ItemComponent {
 					this.item.shareDate = new Date().getTime();
 					this.customService.callbackToast(null, this.translate('File shared with success!'));
 					this.shared.emit(this.item);
+					this.confirmDeleteAfterShare();
 				}else{
 					// For test only
 					// this.item.shareDate = new Date().getTime();
@@ -97,6 +96,29 @@ export class FileComponent extends ItemComponent {
 			]
 		});
 		actionSheet.present();
+	}
+
+	confirmDeleteAfterShare() {
+		let alert = this.alertCtrl.create({
+			title: this.translate('Confirm delete'),
+			message: this.translate('Has the file been shared with success? If yes, do you want to delete it now?'),
+			buttons: [
+				{
+					text: this.translate('No'),
+					role: 'cancel',
+					handler: () => {
+						console.log('Cancel clicked');
+					}
+				},
+				{
+					text: this.translate('Yes'),
+					handler: () => {
+						this.deleteItem();
+					}
+				}
+			]
+		});
+		alert.present();
 	}
 
 }
