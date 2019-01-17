@@ -18,7 +18,7 @@
 	</ion-item>
 	<ion-item *ngIf="items && items.length > 0">
 		<ion-label>{{translate('Share to server')}}</ion-label>
-		<ion-toggle [(ngModel)]="items[0].shateToUrl"></ion-toggle>
+		<ion-toggle [(ngModel)]="items[0].shateToUrl" (ionChange)="save()"></ion-toggle>
 	</ion-item>
 	<ion-item *ngIf="items && items.length > 0 && items[0].shateToUrl">
 		<ion-label fixed>{{translate('Name or IP')}}</ion-label>
