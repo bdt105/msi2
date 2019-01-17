@@ -614,6 +614,34 @@
             "FR": "Port",
             "PT": "Porta"
         }
+    },
+    {
+        "key": "Waste",
+        "value": {
+            "FR": "Perte",
+            "PT": "Quebra"
+        }
+    },
+    {
+        "key": "Tarif",
+        "value": {
+            "FR": "Tarif",
+            "PT": "Tarifa"
+        }
+    },
+    {
+        "key": "Procurement",
+        "value": {
+            "FR": "Achats",
+            "PT": "Compras"
+        }
+    },
+    {
+        "key": "Article",
+        "value": {
+            "FR": "Article",
+            "PT": "Artigo"
+        }
     }
 
         

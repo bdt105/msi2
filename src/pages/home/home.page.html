@@ -16,7 +16,7 @@
 			<ion-card-header style="padding: 0">
 				<ion-item>
 					<ion-label>
-						<ion-icon name="mail-open"></ion-icon>&nbsp;{{translate('Files not sent')}}
+						<ion-icon color="secondary" name="mail-open"></ion-icon>&nbsp;{{translate('Files not sent')}}
 					</ion-label>
 				</ion-item>
 			</ion-card-header>
@@ -24,10 +24,10 @@
 				<ion-item *ngIf="element.data && element.data.notSent && element.data.notSent.length > 0" (click)="goToFiles(element.type)">
 					{{element | json }}
 					<ion-label>
-						<small *ngIf="this.customService.getFileFormat(element.type)">
+						<span *ngIf="this.customService.getFileFormat(element.type)">
 							{{translate(this.customService.getFileFormat(element.type).label)}}&nbsp;
 							<ion-badge *ngIf="element.data && element.data.notSent">{{element.data.notSent.length}}/{{element.length}}</ion-badge>
-						</small>
+						</span>
 					</ion-label>
 				</ion-item>
 			</span>
@@ -36,7 +36,7 @@
 			<ion-card-header style="padding: 0">
 				<ion-item>
 					<ion-label>
-						<ion-icon name="eye"></ion-icon>&nbsp;{{translate('Last file accessed')}}
+						<ion-icon color="secondary" name="eye"></ion-icon>&nbsp;{{translate('Last file accessed')}}
 					</ion-label>
 				</ion-item>
 				<fileComponent [item]="lastFile" [items]="items" [allowMenu]="false"></fileComponent>

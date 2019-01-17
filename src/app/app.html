@@ -19,29 +19,25 @@
 		<ion-list>
 			<div *ngFor="let page of pages">
 				<div *ngIf="!page.subMenus">
-					<button menuClose ion-item style="border: 0" (click)="openPage(page, page.parameter)">
-						<span *ngIf="page.iconName">
-							<ion-icon name="{{page.iconName}}"></ion-icon>&nbsp;&nbsp;
-						</span>
+					<button menuClose ion-item style="border: 0;" (click)="openPage(page, page.parameter)">
+						<ion-icon *ngIf="page.iconName" color="secondary" name="{{page.iconName}}" style="width: 25px; font-size: 1.5em"></ion-icon>
 						{{translate(page.title)}}
 					</button>
 				</div>
 				<div *ngIf="page.subMenus">
-					<div ion-item style="border: 0">
-						<span (click)="page.showDetail = !page.showDetail">
-							<span *ngIf="page.iconName">
-								<ion-icon name="{{page.iconName}}"></ion-icon>&nbsp;&nbsp;
-							</span>
+					<div ion-item style="border: 0;">
+						<div (click)="page.showDetail = !page.showDetail">
+							<ion-icon *ngIf="page.iconName" color="secondary" name="{{page.iconName}}" style="width: 25px; font-size: 1.5em"></ion-icon>
 							{{translate(page.title)}}
-						</span>
+						</div>
 						<div *ngIf="page.showDetail" style="margin-top: 8px">
-							<button ion-button menuClose *ngFor="let subMenu of page.subMenus" (click)="openPage(subMenu, subMenu.parameter)"
-							 style="border: 0">
-								<span *ngIf="subMenu.iconName">
-									<ion-icon name="{{subMenu.iconName}}"></ion-icon>&nbsp;&nbsp;
-								</span>
-								{{translate(subMenu.title)}}
-							</button>
+							<ion-list no-lines nopadding style="margin: 0">
+								<button ion-item menuClose *ngFor="let subMenu of page.subMenus" (click)="openPage(subMenu, subMenu.parameter)"
+								 style="border: 0; height: 40px">
+									<ion-icon *ngIf="subMenu.iconName" color="secondary" name="{{subMenu.iconName}}"></ion-icon>
+									<span>{{translate(subMenu.title)}}</span>
+								</button>
+							</ion-list>
 						</div>
 					</div>
 				</div>
