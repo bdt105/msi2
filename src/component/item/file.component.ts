@@ -86,7 +86,7 @@ export class FileComponent extends ItemComponent {
 					}
 				},
 				{
-					text: 'Cancel',
+					text: this.translate('Cancel'),
 					role: 'cancel',
 					handler: () => {
 						this.selected = false;

@@ -642,6 +642,62 @@
             "FR": "Article",
             "PT": "Artigo"
         }
+    },
+    {
+        "key": "Entry",
+        "value": {
+            "FR": "Entrée",
+            "PT": "Entrada"
+        }
+    },
+    {
+        "key": "Sale",
+        "value": {
+            "FR": "Promotion",
+            "PT": "Promoçao"
+        }
+    },
+    {
+        "key": "Delete files",
+        "value": {
+            "FR": "Supprimer des fichiers",
+            "PT": "Apagar ficheiros"
+        }
+    },
+    {
+        "key": "All files",
+        "value": {
+            "FR": "Tous des fichiers",
+            "PT": "Todos os ficheiros"
+        }
+    },
+    {
+        "key": "Files sent only",
+        "value": {
+            "FR": "Les fichiers envoyés uniquement",
+            "PT": "Ficheiros enviados apenas"
+        }
+    },
+    {
+        "key": "Files not sent only",
+        "value": {
+            "FR": "Les fichiers non envoyés uniquement",
+            "PT": "Ficheiros nao enviados apenas"
+        }
+    },
+    {
+        "key": "Choose your action",
+        "value": {
+            "FR": "Choisissez votre action",
+            "PT": "Esccolhe sua açao"
+        }
+    },
+    {
+        "key": "Files not sent",
+        "value": {
+            "FR": "Fichiers non envoyés",
+            "PT": "Ficheiros nao enviados"
+        }
     }
 
         

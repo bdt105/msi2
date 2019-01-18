@@ -200,4 +200,19 @@ export class ItemService {
         return ret && (article.code != null && article.code != undefined);
     }
 
+    getFileCount(callback: Function, fileFormat: any) {
+        if (fileFormat) {
+            
+            this.getFiles(
+                (data: any, error: any) => {
+                    if (!error && data) {
+                        callback(data.length, null);
+                    } else {
+                        callback(data, error);
+                    }
+                }, fileFormat.name
+            )
+        }
+    }
+
 }

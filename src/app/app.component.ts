@@ -9,6 +9,7 @@ import { GenericComponent } from '../angularShared/components/generic.component'
 import { MiscellaneousService } from '../angularShared/services/miscellaneous.service';
 import { FilesPage } from '../pages/item/files.page';
 import { CustomService } from '../service/custom.service';
+import { ItemService } from '../service/item.service';
 
 @Component({
 	templateUrl: 'app.html'
@@ -23,7 +24,7 @@ export class MyApp extends GenericComponent {
 	theme: String = 'blue-theme';//keep default theme as blue
 
 	constructor(public miscellaneousService: MiscellaneousService, public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen,
-		public customService: CustomService, public event: Events) {
+		public customService: CustomService, public event: Events, public itemService: ItemService) {
 		super(miscellaneousService);
 		this.initializeApp();
 
@@ -57,7 +58,7 @@ export class MyApp extends GenericComponent {
 					}
 					let fileFormat = this.customService.getFileFormat(subMenu.format);
 					let subPage: any = {
-						title: subMenu.title, component: FilesPage, parameter: { fileFormat: fileFormat }
+						title: subMenu.title, component: FilesPage, parameter: { fileFormat: fileFormat }, count: null
 					}
 					page.subMenus.push(subPage);
 				});
@@ -66,8 +67,6 @@ export class MyApp extends GenericComponent {
 		});
 
 		this.pages.push({ title: 'Parameters', component: ParameterPage, iconName: "cog" });
-
-
 	}
 
 	toggleTheme() {
@@ -91,6 +90,32 @@ export class MyApp extends GenericComponent {
 		// Reset the content nav to have just this page
 		// we wouldn't want the back button to show in this scenario
 		this.nav.setRoot(page.component, parameter);
+	}
+
+	getFileCount(subMenu: any) {
+		if (subMenu && subMenu.parameter) {
+			this.itemService.getFileCount(
+				(data: any, error: any) => {
+					if (!error && data) {
+						subMenu.count = data;
+					} else {
+						subMenu.count = null;
+					}
+				}, subMenu.parameter.fileFormat
+			)
+		}
+	}
+
+	openSubMenu(page: any) {
+		if (page) {
+			page.showDetail = !page.showDetail;
+			if (page.showDetail && page.subMenus && page.subMenus.length > 0) {
+				for (var i = 0; i < page.subMenus.length; i++) {
+					this.getFileCount(page.subMenus[i]);
+				}
+			}
+		}
+
 	}
 
 }

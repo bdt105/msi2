@@ -26,7 +26,7 @@
 				</div>
 				<div *ngIf="page.subMenus">
 					<div ion-item style="border: 0;">
-						<div (click)="page.showDetail = !page.showDetail">
+						<div (click)="openSubMenu(page)">
 							<ion-icon *ngIf="page.iconName" color="secondary" name="{{page.iconName}}" style="width: 25px; font-size: 1.5em"></ion-icon>
 							{{translate(page.title)}}
 						</div>
@@ -35,7 +35,8 @@
 								<button ion-item menuClose *ngFor="let subMenu of page.subMenus" (click)="openPage(subMenu, subMenu.parameter)"
 								 style="border: 0; height: 40px">
 									<ion-icon *ngIf="subMenu.iconName" color="secondary" name="{{subMenu.iconName}}"></ion-icon>
-									<span>{{translate(subMenu.title)}}</span>
+									<span>{{translate(subMenu.title)}}</span>&nbsp;
+									<ion-badge *ngIf="subMenu.count">{{subMenu.count}}</ion-badge>
 								</button>
 							</ion-list>
 						</div>
