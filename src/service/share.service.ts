@@ -46,9 +46,9 @@ export class ShareService {
         }
     }
 
-    private shareFile(callback: Function, file: any, station: string, user: string, destinationUrl: string) {
+    private shareFile(callback: Function, file: any, destinationUrl: string, params: any) {
         let fileFormat = this.customService.getFileFormat(file.type);
-        if (fileFormat && station && user) {
+        if (fileFormat && params && params.station && params.user) {
             this.exportService.shareFile(
                 (data: any, error: any) => {
                     if (destinationUrl) {
@@ -58,7 +58,7 @@ export class ShareService {
                             chunkedMode: false, // add chunkedMode
                             mimeType: "multipart/form-data", // add mimeType
                             fileName: data.fileName,
-                            params: { 'fileName': data.fileName, "station": station, "user": user }
+                            params: params
                         };
                         this.goSendToUrl(callback, data.dir + data.fileName, uploadOptions, destinationUrl)
                     } else {
@@ -68,7 +68,7 @@ export class ShareService {
                             callback(null, error);
                         }
                     }
-                }, file, station, user
+                }, file, params.station, params.user
             );
         } else {
             callback(null, { message: "PARAM_ERROR" });
@@ -80,16 +80,12 @@ export class ShareService {
             (data: any, error: any) => {
                 if (!error && data) {
                     if (data && data.length > 0) {
-                        let station = data[0].station;
-                        let user = data[0].user;
                         let shateToUrl = data[0].shateToUrl;
-                        let destinationUrl = shateToUrl ?
-                            "http://" + data[0].serverUrl + ":" + data[0].port + "/upload" :
-                            "";
+                        let destinationUrl = shateToUrl ? data[0].serverUrl + "/uploadFile" : "";
                         this.shareFile(
                             (data1: any, error1: any) => {
                                 callback(data1, error1);
-                            }, file, station, user, destinationUrl
+                            }, file, destinationUrl, data[0]
                         )
                     } else {
                         callback(data, error);

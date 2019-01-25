@@ -97,6 +97,7 @@ export class ParameterPage extends ItemsPage {
 */
 	
 	save(){
+		this.items[0].station = "MSIVirtual";
 		this.itemService.saveParameters(
 			(data: any, error: any) => {
 				if (error){

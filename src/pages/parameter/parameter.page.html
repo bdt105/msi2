@@ -8,10 +8,10 @@
 </ion-header>
 
 <ion-content nopadding>
-	<ion-item *ngIf="items && items.length > 0">
+	<!-- <ion-item *ngIf="items && items.length > 0">
 		<ion-label fixed>{{translate('Station')}}</ion-label>
-		<ion-input type="text" placeholder="{{translate('Station')}}" [(ngModel)]="items[0].station" (change)="save()"></ion-input>
-	</ion-item>
+		<ion-input type="text" placeholder="{{translate('Station')}}" [(ngModel)]="items[0].station" (change)="save()" disabled></ion-input>
+	</ion-item> -->
 	<ion-item *ngIf="items && items.length > 0">
 		<ion-label fixed>{{translate('User')}}</ion-label>
 		<ion-input type="text" placeholder="{{translate('User')}}" [(ngModel)]="items[0].user" (change)="save()"></ion-input>
@@ -21,12 +21,16 @@
 		<ion-toggle [(ngModel)]="items[0].shateToUrl" (ionChange)="save()"></ion-toggle>
 	</ion-item>
 	<ion-item *ngIf="items && items.length > 0 && items[0].shateToUrl">
-		<ion-label fixed>{{translate('Name or IP')}}</ion-label>
+		<ion-label fixed>{{translate('Name or IP, includee port if necessary')}}</ion-label>
 		<ion-input type="text" placeholder="{{translate('Server name or IP')}}" [(ngModel)]="items[0].serverUrl" (change)="save()"></ion-input>
 	</ion-item>
-	<ion-item *ngIf="items && items.length > 0 && items[0].shateToUrl">
+	<!-- <ion-item *ngIf="items && items.length > 0 && items[0].shateToUrl">
 		<ion-label fixed>{{translate('Port')}}</ion-label>
 		<ion-input type="number" placeholder="{{translate('Server port')}}" [(ngModel)]="items[0].port" (change)="save()"></ion-input>
+	</ion-item> -->
+	<ion-item *ngIf="items && items.length > 0 && items[0].shateToUrl">
+		<ion-label fixed>{{translate('Identifier')}}</ion-label>
+		<ion-input type="text" placeholder="{{translate('Identifier')}}" [(ngModel)]="items[0].identifier" (change)="save()"></ion-input>
 	</ion-item>
 	<div padding>
 		<span (press)="toggleAllData()">{{translate('Choose a language')}}</span><br><br>

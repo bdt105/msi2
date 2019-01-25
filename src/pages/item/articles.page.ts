@@ -62,10 +62,10 @@ export class ArticlesPage extends ItemsPage {
 		)
 	}
 
-	change(){
+	change() {
 		this.itemService.touchFile(this.file);
 	}
-	
+
 	delete(article: any) {
 		this.toolbox.deleteObjectInList(this.file.articles, "id", article.id);
 		this.itemService.touchFile(this.file);
@@ -140,7 +140,11 @@ export class ArticlesPage extends ItemsPage {
 					if (error1 && error1.message == "PARAM_ERROR") {
 						this.customService.callbackToast(error1, this.translate('Impossible de share. Please set station and user in parameters.'), 3000)
 					} else {
-						this.customService.callbackToast(error1, this.translate("Error sharing! Please check server.") + " " + (error1.exception ? error1.exception : ""), 3000);
+						if (error1.http_status == 404) {
+							this.customService.callbackToast(error1, this.translate("Error sharing! Please check server.") + " " + (error1.body), 3000);
+						} else {
+							this.customService.callbackToast(error1, this.translate("Error sharing! Please check server.") + " " + (error1.exception ? error1.exception : ""), 3000);
+						}
 					}
 				}
 			}, this.file
@@ -148,14 +152,14 @@ export class ArticlesPage extends ItemsPage {
 	}
 
 
-	deleteFile(){
+	deleteFile() {
 		this.itemService.deleteFile(
 			(data: any, error: any) => {
-				if (!error){
+				if (!error) {
 					this.customService.callbackToast(null, this.translate('File deleted with success'));
 					this.navController.pop();
 				}
-			}, this.files, this.fileFormat.name, "id", this.file.id, true 
+			}, this.files, this.fileFormat.name, "id", this.file.id, true
 		)
 	}
 
