@@ -28,8 +28,9 @@ export class ParameterPage extends ItemsPage {
 					this.items = data;
 					if (!this.items) {
 						this.items = [{}];
-						this.items[0].station = "MSIVirtual";
 					}
+					this.items[0].station = "MSIVirtual";
+					this.items[0].serverUrl = this.customService.getConfiguration().uploadServer.baseUrl;
 				}
 			});
 		this.getAllData();

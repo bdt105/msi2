@@ -52,15 +52,19 @@ export class ShareService {
             this.exportService.shareFile(
                 (data: any, error: any) => {
                     if (destinationUrl) {
-                        // let more = {"fileName": data.fileName, "station": station, "user": user};
-                        var uploadOptions = {
-                            fileKey: "file", // change fileKey
-                            chunkedMode: false, // add chunkedMode
-                            mimeType: "multipart/form-data", // add mimeType
-                            fileName: data.fileName,
-                            params: params
-                        };
-                        this.goSendToUrl(callback, data.dir + data.fileName, uploadOptions, destinationUrl)
+                        if (params.identifier) {
+                            // let more = {"fileName": data.fileName, "station": station, "user": user};
+                            var uploadOptions = {
+                                fileKey: "file", // change fileKey
+                                chunkedMode: false, // add chunkedMode
+                                mimeType: "multipart/form-data", // add mimeType
+                                fileName: data.fileName,
+                                params: params
+                            };
+                            this.goSendToUrl(callback, data.dir + data.fileName, uploadOptions, destinationUrl)
+                        } else {
+                            callback(null, { "exception": "No identifier found" });
+                        }
                     } else {
                         if (!error) {
                             this.goShare(callback, data.dir + data.fileName);
@@ -81,7 +85,7 @@ export class ShareService {
                 if (!error && data) {
                     if (data && data.length > 0) {
                         let shateToUrl = data[0].shateToUrl;
-                        let destinationUrl = shateToUrl ? data[0].serverUrl + "/uploadFile" : "";
+                        let destinationUrl = shateToUrl ? this.customService.getConfiguration().uploadServer.baseUrl + this.customService.getConfiguration().uploadServer.uploadFile : "";
                         this.shareFile(
                             (data1: any, error1: any) => {
                                 callback(data1, error1);

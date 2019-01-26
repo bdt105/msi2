@@ -1,3 +1,6 @@
 {
-    
+    "uploadServer": {
+        "baseUrl": "http://vps592280.ovh.net/apiupload/",
+        "uploadFile": "uploadFile"
+    }
 }

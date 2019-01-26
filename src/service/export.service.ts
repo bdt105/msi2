@@ -3,14 +3,13 @@ import { Toolbox } from 'bdt105toolbox/dist';
 import { File } from '@ionic-native/file';
 import { Platform } from 'ionic-angular';
 import { CustomService } from './custom.service';
-import { FileTransfer, FileUploadOptions, FileTransferObject } from '@ionic-native/file-transfer';
 
 @Injectable()
 export class ExportService {
 
     toolbox = new Toolbox();
     constructor(private file: File, private customService: CustomService, public platform: Platform) {
-
+        
     }
 
     private getDirectory() {
