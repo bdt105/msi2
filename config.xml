@@ -71,8 +71,8 @@
         <splash height="960" platform="ios" src="resources/ios/splash/Default@2x~iphone.png" width="640" />
         <splash height="480" platform="ios" src="resources/ios/splash/Default~iphone.png" width="320" />
         <plugin name="cordova-plugin-camera" spec="^4.0.3">
-            <variable name="CAMERA_USAGE_DESCRIPTION" value="Spreadsheet needs to access your camera" />
-            <variable name="PHOTOLIBRARY_USAGE_DESCRIPTION" value="Spreadsheet needs to access your image library" />
+            <variable name="CAMERA_USAGE_DESCRIPTION" value="MSIVirtual needs to access your camera" />
+            <variable name="PHOTOLIBRARY_USAGE_DESCRIPTION" value="MSIVirtual needs to access your image library" />
         </plugin>
         <edit-config file="*-Info.plist" mode="merge" target="NSCameraUsageDescription">
             <string>need camera access to take pictures</string>
