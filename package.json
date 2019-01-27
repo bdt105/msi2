@@ -1,7 +1,7 @@
 {
-  "name": "testvers",
+  "name": "msivirtual",
   "version": "0.0.1",
-  "author": "Ionic Framework",
+  "author": "Bernard Deregnaucourt",
   "homepage": "http://ionicframework.com/",
   "private": true,
   "scripts": {
