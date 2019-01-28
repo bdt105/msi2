@@ -110,7 +110,7 @@ export class ParameterPage extends ItemsPage {
 
 	saveUser() {
 		if (this.items && this.items.length > 0) {
-			this.items[0].user = this.items[0].user.replace(/[^a-zA-Z]/g, "");
+			this.items[0].user = this.items[0].user.replace(/[^a-zA-Z0-9]/g, "");
 			// this.items[0].user = this.items[0].user.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 			// this.items[0].user = this.toolbox.noAccent(this.items[0].user);
 			// this.items[0].user = this.toolbox.replaceAll(this.items[0].user, " ", "");
