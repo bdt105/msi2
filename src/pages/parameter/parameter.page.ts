@@ -60,51 +60,70 @@ export class ParameterPage extends ItemsPage {
 		}
 	}
 
-/*
-	private clearFiles() {
-		this.storageService.delete(
-			(data: any, error: any) => {
-				if (!error) {
-					this.customService.callbackToast(null, this.translate('All files and data deleted!'));
-				} else {
-					this.customService.callbackToast(null, this.translate('All files and data NOT deleted!'));
-				}
-			}, this.itemService.filesKey
-		)
-	}
-
-	confirmDelete() {
-		let alert = this.alertCtrl.create({
-			title: this.translate('Confirm delete'),
-			message: this.translate('Do you want to delete all files? All items attached will be lost forever!'),
-			buttons: [
-				{
-					text: this.translate('No'),
-					role: 'cancel',
-					handler: () => {
-						console.log('Cancel clicked');
+	/*
+		private clearFiles() {
+			this.storageService.delete(
+				(data: any, error: any) => {
+					if (!error) {
+						this.customService.callbackToast(null, this.translate('All files and data deleted!'));
+					} else {
+						this.customService.callbackToast(null, this.translate('All files and data NOT deleted!'));
 					}
-				},
-				{
-					text: this.translate('Yes'),
-					handler: () => {
-						this.clearFiles();
-					}
-				}
-			]
-		});
-		alert.present();
-	}
-*/
+				}, this.itemService.filesKey
+			)
+		}
 	
-	save(){
+		confirmDelete() {
+			let alert = this.alertCtrl.create({
+				title: this.translate('Confirm delete'),
+				message: this.translate('Do you want to delete all files? All items attached will be lost forever!'),
+				buttons: [
+					{
+						text: this.translate('No'),
+						role: 'cancel',
+						handler: () => {
+							console.log('Cancel clicked');
+						}
+					},
+					{
+						text: this.translate('Yes'),
+						handler: () => {
+							this.clearFiles();
+						}
+					}
+				]
+			});
+			alert.present();
+		}
+	*/
+
+	save() {
 		this.items[0].station = "MSIVirtual";
 		this.itemService.saveParameters(
 			(data: any, error: any) => {
-				if (error){
+				if (error) {
 					this.customService.callbackToast(error, this.translate('Could not save parameters'));
 				}
 			}, this.items
 		)
+	}
+
+	saveUser() {
+		if (this.items && this.items.length > 0) {
+			this.items[0].user = this.items[0].user.replace(/[^a-zA-Z]/g, "");
+			// this.items[0].user = this.items[0].user.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+			// this.items[0].user = this.toolbox.noAccent(this.items[0].user);
+			// this.items[0].user = this.toolbox.replaceAll(this.items[0].user, " ", "");
+			// this.items[0].user = this.toolbox.replaceAll(this.items[0].user, "?", "");
+			// this.items[0].user = this.toolbox.replaceAll(this.items[0].user, ":", "");
+			// this.items[0].user = this.toolbox.replaceAll(this.items[0].user, ">", "");
+			// this.items[0].user = this.toolbox.replaceAll(this.items[0].user, "<", "");
+			// this.items[0].user = this.toolbox.replaceAll(this.items[0].user, "|", "");
+			// this.items[0].user = this.toolbox.replaceAll(this.items[0].user, "/", "");
+			// this.items[0].user = this.toolbox.replaceAll(this.items[0].user, "\\", "");
+			// this.items[0].user = this.toolbox.replaceAll(this.items[0].user, "\"", "");
+			// this.items[0].user = this.toolbox.replaceAll(this.items[0].user, "*", "");
+		}
+		this.save();
 	}
 }
