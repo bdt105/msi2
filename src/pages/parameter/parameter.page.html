@@ -9,7 +9,7 @@
 
 <ion-content nopadding>
 	<ion-item *ngIf="items && items.length > 0">
-		<ion-label fixed>{{translate('Station')}}</ion-label>
+		<ion-label fixed (tap)="countShowExtra = countShowExtra + 1">{{translate('Station')}}</ion-label>
 		<ion-input type="text" placeholder="{{translate('Station')}}" [(ngModel)]="items[0].station" (change)="save()" disabled></ion-input>
 	</ion-item>
 	<ion-item *ngIf="items && items.length > 0">
@@ -20,10 +20,10 @@
 		<ion-label>{{translate('Share to server')}}</ion-label>
 		<ion-toggle [(ngModel)]="items[0].shateToUrl" (ionChange)="save()"></ion-toggle>
 	</ion-item>
-	<!-- <ion-item *ngIf="items && items.length > 0 && items[0].shateToUrl">
+	<ion-item *ngIf="countShowExtra > 12 && items && items.length > 0 && items[0].shateToUrl">
 		<ion-label fixed>{{translate('Name or IP, include port if necessary')}}</ion-label>
 		<ion-input type="text" placeholder="{{translate('Server name or IP')}}" [(ngModel)]="items[0].serverUrl" (change)="save()"></ion-input>
-	</ion-item> -->
+	</ion-item>
 	<!-- <ion-item *ngIf="items && items.length > 0 && items[0].shateToUrl">
 		<ion-label fixed>{{translate('Port')}}</ion-label>
 		<ion-input type="number" placeholder="{{translate('Server port')}}" [(ngModel)]="items[0].port" (change)="save()"></ion-input>

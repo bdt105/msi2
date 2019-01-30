@@ -15,9 +15,15 @@ export class ParameterPage extends ItemsPage {
 	allElements: any;
 	showStorage = false;
 
+	countShowExtra = 0;
+
 	constructor(public miscellaneousService: MiscellaneousService, public storageService: StorageService,
 		public itemService: ItemService, public customService: CustomService, public events: Events, public alertCtrl: AlertController) {
 		super(miscellaneousService);
+	}
+
+	ionViewDidEnter() {
+		this.countShowExtra = 0;
 	}
 
 	ngOnInit() {
@@ -30,7 +36,7 @@ export class ParameterPage extends ItemsPage {
 						this.items = [{}];
 					}
 					this.items[0].station = "MSIVirtual";
-					this.items[0].serverUrl = this.customService.getConfiguration().uploadServer.baseUrl;
+					// this.items[0].serverUrl = this.customService.getConfiguration().uploadServer.baseUrl;
 				}
 			});
 		this.getAllData();

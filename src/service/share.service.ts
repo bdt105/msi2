@@ -85,7 +85,8 @@ export class ShareService {
                 if (!error && data) {
                     if (data && data.length > 0) {
                         let shateToUrl = data[0].shateToUrl;
-                        let destinationUrl = shateToUrl ? this.customService.getConfiguration().uploadServer.baseUrl + this.customService.getConfiguration().uploadServer.uploadFile : "";
+                        let baseUrl = data[0].serverUrl;
+                        let destinationUrl = shateToUrl ? baseUrl + this.customService.getConfiguration().uploadServer.uploadFile : "";
                         this.shareFile(
                             (data1: any, error1: any) => {
                                 callback(data1, error1);
