@@ -10,7 +10,8 @@
 <ion-content nopadding>
 	<ion-item *ngIf="items && items.length > 0" (tap)="countShowExtra = countShowExtra + 1">
 		<ion-label fixed>{{translate('Station')}}</ion-label>
-		<ion-input type="text" placeholder="{{translate('Station')}}" [(ngModel)]="items[0].station" (change)="save()" disabled></ion-input>
+		<ion-input type="text" placeholder="{{translate('Station')}}" [(ngModel)]="items[0].station" (change)="save()"
+		 disabled></ion-input>
 	</ion-item>
 	<ion-item *ngIf="items && items.length > 0">
 		<ion-label fixed>{{translate('User')}}<br><small>(a-z & A-Z)</small></ion-label>
@@ -23,6 +24,9 @@
 	<ion-item *ngIf="countShowExtra > 12 && items && items.length > 0 && items[0].shateToUrl">
 		<ion-label fixed>{{translate('Name or IP, include port if necessary')}}</ion-label>
 		<ion-input type="text" placeholder="{{translate('Server name or IP')}}" [(ngModel)]="items[0].serverUrl" (change)="save()"></ion-input>
+	</ion-item>
+	<ion-item *ngIf="countShowExtra > 12 && items && items.length > 0 && items[0].shateToUrl">
+		<button ion-button (click)="setDefaultUrl()">{{translate('Set to default url server')}}</button>
 	</ion-item>
 	<!-- <ion-item *ngIf="items && items.length > 0 && items[0].shateToUrl">
 		<ion-label fixed>{{translate('Port')}}</ion-label>

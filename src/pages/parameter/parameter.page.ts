@@ -26,6 +26,11 @@ export class ParameterPage extends ItemsPage {
 		this.countShowExtra = 0;
 	}
 
+	setDefaultUrl(){
+		this.items[0].serverUrl = this.customService.getConfiguration().uploadServer.baseUrl;
+		this.save();
+	}
+
 	ngOnInit() {
 		this.items = null;
 		this.itemService.getParameters(
@@ -37,8 +42,9 @@ export class ParameterPage extends ItemsPage {
 					}
 					this.items[0].station = "MSIVirtual";
 					if (!this.items[0].serverUrl) {
-						this.items[0].serverUrl = this.customService.getConfiguration().uploadServer.baseUrl;
+						this.setDefaultUrl();
 					}
+					this.save();
 				}
 			});
 		this.getAllData();
