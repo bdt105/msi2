@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { MiscellaneousService } from '../../angularShared/services/miscellaneous.service';
 import { CustomService } from '../../service/custom.service';
-import { Events, AlertController } from 'ionic-angular';
+import { Events, AlertController, NavController } from 'ionic-angular';
 import { ItemsPage } from '../item/items.page';
 import { StorageService } from '../../service/storage.service';
 import { ItemService } from '../../service/item.service';
@@ -17,7 +17,7 @@ export class ParameterPage extends ItemsPage {
 
 	countShowExtra = 0;
 
-	constructor(public miscellaneousService: MiscellaneousService, public storageService: StorageService,
+	constructor(public miscellaneousService: MiscellaneousService, public storageService: StorageService, private navCtrl: NavController,
 		public itemService: ItemService, public customService: CustomService, public events: Events, public alertCtrl: AlertController) {
 		super(miscellaneousService);
 	}
@@ -26,7 +26,7 @@ export class ParameterPage extends ItemsPage {
 		this.countShowExtra = 0;
 	}
 
-	setDefaultUrl(){
+	setDefaultUrl() {
 		this.items[0].serverUrl = this.customService.getConfiguration().uploadServer.baseUrl;
 		this.save();
 	}
@@ -127,5 +127,21 @@ export class ParameterPage extends ItemsPage {
 			this.items[0].user = this.items[0].user.replace(/[^a-zA-Z0-9]/g, "");
 		}
 		this.save();
+	}
+
+	scanIdentifier() {
+		this.customService.scanSimple((barcodeData: any, error: any) => {
+			if (!error && barcodeData) {
+				if (!barcodeData.cancelled) {
+					this.items[0].identifier = barcodeData.text;
+					this.save();
+				} else {
+					this.navCtrl.push(ParameterPage);
+				}
+			} else {
+				console.log("Could not Scan");
+			}
+		});
+
 	}
 }

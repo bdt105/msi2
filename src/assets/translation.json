@@ -698,6 +698,41 @@
             "FR": "Fichiers non envoyés",
             "PT": "Ficheiros nao enviados"
         }
+    },
+    {
+        "key": "Sent",
+        "value": {
+            "FR": "Envoyé",
+            "PT": "Enviado"
+        }
+    },
+    {
+        "key": "Not sent",
+        "value": {
+            "FR": "Non envoyé",
+            "PT": "Nao enviado"
+        }
+    },
+    {
+        "key": "List",
+        "value": {
+            "FR": "Liste",
+            "PT": "Lista"
+        }
+    },
+    {
+        "key": "Identifier",
+        "value": {
+            "FR": "Identifiant",
+            "PT": "Identificador"
+        }
+    },
+    {
+        "key": "Scan identifier",
+        "value": {
+            "FR": "Scaner l'identifiant",
+            "PT": "Scan o identificador"
+        }
     }
 
         
