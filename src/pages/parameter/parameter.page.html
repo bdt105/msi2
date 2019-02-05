@@ -37,7 +37,7 @@
 		<ion-input type="text" placeholder="{{translate('Identifier')}}" [(ngModel)]="items[0].identifier" (change)="save()"></ion-input>
 	</ion-item>
 	<ion-item *ngIf="items && items.length > 0 && items[0].shateToUrl">
-		<button ion-button (click)="scanIdentifier()"><ion-icon name="barcode"></ion-icon>&nbsp;{{translate('Scan identifer')}}</button>
+		<button ion-button (click)="scanIdentifier()"><ion-icon name="barcode"></ion-icon>&nbsp;{{translate('Scan identifier')}}</button>
 	</ion-item>
 	<div padding>
 		<span (press)="toggleAllData()">{{translate('Choose a language')}}</span><br><br>

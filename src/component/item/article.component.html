@@ -18,7 +18,7 @@
 			<ion-input type="number" [(ngModel)]="item.value" (change)="onChangee()" placeholder="{{customService.getFileFormat(file.type).valuePlaceHolder}}"></ion-input>
 		</ion-item>
 		<ion-item  *ngIf="!isValid() && customService.getFileFormat(file.type).valueMessage">
-			<span>{{customService.getFileFormat(file.type).valueMessage}}</span>
+			<span>{{translate(customService.getFileFormat(file.type).valueMessage) + ' ' + customService.getFileFormat(file.type).valuePlaceHolder}}</span>
 		</ion-item>
 		<ion-item>
 			<ion-label fixed>{{translate('Comment')}}</ion-label>

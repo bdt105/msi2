@@ -18,7 +18,7 @@ export class ArticlesPage extends ItemsPage {
 	fileFormat: any;
 
 	constructor(public miscellaneousService: MiscellaneousService, public customService: CustomService, private shareService: ShareService,
-		public navParams: NavParams, public itemService: ItemService, public alertCtrl: AlertController, public navController: NavController) {
+		public navParams: NavParams, public itemService: ItemService, public alertCtrl: AlertController, public navController: NavController, private navCtrl: NavController) {
 		super(miscellaneousService);
 	}
 
@@ -81,6 +81,8 @@ export class ArticlesPage extends ItemsPage {
 						article.code = data.text;
 						this.itemService.touchFile(this.file);
 						this.promptValue(article);
+					} else {
+						//this.navCtrl.pop();//. push(ArticlesPage, { "file": this.file, "files": this.files });
 					}
 				}
 			}
@@ -95,7 +97,7 @@ export class ArticlesPage extends ItemsPage {
 				this.items.splice(0, 0, article);
 				this.save();
 			} else {
-				alert(this.translate(this.fileFormat.valueMessage));
+				alert(this.translate(this.fileFormat.valueMessage) + ' ' + this.fileFormat.valuePlaceHolder);
 				this.promptValue(article);
 			}
 		}
@@ -108,7 +110,7 @@ export class ArticlesPage extends ItemsPage {
 				this.save();
 				this.newScan();
 			} else {
-				alert(this.translate(this.fileFormat.valueMessage));
+				alert(this.translate(this.fileFormat.valueMessage) + ' ' + this.fileFormat.valuePlaceHolder);
 				this.promptValue(article);
 			}
 		}
@@ -138,7 +140,7 @@ export class ArticlesPage extends ItemsPage {
 					this.confirmDeleteFile();
 				} else {
 					if (error1 && error1.message == "PARAM_ERROR") {
-						this.customService.callbackToast(error1, this.translate('Impossible de share. Please set station and user in parameters.'), 3000)
+						this.customService.callbackToast(error1, this.translate('Impossible de share. Please set user in parameters.'), 3000)
 					} else {
 						if (error1.http_status == 404) {
 							this.customService.callbackToast(error1, this.translate("Error sharing! Please check server.") + " " + (error1.body), 3000);

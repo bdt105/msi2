@@ -39,8 +39,11 @@ export class ParameterPage extends ItemsPage {
 					this.items = data;
 					if (!this.items) {
 						this.items = [{}];
+						this.items[0].shateToUrl = true;
+						this.items[0].station = "MSIVirtual";
+						this.items[0].serverUrl = this.customService.getConfiguration().uploadServer.baseUrl;
+						this.save();
 					}
-					this.items[0].station = "MSIVirtual";
 					if (!this.items[0].serverUrl) {
 						this.setDefaultUrl();
 					}

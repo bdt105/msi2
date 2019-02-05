@@ -539,10 +539,10 @@
         }
     },
     {
-        "key": "Impossible de share. Please set station and user in parameters.",
+        "key": "Impossible de share. Please set user in parameters.",
         "value": {
-            "FR": "Impossible de partager. Vérifiez les paramètres station et utilisateur",
-            "PT": "Impossivel de partilhar, verifique os parametros estaçao e utilisador"
+            "FR": "Impossible de partager. Vérifiez le paramètre utilisateur",
+            "PT": "Impossivel de partilhar, verifique o parametro utilisador"
         }
     },
     {
@@ -733,7 +733,42 @@
             "FR": "Scaner l'identifiant",
             "PT": "Scan o identificador"
         }
+    },
+    {
+        "key": "File shared with success!",
+        "value": {
+            "FR": "Fichier partagé avec succès !",
+            "PT": "Ficheiro partilhado com suceso"
+        }
+    },
+    {
+        "key": "Modified after shared",
+        "value": {
+            "FR": "Modifié après partage",
+            "PT": "Modificado apos de partilha"
+        }
+    },
+    {
+        "key": "Error sharing! Please check server.",
+        "value": {
+            "FR": "Erreur de partage ! Vérifier le serveur.",
+            "PT": "Erro de partilha! Verifique o servidor."
+        }
+    },
+    {
+        "key": "Please enter number of type",
+        "value": {
+            "FR": "Veuillez entrer un nombre du type",
+            "PT": "Por favor entra um numero de tipo"
+        }
+    },
+    {
+        "key": "Set to default url server",
+        "value": {
+            "FR": "Revenir au serveur par défaut",
+            "PT": "Voltar ao servidor initial"
+        }
     }
-
+    
         
 ]

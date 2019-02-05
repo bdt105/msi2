@@ -5,7 +5,7 @@
         "iconName": "",
         "iconColor": "#6700ff",
         "valueRegex": "^[0-9]{1,4}$",
-        "valueMessage": "Please number <= 9999",
+        "valueMessage": "Please enter number of type",
         "valuePlaceHolder": "0000",
         "fileName": "ETIQUETTE",
         "fileFormat": [
@@ -46,8 +46,8 @@
         "iconColor": "#005d38",
         "valueRegex2": "[0-9]{0,5}.?[0-9]{0,2}",
         "valueRegex": "^[0-9]{1,3}(\\.[0-9]{1,2})?$",
-        "valuePlaceHolder": "00000.000",
-        "valueMessage": "Please enter a number of type 00000.00",
+        "valuePlaceHolder": "00000.00",
+        "valueMessage": "Please enter number of type",
         "fileFormat": [
             {
                 "length": 13,
@@ -74,7 +74,7 @@
         "iconColor": "#677171",
         "valueRegex": "^[0-9]{1,4}(\\.[0-9]{1,4})?$",
         "valuePlaceHolder": "0000.0000",
-        "valueMessage": "Please enter a number of type 0000.0000",
+        "valueMessage": "Please enter number of type",
         "fileFormat": [
             {
                 "length": 13,
@@ -106,7 +106,7 @@
         "iconColor": "#bcc300",
         "valueRegex": "^[0-9]{1,2}$",
         "valuePlaceHolder": "00",
-        "valueMessage": "Please enter a number of type 00",
+        "valueMessage": "Please enter number of type",
         "fileFormat": [
             {
                 "length": 13,
@@ -128,7 +128,7 @@
         "iconColor": "#bcc300",
         "valueRegex": "^[0-9]{1,6}(\\.[0-9]{1,3})?$",
         "valuePlaceHolder": "000000.000",
-        "valueMessage": "Please enter an number of type 000000.000",
+        "valueMessage": "Please enter number of type",
         "fileFormat": [
             {
                 "length": 13,
@@ -155,7 +155,7 @@
         "iconColor": "#bcc300",
         "valueRegex": "^[0-9]{1,6}(\\.[0-9]{1,3})?$",
         "valuePlaceHolder": "000000.000",
-        "valueMessage": "Please enter an number of type 000000.000",
+        "valueMessage": "Please enter number of type",
         "fileFormat": [
             {
                 "length": 13,
@@ -182,7 +182,7 @@
         "iconColor": "#bcc300",
         "valueRegex": "^[0-9]{1,5}(\\.[0-9]{1,2})?$",
         "valuePlaceHolder": "00000.00",
-        "valueMessage": "Please enter a number of type 00000.00",
+        "valueMessage": "Please enter number of type",
         "fileFormat": [
             {
                 "length": 13,
@@ -209,7 +209,7 @@
         "iconColor": "#bcc300",
         "valueRegex": "^[0-9]{1,5}(\\.[0-9]{1,2})?$",
         "valuePlaceHolder": "00000.00",
-        "valueMessage": "Please enter a number of type 00000.00",
+        "valueMessage": "Please enter number of type",
         "fileFormat": [
             {
                 "length": 13,
