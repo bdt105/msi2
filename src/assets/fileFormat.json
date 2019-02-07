@@ -72,8 +72,8 @@
         "fileName": "LIVRAISON",
         "iconName": "",
         "iconColor": "#677171",
-        "valueRegex": "^[0-9]{1,4}(\\.[0-9]{1,4})?$",
-        "valuePlaceHolder": "0000.0000",
+        "valueRegex": "^[0-9]{1,5}(\\.[0-9]{1,3})?$",
+        "valuePlaceHolder": "00000.000",
         "valueMessage": "Please enter number of type",
         "fileFormat": [
             {
@@ -87,12 +87,12 @@
             },
             
             {
-                "length": 4,
+                "length": 5,
                 "fillWith": "0",
                 "field": "valueInteger"
             },
             {
-                "length": 4,
+                "length": 3,
                 "fillWith": "0",
                 "field": "valueDecimal"
             }
