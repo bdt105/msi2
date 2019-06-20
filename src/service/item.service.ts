@@ -67,6 +67,15 @@ export class ItemService {
         }
     }
 
+    // copyFile(callback: Function, sourceFile: any, destinationType: string){
+    //     if (sourceFile && destinationType){
+    //         this.storageService.read((data: any, error: any) => {
+
+    //         }, )
+    //     }
+
+    // }
+
     getFiles(callback: Function, type: string) {
         this.getItem(
             (data: any, error: any) => {

@@ -91,7 +91,7 @@ export class ArticlesPage extends ItemsPage {
 
 	promptValue(article: any) {
 		let callbackSave = (data: any) => {
-			article.value = data['0'];
+			article.value = isNaN((data['0'])) ? "" : data['0'];
 			if (data && this.itemService.isArticleValid(this.fileFormat, article)) {
 				article.modify = false;
 				this.items.splice(0, 0, article);
@@ -103,7 +103,7 @@ export class ArticlesPage extends ItemsPage {
 		}
 
 		let callbackSaveScan = (data: any) => {
-			article.value = data['0'];
+			article.value = isNaN((data['0'])) ? "" : data['0'];
 			if (data && this.itemService.isArticleValid(this.fileFormat, article)) {
 				article.modify = false;
 				this.items.splice(0, 0, article);

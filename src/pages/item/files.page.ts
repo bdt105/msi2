@@ -4,7 +4,6 @@ import { ItemService } from '../../service/item.service';
 import { CustomService } from '../../service/custom.service';
 import { NavParams, AlertController } from 'ionic-angular';
 import { ItemsPage } from './items.page';
-import { LoadedRouterConfig } from '@angular/router/src/config';
 
 @Component({
 	selector: 'page-files',

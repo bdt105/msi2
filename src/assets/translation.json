@@ -768,7 +768,34 @@
             "FR": "Revenir au serveur par défaut",
             "PT": "Voltar ao servidor initial"
         }
+    },
+    {
+        "key": "Copy to type",
+        "value": {
+            "FR": "Copier vers un type",
+            "PT": "Copiar para um tipo"
+        }
+    },
+    {
+        "key": "Copy",
+        "value": {
+            "FR": "Copier",
+            "PT": "Copiar"
+        }
+    },
+    {
+        "key": "Copy of",
+        "value": {
+            "FR": "Copie de ",
+            "PT": "Copia de"
+        }
+    },
+    {
+        "key": "File copied to",
+        "value": {
+            "FR": "Fichier copié vers",
+            "PT": "Ficheiro copiado para"
+        }
     }
-    
-        
+     
 ]
