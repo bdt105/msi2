@@ -36,14 +36,14 @@
                 <ion-icon name="warning"></ion-icon>&nbsp;{{translate('Not sent')}}
             </ion-list-header>
             <fileComponent [item]="file" [items]="items" *ngFor="let file of fileSplited.notSent" (deleted)="delete(file)"
-                (changed)="save()" (saved)="save()" (shared)="save(true)"></fileComponent>
+                (changed)="save(false, file)" (saved)="save(false, file)" (shared)="save(true, file)"></fileComponent>
         </div>
         <div *ngIf="fileSplited.sent && fileSplited.sent.length > 0">
             <ion-list-header style="color: green">
                 {{translate('Sent')}}
             </ion-list-header>
             <fileComponent [item]="file" [items]="items" *ngFor="let file of fileSplited.sent" (deleted)="delete(file)"
-                (changed)="save()" (saved)="save()"></fileComponent>
+                (changed)="save(false, file)" (saved)="save(false, file)"></fileComponent>
         </div>
     </ion-list>
     <!-- <ion-list>

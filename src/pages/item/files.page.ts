@@ -2,8 +2,9 @@ import { Component } from '@angular/core';
 import { MiscellaneousService } from '../../angularShared/services/miscellaneous.service';
 import { ItemService } from '../../service/item.service';
 import { CustomService } from '../../service/custom.service';
-import { NavParams, AlertController } from 'ionic-angular';
+import { NavParams, AlertController, NavController } from 'ionic-angular';
 import { ItemsPage } from './items.page';
+import { ArticlesPage } from './articles.page';
 
 @Component({
 	selector: 'page-files',
@@ -11,7 +12,7 @@ import { ItemsPage } from './items.page';
 })
 export class FilesPage extends ItemsPage {
 
-	constructor(public miscellaneousService: MiscellaneousService, public customService: CustomService,
+	constructor(public miscellaneousService: MiscellaneousService, public customService: CustomService, private navCtrl: NavController,
 		public navParams: NavParams, public itemService: ItemService, public alertCtrl: AlertController) {
 		super(miscellaneousService);
 	}
@@ -20,7 +21,7 @@ export class FilesPage extends ItemsPage {
 
 	public fileSplited: any;
 
-	ionViewDidEnter(){
+	ionViewDidEnter() {
 		this.ngOnInit();
 	}
 
@@ -56,7 +57,7 @@ export class FilesPage extends ItemsPage {
 					}
 					if (createNew) {
 						this.newFile(type);
-						this.save();
+						this.save(false, null);
 					}
 				} else {
 					this.customService.callbackToast(error, this.translate('Impossible to get files'));
@@ -87,7 +88,7 @@ export class FilesPage extends ItemsPage {
 		}
 	}
 
-	save(reload: boolean = false) {
+	save(reload: boolean, file: any) {
 		this.items = this.fileSplited.notSent.concat(this.fileSplited.sent);
 		this.itemService.saveFiles(
 			(data: any, error: any) => {
@@ -96,6 +97,10 @@ export class FilesPage extends ItemsPage {
 				} else {
 					if (reload) {
 						this.load();
+					} else {
+						if (file && (!file.articles || (file.articles && file.articles.length == 0))) {
+							this.navCtrl.push(ArticlesPage, { "file": file, "files": this.items });
+						}
 					}
 				}
 			}, this.items, this.fileFormat.name

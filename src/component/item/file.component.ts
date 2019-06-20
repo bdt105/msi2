@@ -50,7 +50,6 @@ export class FileComponent extends ItemComponent {
 		)
 	}
 
-
 	confirmCopy() {
 		let callbackOk = (data: any) => {
 			if (this.item && data && data.value) {
