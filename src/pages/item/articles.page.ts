@@ -119,15 +119,22 @@ export class ArticlesPage extends ItemsPage {
 		}
 
 		let values = [
-			{ "type": "number", "value": null, "label": this.translate('Value'), "checked": false, "placeholder": this.fileFormat.placeholder }
+			{
+				"type": "number", "value": 1, "label": this.translate('Value'), "checked": false, "placeholder": this.fileFormat.placeholder
+			}
 		];
 
+		let isInList = false;
+		if (article && this.file && this.file.articles && this.file.articles.length > 0) {
+			isInList = this.toolbox.findIndexArrayOfObjects(this.file.articles, "code", article.code) > -1;
+		}
+
 		this.customService.showAlertForm(
-			this.translate('Value'),
+			this.translate('Value for') + ' ' + (article ? article.code : "?"),
 			[{ "label": this.translate('Save'), "callback": callbackSave },
 			{ "label": this.translate('Save & scan'), "callback": callbackSaveScan },
 			{ "label": this.translate('Cancel'), "callback": callbackNok }],
-			values)
+			values, isInList ? this.translate('Already in list') : null);
 	}
 
 	share() {

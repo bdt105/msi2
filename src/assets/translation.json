@@ -483,6 +483,13 @@
         }
     },
     {
+        "key": "Value for",
+        "value": {
+            "FR": "Valeur pour",
+            "PT": "Valor para"
+        }
+    },
+    {
         "key": "Comment",
         "value": {
             "FR": "Commentaire",
@@ -796,6 +803,13 @@
             "FR": "Fichier copié vers",
             "PT": "Ficheiro copiado para"
         }
+    },
+    {
+        "key": "Already in list",
+        "value": {
+            "FR": "Déjà dans la liste",
+            "PT": "Jà na lista"
+        }
     }
-     
+        
 ]
