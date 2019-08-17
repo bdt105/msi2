@@ -140,10 +140,10 @@
         }
     },
     {
-        "key": "Do you want to delete this item? All items attached will be lost forever!",
+        "key": "Do you want to delete this item? All data attached will be lost forever!",
         "value": {
-            "FR": "Voulez vous supprimer ce fichier ? Toutes les données attachée seront perdues pour toujours !",
-            "PT": "Vocé quer apagar este ficheiro? Todos os dados ligados serao perdidos por sempre!"
+            "FR": "Voulez vous supprimer cet élément ? Toutes les données attachées seront perdues pour toujours !",
+            "PT": "Vocé quer apagar este elemento? Todos os dados ligados serao perdidos por sempre!"
         }
     },
     {
@@ -511,7 +511,7 @@
         }
     },
     {
-        "key": "Do you want to delete all files? All items attached will be lost forever!",
+        "key": "Do you want to delete all files? All data attached will be lost forever!",
         "value": {
             "FR": "Voulez vous supprimer tous les fichiers ? Tous les items associés seront perdus pour toujours!",
             "PT": "Quer apagar todos os ficheiros? Todos os items asociados serao perdidos para sempre!"
@@ -810,6 +810,15 @@
             "FR": "Déjà dans la liste",
             "PT": "Jà na lista"
         }
+    },
+    {
+        "key": "Do you want to delete this file?",
+        "value": {
+            "FR": "Voulez vous supprimer ce fichier ?",
+            "PT": "Quer apagar este ficheiro?"
+        }
     }
+
+    
         
 ]

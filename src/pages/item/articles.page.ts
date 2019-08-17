@@ -144,7 +144,7 @@ export class ArticlesPage extends ItemsPage {
 					this.file.shareDate = new Date().getTime();
 					this.customService.callbackToast(null, this.translate('File shared with success!'));
 					this.save();
-					this.confirmDeleteFile();
+					this.confirmDeleteFile('Has the file been shared with success? If yes, do you want to delete it now?');
 				} else {
 					if (error1 && error1.message == "PARAM_ERROR") {
 						this.customService.callbackToast(error1, this.translate('Impossible de share. Please set user in parameters.'), 3000)
@@ -172,10 +172,10 @@ export class ArticlesPage extends ItemsPage {
 		)
 	}
 
-	confirmDeleteFile() {
+	confirmDeleteFile(message: string) {
 		let alert = this.alertCtrl.create({
 			title: this.translate('Confirm delete'),
-			message: this.translate('Has the file been shared with success? If yes, do you want to delete it now?'),
+			message: this.translate(message),
 			buttons: [
 				{
 					text: this.translate('No'),

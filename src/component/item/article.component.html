@@ -1,3 +1,39 @@
+<ion-item-sliding>
+
+	<ion-item *ngIf="item" (press)="presentActionSheet()"
+		[ngStyle]="{'background-color': selected ? '#fff0f0' : 'transparent'}">
+		<ion-avatar item-end *ngIf="item.imageUri && customService.isMobileDevice()">
+			<span *ngIf="customService.isMobileDevice()" (click)="viewPhoto()">
+				<img [src]="image" />
+			</span>
+		</ion-avatar>
+		<span>
+			<ion-icon name="barcode"></ion-icon> {{item.code}}<br>
+			<ion-icon name="calculator"></ion-icon> <small>{{item.value}}</small>
+		</span>
+		<small *ngIf="item.comment"><br>{{item.comment}}</small>
+		<div item-end style="height: 100%;margin-top: 30px;">
+			<small>
+				<ion-icon name="create"></ion-icon>&nbsp;{{customService.smartDate(item.modificationDate)}}
+			</small>
+			<small *ngIf="item.shareDate">
+				<br>
+				<ion-icon name="share"></ion-icon>&nbsp;{{customService.smartDate(item.shareDate)}}
+			</small>
+		</div>
+	</ion-item>
+	<ion-item-options side="left">
+		<button ion-button color="info" (click)="scan(item)">
+			<ion-icon name="barcode"></ion-icon>
+		</button>
+		<button ion-button color="success" (click)="toggleModify()">
+			<ion-icon name="create"></ion-icon>
+		</button>
+		<button ion-button (click)="confirmmDelete()">
+			<ion-icon name="trash"></ion-icon>
+		</button>
+	</ion-item-options>
+</ion-item-sliding>
 <ion-card *ngIf="item && item.modify">
 	<ion-list>
 		<ion-item *ngIf="item.imageUri && customService.isMobileDevice()">
@@ -15,9 +51,10 @@
 			<ion-label fixed>
 				{{translate('Value')}}
 			</ion-label>
-			<ion-input type="number" [(ngModel)]="item.value" (change)="onChangee()" placeholder="{{customService.getFileFormat(file.type).valuePlaceHolder}}"></ion-input>
+			<ion-input type="number" [(ngModel)]="item.value" (change)="onChangee()"
+				placeholder="{{customService.getFileFormat(file.type).valuePlaceHolder}}"></ion-input>
 		</ion-item>
-		<ion-item  *ngIf="!isValid() && customService.getFileFormat(file.type).valueMessage">
+		<ion-item *ngIf="!isValid() && customService.getFileFormat(file.type).valueMessage">
 			<span>{{translate(customService.getFileFormat(file.type).valueMessage) + ' ' + customService.getFileFormat(file.type).valuePlaceHolder}}</span>
 		</ion-item>
 		<ion-item>
@@ -25,9 +62,6 @@
 			<ion-input type="text" [(ngModel)]="item.comment" (change)="onChange()"></ion-input>
 		</ion-item>
 		<ion-item>
-			<!-- <button ion-button *ngIf="!item.modify" (click)="toggleModify()">
-				<ion-icon name="create"></ion-icon>&nbsp;{{translate('Edit')}}
-			</button> -->
 			<button ion-button *ngIf="item.modify && isValid()" (click)="onSave()">
 				<ion-icon name="checkmark"></ion-icon>&nbsp;{{translate('Save')}}
 			</button>
@@ -47,24 +81,3 @@
 		</ion-item>
 	</ion-list>
 </ion-card>
-<ion-item *ngIf="item && !item.modify" (press)="presentActionSheet()" [ngStyle]="{'background-color': selected ? '#fff0f0' : 'transparent'}">
-	<ion-avatar item-end *ngIf="item.imageUri && customService.isMobileDevice()">
-		<span *ngIf="customService.isMobileDevice()" (click)="viewPhoto()">
-			<img [src]="image" />
-		</span>
-	</ion-avatar>
-	<span>
-		<ion-icon name="barcode"></ion-icon> {{item.code}}<br>
-		<span style="font-size: 1.1em">{{item.value}}</span>
-	</span>
-	<small *ngIf="item.comment"><br>{{item.comment}}</small>
-	<div item-end style="height: 100%;margin-top: 30px;">
-		<small>
-			<ion-icon name="create"></ion-icon>&nbsp;{{customService.smartDate(item.modificationDate)}}
-		</small>
-		<small *ngIf="item.shareDate">
-			<br>
-			<ion-icon name="share"></ion-icon>&nbsp;{{customService.smartDate(item.shareDate)}}
-		</small>
-	</div>
-</ion-item>

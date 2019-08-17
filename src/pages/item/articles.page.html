@@ -4,12 +4,17 @@
             <ion-icon name="menu"></ion-icon>
         </button>
         <ion-title *ngIf="file">
-            <ion-icon *ngIf="customService.getFileFormat(file.type)" name="{{customService.getFileFormat(file.type).icon}}"></ion-icon>&nbsp;
-            {{file.name ? file.name : translate('File')}}&nbsp;<ion-badge *ngIf="items && items.length > 0">{{items.length}}</ion-badge>
+            <ion-icon *ngIf="customService.getFileFormat(file.type)"
+                name="{{customService.getFileFormat(file.type).icon}}"></ion-icon>&nbsp;
+            {{file.name ? file.name : translate('File')}}&nbsp;<ion-badge *ngIf="items && items.length > 0">
+                {{items.length}}</ion-badge>
         </ion-title>
         <ion-buttons end>
             <button *ngIf="items && items.length > 0" ion-button icon-only (click)="share()">
-                <ion-icon name="share"></ion-icon>
+                <ion-icon name="cloud-upload"></ion-icon>
+            </button>
+            <button *ngIf="items && items.length > 0" ion-button icon-only (click)="confirmDeleteFile('Do you want to delete this file?')">
+                <ion-icon name="trash"></ion-icon>
             </button>
         </ion-buttons>
     </ion-navbar>
@@ -25,10 +30,6 @@
         <small *ngIf="file && file.shareDate">
             <ion-icon name="share"></ion-icon> {{customService.myFormatDate(file.shareDate)}}
         </small>
-        <!-- <small *ngIf="file"><br>
-            <ion-icon *ngIf="customService.getFileFormat(file.type)" name="{{customService.getFileFormat(file.type).icon}}"></ion-icon>
-            &nbsp;{{translate(file.type)}}
-        </small> -->
         <span *ngIf="file.modificationDate > file.shareDate">
             <br>
             <small style="color: red">
@@ -38,8 +39,8 @@
         </span>
     </ion-card>
     <ion-list>
-        <articleComponent #articleComponent [item]="article" [file]="file" *ngFor="let article of items" (deleted)="delete($event)"
-            (changed)="change()" (saved)="save()"></articleComponent>
+        <articleComponent #articleComponent [item]="article" [file]="file" *ngFor="let article of items"
+            (deleted)="delete($event)" (changed)="change()" (saved)="save()"></articleComponent>
     </ion-list>
     <ion-fab right top>
         <button ion-fab color="secondary" (click)="newScan()">

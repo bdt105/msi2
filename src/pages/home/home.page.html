@@ -32,7 +32,7 @@
 				</ion-item>
 			</span>
 		</ion-card>
-		<ion-card style="padding: 0" *ngIf="lastFile">
+		<!-- <ion-card style="padding: 0" *ngIf="lastFile">
 			<ion-card-header style="padding: 0">
 				<ion-item>
 					<ion-label>
@@ -41,7 +41,7 @@
 				</ion-item>
 				<fileComponent [item]="lastFile" [items]="items" [allowMenu]="false"></fileComponent>
 			</ion-card-header>
-		</ion-card>
+		</ion-card> -->
 		<ion-fab right top *ngIf="lastFile">
 			<button ion-fab color="secondary" (click)="newScan()">
 				<ion-icon name="barcode"></ion-icon>
