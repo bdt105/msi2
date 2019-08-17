@@ -147,7 +147,7 @@ export class ArticlesPage extends ItemsPage {
 					this.confirmDeleteFile('Has the file been shared with success? If yes, do you want to delete it now?');
 				} else {
 					if (error1 && error1.message == "PARAM_ERROR") {
-						this.customService.callbackToast(error1, this.translate('Impossible de share. Please set user in parameters.'), 3000)
+						this.customService.callbackToast(error1, this.translate('Impossible to share. Please set user in parameters.'), 3000)
 					} else {
 						if (error1.http_status == 404) {
 							this.customService.callbackToast(error1, this.translate("Error sharing! Please check server.") + " " + (error1.body), 3000);

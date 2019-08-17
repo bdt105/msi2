@@ -20,7 +20,6 @@
     </h4>
     <ion-card padding *ngIf="fileTypeFilter">
         {{translate('Current filter')}}&nbsp;
-
         <ion-chip #chip1 color="primary">
             <ion-label>
                 <ion-icon name="{{itemService.getFormat(fileTypeFilter).icon}}"></ion-icon>&nbsp;{{translate(itemService.getFormat(fileTypeFilter).label)}}
@@ -46,10 +45,7 @@
                 (changed)="save(false, file)" (saved)="save(false, file)"></fileComponent>
         </div>
     </ion-list>
-    <!-- <ion-list>
-        <fileComponent [item]="file" [items]="items" *ngFor="let file of items" (deleted)="delete(file)" (changed)="save()"
-            (saved)="save()"></fileComponent>
-    </ion-list> -->
+
     <ion-fab right bottom>
         <button ion-fab (click)="newFile(fileFormat.name)">
             <ion-icon name="add"></ion-icon>

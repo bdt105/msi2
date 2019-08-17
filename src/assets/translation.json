@@ -546,7 +546,7 @@
         }
     },
     {
-        "key": "Impossible de share. Please set user in parameters.",
+        "key": "Impossible to share. Please set user in parameters.",
         "value": {
             "FR": "Impossible de partager. Vérifiez le paramètre utilisateur",
             "PT": "Impossivel de partilhar, verifique o parametro utilisador"

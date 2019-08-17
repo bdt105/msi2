@@ -41,7 +41,7 @@ export class FileComponent extends ItemComponent {
 					// this.item.shareDate = new Date().getTime();
 					// this.shared.emit(this.item);
 					if (error1 && error1.message == "PARAM_ERROR") {
-						this.customService.callbackToast(error1, this.translate('Impossible de share. Please set station and user in parameters.'), 3000)
+						this.customService.callbackToast(error1, this.translate('Impossible to share. Please set user in parameters.'), 3000)
 					} else {
 						this.customService.callbackToast(error1, this.translate("Error sharing! Please check server.") + " " + (error1.exception ? error1.exception : ""), 3000);
 					}
@@ -106,7 +106,7 @@ export class FileComponent extends ItemComponent {
 						if (this.item && this.item.articles && this.item.articles.length > 0) {
 							this.share();
 						} else {
-							this.customService.callbackToast(null, this.translate('No article to share'))
+							this.customService.callbackToast(null, this.translate('No article to upload'))
 						}
 					}
 				},
