@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { MiscellaneousService } from '../../angularShared/services/miscellaneous.service';
 import { AlertController, NavController, ActionSheetController } from 'ionic-angular';
 import { ItemComponent } from '../item/item.component';
@@ -20,6 +20,9 @@ export class ArticleComponent extends ItemComponent {
 	base64Image: any;
 	image: string;
 	fileFormat: any;
+	valueLabel: string;
+
+	@Output() codeChanged = new EventEmitter();
 
 	selected = false;
 	constructor(public miscellaneousService: MiscellaneousService, public domSanitizer: DomSanitizer, public itemService: ItemService,
@@ -205,15 +208,19 @@ export class ArticleComponent extends ItemComponent {
 		}
 	}
 
-
-	onChangee(){
-		if (this.isValid()){
+	onChangee() {
+		if (this.isValid()) {
 			this.onChange();
 		}
 	}
 
-	isValid(){
-		return this.itemService.isArticleValid(this.fileFormat, this.item); 
+	isValid() {
+		return this.itemService.isArticleValid(this.fileFormat, this.item);
+	}
+
+	onCodeChanged() {
+		this.codeChanged.emit(this.item);
+		this.onChange();
 	}
 
 }

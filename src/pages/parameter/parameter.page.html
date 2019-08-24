@@ -11,40 +11,57 @@
 	<ion-item *ngIf="items && items.length > 0" (tap)="countShowExtra = countShowExtra + 1">
 		<ion-label fixed>{{translate('Station')}}</ion-label>
 		<ion-input type="text" placeholder="{{translate('Station')}}" [(ngModel)]="items[0].station" (change)="save()"
-		 disabled></ion-input>
+			disabled></ion-input>
 	</ion-item>
 	<ion-item *ngIf="items && items.length > 0">
 		<ion-label fixed>{{translate('User')}}<br><small>(a-z & A-Z)</small></ion-label>
-		<ion-input type="text" placeholder="{{translate('User')}}" [(ngModel)]="items[0].user" (change)="saveUser()"></ion-input>
+		<ion-input type="text" placeholder="{{translate('User')}}" [(ngModel)]="items[0].user" (change)="saveUser()">
+		</ion-input>
 	</ion-item>
 	<ion-item *ngIf="items && items.length > 0">
 		<ion-label>{{translate('Share to server')}}</ion-label>
-		<ion-toggle [(ngModel)]="items[0].shateToUrl" (ionChange)="save()"></ion-toggle>
+		<ion-toggle [(ngModel)]="items[0].shareToUrl" (ionChange)="save()"></ion-toggle>
 	</ion-item>
-	<ion-item *ngIf="countShowExtra > 12 && items && items.length > 0 && items[0].shateToUrl">
+	<ion-item *ngIf="countShowExtra > 12 && items && items.length > 0 && items[0].shareToUrl">
 		<ion-label fixed>{{translate('Name or IP, include port if necessary')}}</ion-label>
-		<ion-input type="text" placeholder="{{translate('Server name or IP')}}" [(ngModel)]="items[0].serverUrl" (change)="save()"></ion-input>
+		<ion-input type="text" placeholder="{{translate('Server name or IP')}}" [(ngModel)]="items[0].serverUrl"
+			(change)="save()"></ion-input>
 	</ion-item>
-	<ion-item *ngIf="countShowExtra > 12 && items && items.length > 0 && items[0].shateToUrl">
+	<ion-item *ngIf="countShowExtra > 12 && items && items.length > 0 && items[0].shareToUrl">
 		<button ion-button (click)="setDefaultUrl()">{{translate('Set to default url server')}}</button>
 	</ion-item>
-	<!-- <ion-item *ngIf="items && items.length > 0 && items[0].shateToUrl">
-		<ion-label fixed>{{translate('Port')}}</ion-label>
-		<ion-input type="number" placeholder="{{translate('Server port')}}" [(ngModel)]="items[0].port" (change)="save()"></ion-input>
-	</ion-item> -->
-	<ion-item *ngIf="items && items.length > 0 && items[0].shateToUrl">
+	<ion-item *ngIf="items && items.length > 0 && items[0].shareToUrl">
 		<ion-label fixed>{{translate('Identifier')}}</ion-label>
-		<ion-input type="text" placeholder="{{translate('Identifier')}}" [(ngModel)]="items[0].identifier" (change)="save()"></ion-input>
+		<ion-input type="text" placeholder="{{translate('Identifier')}}" [(ngModel)]="items[0].identifier"
+			(change)="save()"></ion-input>
 	</ion-item>
-	<ion-item *ngIf="items && items.length > 0 && items[0].shateToUrl">
-		<button ion-button (click)="scanIdentifier()"><ion-icon name="barcode"></ion-icon>&nbsp;{{translate('Scan identifier')}}</button>
+	<ion-item *ngIf="items && items.length > 0 && items[0].shareToUrl">
+		<button ion-button (click)="scanIdentifier()">
+			<ion-icon name="barcode"></ion-icon>&nbsp;{{translate('Scan identifier')}}
+		</button>
 	</ion-item>
-	<div padding>
-		<span (press)="toggleAllData()">{{translate('Choose a language')}}</span><br><br>
-		<img src="./assets/imgs/portugal.png" style="width: 30px" (click)="setLanguage('PT')">
-		<img src="./assets/imgs/france.png" style="width: 30px" (click)="setLanguage('FR')">
-		<img src="./assets/imgs/uk.png" style="width: 30px" (click)="setLanguage('')">
-	</div>
+	<ion-item *ngIf="items && items.length > 0">
+		<ion-label>{{translate('Check code')}}</ion-label>
+		<ion-toggle [(ngModel)]="items[0].apiCheckPresence" (ionChange)="save()"></ion-toggle>
+	</ion-item>
+	<ion-item *ngIf="items && items.length > 0 && items[0].apiCheckPresence">
+		<ion-label fixed>{{translate('Api')}}</ion-label>
+		<ion-input type="text" placeholder="{{translate('Api')}}" [(ngModel)]="items[0].apicheck" (change)="save()">
+		</ion-input>
+	</ion-item>
+	<ion-item *ngIf="items && items.length > 0 && items[0].apiCheckPresence">
+		<ion-label fixed>{{translate('Field to display')}}</ion-label>
+		<ion-input type="text" placeholder="{{translate('Field to display')}}" [(ngModel)]="items[0].apicheckfield"
+			(change)="save()"></ion-input>
+	</ion-item>
+	<ion-item>
+		<div>
+			<span (press)="toggleAllData()">{{translate('Choose a language')}}</span><br><br>
+			<img src="./assets/imgs/portugal.png" style="width: 30px" (click)="setLanguage('PT')">
+			<img src="./assets/imgs/france.png" style="width: 30px" (click)="setLanguage('FR')">
+			<img src="./assets/imgs/uk.png" style="width: 30px" (click)="setLanguage('')">
+		</div>
+	</ion-item>
 	<!-- <button ion-button (click)="confirmDelete()"><ion-icon name="trash" ></ion-icon>&nbsp;{{translate('Clear all files')}}</button>	 -->
 	<div *ngIf="showStorage" [innerHTML]="allElements"></div>
 </ion-content>

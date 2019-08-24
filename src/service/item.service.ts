@@ -211,7 +211,7 @@ export class ItemService {
 
     getFileCount(callback: Function, fileFormat: any) {
         if (fileFormat) {
-            
+
             this.getFiles(
                 (data: any, error: any) => {
                     if (!error && data) {
@@ -223,5 +223,6 @@ export class ItemService {
             )
         }
     }
+
 
 }

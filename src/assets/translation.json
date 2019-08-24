@@ -805,10 +805,10 @@
         }
     },
     {
-        "key": "Already in list",
+        "key": "Values already entered",
         "value": {
-            "FR": "Déjà dans la liste",
-            "PT": "Jà na lista"
+            "FR": "Valeurs déjà saisies",
+            "PT": "Valores jà entradas"
         }
     },
     {
@@ -817,8 +817,55 @@
             "FR": "Voulez vous supprimer ce fichier ?",
             "PT": "Quer apagar este ficheiro?"
         }
+    },
+    {
+        "key": "Save & scan",
+        "value": {
+            "FR": "Sauver et scanner",
+            "PT": "Salvar e scan"
+        }
+    },
+    {
+        "key": "Check code",
+        "value": {
+            "FR": "Vérifier le code",
+            "PT": "Verificar o codigo"
+        }
+    },
+    {
+        "key": "Warning! No data found",
+        "value": {
+            "FR": "Attention! Pas de donnée trouvée",
+            "PT": "Atençao! Nehum dado encontrado"
+        }
+    },
+    {
+        "key": "Field to display",
+        "value": {
+            "FR": "Champ à afficher",
+            "PT": "Campo a afixar"
+        }
+    },
+    {
+        "key": "Sum values if element already in list",
+        "value": {
+            "FR": "Ajouter les valeurs si élément déjà dans la liste",
+            "PT": "Ajuntar os valores se elemento jà na lista"
+        }
+    },
+    {
+        "key": "New value",
+        "value": {
+            "FR": "Nouvelle valeur",
+            "PT": "Novo valor"
+        }
+    },
+    {
+        "key": "for",
+        "value": {
+            "FR": "pour",
+            "PT": "para"
+        }
     }
-
-    
-        
+          
 ]

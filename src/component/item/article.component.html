@@ -8,7 +8,7 @@
 			</span>
 		</ion-avatar>
 		<span>
-			<ion-icon name="barcode"></ion-icon> {{item.code}}<br>
+			<ion-icon name="barcode"></ion-icon> {{item.code}}<span *ngIf="item.label"><br>{{item.label}}</span><br>
 			<ion-icon name="calculator"></ion-icon> <small>{{item.value}}</small>
 		</span>
 		<small *ngIf="item.comment"><br>{{item.comment}}</small>
@@ -45,12 +45,10 @@
 		</ion-item>
 		<ion-item>
 			<ion-label>{{translate('Code')}}</ion-label>
-			<ion-input type="text" [(ngModel)]="item.code" (change)="onChange()"></ion-input>
+			<ion-input type="text" [(ngModel)]="item.code" (change)="onCodeChanged()"></ion-input>
 		</ion-item>
 		<ion-item>
-			<ion-label fixed>
-				{{translate('Value')}}
-			</ion-label>
+			<ion-label>{{translate('Value')}} </ion-label>
 			<ion-input type="number" [(ngModel)]="item.value" (change)="onChangee()"
 				placeholder="{{customService.getFileFormat(file.type).valuePlaceHolder}}"></ion-input>
 		</ion-item>
@@ -78,6 +76,9 @@
 			<button ion-button (click)="confirmDeletePicture()" *ngIf="item.imageUri">
 				<ion-icon name="trash"></ion-icon>&nbsp;{{translate('Delete picture')}}
 			</button>
+		</ion-item>
+		<ion-item *ngIf="item.label">
+			{{item.label}}
 		</ion-item>
 	</ion-list>
 </ion-card>

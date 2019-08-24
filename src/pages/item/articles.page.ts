@@ -1,10 +1,13 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { MiscellaneousService } from '../../angularShared/services/miscellaneous.service';
 import { ItemsPage } from './items.page';
 import { NavParams, AlertController, NavController } from 'ionic-angular';
 import { ItemService } from '../../service/item.service';
 import { CustomService } from '../../service/custom.service';
 import { ShareService } from '../../service/share.service';
+import { Rest } from 'bdt105toolbox/dist';
+import { timingSafeEqual } from 'crypto';
+import { ArticleComponent } from '../../component/item/article.component';
 
 @Component({
 	selector: 'page-articles',
@@ -14,8 +17,11 @@ export class ArticlesPage extends ItemsPage {
 
 	file: any;
 	files: any;
-	scan = false;
+	scan: boolean = false;
 	fileFormat: any;
+	rest: Rest = new Rest();
+
+	@ViewChild('articleComponent') articleComponent: ArticleComponent;
 
 	constructor(public miscellaneousService: MiscellaneousService, public customService: CustomService, private shareService: ShareService,
 		public navParams: NavParams, public itemService: ItemService, public alertCtrl: AlertController, public navController: NavController, private navCtrl: NavController) {
@@ -50,6 +56,10 @@ export class ArticlesPage extends ItemsPage {
 		this.itemService.touchFile(this.file);
 	}
 
+	clicSave(article: any) {
+		this.saveArticle(article);
+	}
+
 	save() {
 		this.itemService.saveFiles(
 			(data: any, error: any) => {
@@ -60,6 +70,111 @@ export class ArticlesPage extends ItemsPage {
 				}
 			}, this.files, this.file.type
 		)
+	}
+
+	private addUpdateArticle(article: any) {
+		if (!this.items) {
+			this.items = [];
+		}
+		let articleClone = this.toolbox.cloneObject(article);
+		this.toolbox.deleteObjectsInList(this.items, "code", articleClone.code);
+		this.items.splice(0, 0, articleClone);
+	}
+
+	private getValueSumOfArticle(article: any) {
+		let sum: number = Number.parseFloat(article.value);
+		let foundArray = this.findArticleInList(article);
+		if (foundArray && foundArray.length > 0) {
+			sum = 0;
+			foundArray.forEach((art: any) => {
+				sum += Number.parseFloat(art.value);
+			});
+		}
+		return sum;
+	}
+
+	private saveArticle(article: any) {
+		let foundArray = this.findArticleInList(article);
+		let articleClone = this.toolbox.cloneObject(article);
+		if (foundArray && foundArray.length > 0) {
+			this.itemService.getParameters(
+				(data: any, error: any) => {
+					if (!error && data) {
+						let sumValuesIfInList = data[0].sumValuesIfInList;
+						if (sumValuesIfInList) {
+							articleClone.value = this.getValueSumOfArticle(articleClone);
+						} else {
+							articleClone.value = article.value;
+						}
+					}
+					this.addUpdateArticle(articleClone);
+					this.save();
+				}
+			)
+		}
+	}
+
+	private findArticleInList(article: any) {
+		let foundArray = null;
+		if (article && this.file && this.file.articles && this.file.articles.length > 0) {
+			foundArray = this.toolbox.filterArrayOfObjects(this.file.articles, "code", article.code)
+		}
+		return foundArray;
+	}
+
+	private checkPresenceInList(article: any, occurence: number) {
+		let message = "";
+		let foundArray = this.findArticleInList(article);
+		if (foundArray && foundArray.length >= occurence) {
+			foundArray.forEach((element: any) => {
+				message += (message && element.value ? ", " : "") + (element.value ? element.value : "");
+			});
+		}
+		return message;
+	}
+
+	private checkPresenceInApi(callback: Function, article: any) {
+		this.itemService.getParameters(
+			(data: any, error: any) => {
+				if (!error && data) {
+					let api = data[0].apicheck + '/' + article.code;
+					let checkCode = data[0].apiCheckPresence;
+					let field = data[0].apicheckfield;
+					if (checkCode) {
+						this.rest.call((data1: any, error1: any) => {
+							if (!error1) {
+								if (!data1 || (data1 && data1.json && data1.json.length == 0)) {
+									callback(this.translate('Warning! No data found'));
+									//this.customService.callbackToast(null, this.translate('Warning! No data found'), 4000, 'top');
+								} else {
+									if (field && data1 && data1.json && data1.json.length > 0) {
+										callback(data1.json[0][field]);
+										// this.customService.callbackToast(null, data1.json[0][field], 4000, 'top');
+									}
+								}
+							} else {
+								callback(error1.message);
+								// this.customService.callbackToast(data1, error1.message, 4000, 'top');
+							}
+						}, "GET", api)
+					} else {
+						callback(null);
+					}
+				}
+			}
+		)
+	}
+
+	codeChange(article: any) {
+		article.label = null;
+				this.checkPresenceInApi((message: string) => {
+			article.label = message;
+		}, article);
+		let foundMessage = this.checkPresenceInList(article, 2);
+		if (foundMessage) {
+			this.customService.callbackToast(null, article.code + ' ' + this.translate('Values already entered') + ': ' + foundMessage, 4000);
+		}
+		this.itemService.touchFile(this.file);
 	}
 
 	change() {
@@ -95,7 +210,7 @@ export class ArticlesPage extends ItemsPage {
 			if (data && this.itemService.isArticleValid(this.fileFormat, article)) {
 				article.modify = false;
 				this.items.splice(0, 0, article);
-				this.save();
+				this.saveArticle(article);
 			} else {
 				alert(this.translate(this.fileFormat.valueMessage) + ' ' + this.fileFormat.valuePlaceHolder);
 				this.promptValue(article);
@@ -117,24 +232,32 @@ export class ArticlesPage extends ItemsPage {
 
 		let callbackNok = (data: any) => {
 		}
+		let foundMessage = this.checkPresenceInList(article, 1);
+
+		let label = this.translate("Value");
+		if (foundMessage) {
+			label = this.translate("New value");
+		}
 
 		let values = [
 			{
-				"type": "number", "value": 1, "label": this.translate('Value'), "checked": false, "placeholder": this.fileFormat.placeholder
+				"type": "number", "value": "1", "label": label, "checked": false, "placeholder": label
 			}
 		];
 
-		let isInList = false;
-		if (article && this.file && this.file.articles && this.file.articles.length > 0) {
-			isInList = this.toolbox.findIndexArrayOfObjects(this.file.articles, "code", article.code) > -1;
-		}
-
-		this.customService.showAlertForm(
-			this.translate('Value for') + ' ' + (article ? article.code : "?"),
+		let valuePrompt = this.customService.showAlertForm(
+			label + ' ' + this.translate('for') + ' ' + (article ? article.code : "?"),
 			[{ "label": this.translate('Save'), "callback": callbackSave },
 			{ "label": this.translate('Save & scan'), "callback": callbackSaveScan },
 			{ "label": this.translate('Cancel'), "callback": callbackNok }],
-			values, isInList ? this.translate('Already in list') : null);
+			values, foundMessage ? this.translate('Values already entered') + ': ' + foundMessage : null);
+
+		this.checkPresenceInApi((message: string) => {
+			valuePrompt.setTitle(message + ' ' + (article ? article.code : "?"));
+			article.label = message;
+		}, article);
+
+
 	}
 
 	share() {
@@ -159,7 +282,6 @@ export class ArticlesPage extends ItemsPage {
 			}, this.file
 		)
 	}
-
 
 	deleteFile() {
 		this.itemService.deleteFile(

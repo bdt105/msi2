@@ -39,10 +39,15 @@ export class ParameterPage extends ItemsPage {
 					this.items = data;
 					if (!this.items) {
 						this.items = [{}];
-						this.items[0].shateToUrl = true;
+						this.items[0].shareToUrl = true;
 						this.items[0].station = "MSIVirtual";
+						this.items[0].apicheck = "http://vps592280.ovh.net/apidatabase/tablesearch/``";
 						this.items[0].serverUrl = this.customService.getConfiguration().uploadServer.baseUrl;
 						this.save();
+					} else {
+						if (this.items[0].shareToUrl == null || this.items[0].shareToUrl == undefined) {
+							this.items[0].shareToUrl = this.items[0].shateToUrl;
+						}
 					}
 					if (!this.items[0].serverUrl) {
 						this.setDefaultUrl();
