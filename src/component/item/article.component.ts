@@ -23,6 +23,7 @@ export class ArticleComponent extends ItemComponent {
 	valueLabel: string;
 
 	@Output() codeChanged = new EventEmitter();
+	@Output() valueClicked = new EventEmitter();
 
 	selected = false;
 	constructor(public miscellaneousService: MiscellaneousService, public domSanitizer: DomSanitizer, public itemService: ItemService,
@@ -223,4 +224,7 @@ export class ArticleComponent extends ItemComponent {
 		this.onChange();
 	}
 
+	onValueClicked() {
+		this.valueClicked.emit(this.item);
+	}
 }

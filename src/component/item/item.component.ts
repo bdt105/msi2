@@ -1,7 +1,12 @@
-import { Input, Output, EventEmitter } from '@angular/core';
+import { Input, Output, EventEmitter, Component } from '@angular/core';
 import { GenericComponent } from '../../angularShared/components/generic.component';
 import { MiscellaneousService } from '../../angularShared/services/miscellaneous.service';
 import { AlertController } from 'ionic-angular';
+
+@Component({
+	selector: 'itemComponent',
+	templateUrl: 'item.component.html'
+})
 
 export class ItemComponent extends GenericComponent {
 
@@ -67,7 +72,25 @@ export class ItemComponent extends GenericComponent {
 		alert.present();
 	}
 
-	toggleModify(){
+	toggleModify() {
 		this.item.modify = !this.item.modify;
 	}
+
+	getDataFields() {
+		let ret = null;
+		if (this.item && this.item.data) {
+			ret = [];
+			let ret1 = Object.keys(this.item.data);
+			ret1.forEach((element: string) => {
+				if (element == "__timestamp") {
+					ret.push(element);
+				}
+				if (!element.startsWith("__")) {
+					ret.push(element);
+				}
+			});
+		}
+		return ret;
+	}
+
 }

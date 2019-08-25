@@ -1,0 +1,10 @@
+<ion-list *ngIf="item && item.data" nopadding>
+    <ion-item *ngFor="let key of getDataFields()">
+        <span>
+            <small *ngIf="key!='__timestamp'">{{translate(key)}}</small>
+            <small *ngIf="key=='__timestamp'">{{translate('Date')}}</small><br>
+            <span *ngIf="key!='__timestamp'" item-end>{{item.data[key]}}</span>
+            <span *ngIf="key=='__timestamp'" item-end>{{toolbox.formatDate(item.data[key])}}</span>
+        </span>
+    </ion-item>
+</ion-list>

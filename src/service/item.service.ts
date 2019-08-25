@@ -224,5 +224,8 @@ export class ItemService {
         }
     }
 
+    touchItem(item: any){
+		item.modificationDate = new Date().getTime();
+	}
 
 }

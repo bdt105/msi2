@@ -43,6 +43,7 @@ import { SafePipe } from '../angularShared/services/safe.pipe';
 import { ImageUploaderComponent } from '../angularShared/components/imageUploader';
 import { FileComponent } from "../component/item/file.component";
 import { ArticleComponent } from "../component/item/article.component";
+import { ItemComponent } from "../component/item/item.component";
 
 export function init(customService: CustomService) {
 	return () => {
@@ -64,6 +65,7 @@ export function init(customService: CustomService) {
 		FileUploaderComponent,
 		ImageUploaderComponent,
 		ArticleComponent,
+		ItemComponent,
 		FileComponent
 	],
 	imports: [
@@ -87,6 +89,7 @@ export function init(customService: CustomService) {
 		FileUploaderComponent,
 		ImageUploaderComponent,
 		ArticleComponent,
+		ItemComponent,
 		FileComponent
 	],
 	providers: [

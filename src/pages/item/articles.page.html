@@ -40,7 +40,8 @@
     </ion-card>
     <ion-list>
         <articleComponent #articleComponent [item]="article" [file]="file" *ngFor="let article of items"
-            (deleted)="delete($event)" (changed)="change($event)" (codeChanged)="codeChange($event)" (saved)="clicSave($event)"></articleComponent>
+            (deleted)="delete($event)" (changed)="change($event)" (codeChanged)="codeChange($event)" 
+            (saved)="clicSave($event)" (valueClicked)="valueClicked($event)"></articleComponent>
     </ion-list>
     <ion-fab right top>
         <button ion-fab color="secondary" (click)="newScan()">

@@ -96,6 +96,7 @@ export class ArticlesPage extends ItemsPage {
 	private saveArticle(article: any) {
 		let foundArray = this.findArticleInList(article);
 		let articleClone = this.toolbox.cloneObject(article);
+		this.itemService.touchItem(articleClone);
 		if (foundArray && foundArray.length > 0) {
 			this.itemService.getParameters(
 				(data: any, error: any) => {
@@ -144,16 +145,16 @@ export class ArticlesPage extends ItemsPage {
 						this.rest.call((data1: any, error1: any) => {
 							if (!error1) {
 								if (!data1 || (data1 && data1.json && data1.json.length == 0)) {
-									callback(this.translate('Warning! No data found'));
+									callback(this.translate('Warning! No data found'), null);
 									//this.customService.callbackToast(null, this.translate('Warning! No data found'), 4000, 'top');
 								} else {
 									if (field && data1 && data1.json && data1.json.length > 0) {
-										callback(data1.json[0][field]);
+										callback(data1.json[0][field], data1.json[0]);
 										// this.customService.callbackToast(null, data1.json[0][field], 4000, 'top');
 									}
 								}
 							} else {
-								callback(error1.message);
+								callback(error1.message, null);
 								// this.customService.callbackToast(data1, error1.message, 4000, 'top');
 							}
 						}, "GET", api)
@@ -167,8 +168,10 @@ export class ArticlesPage extends ItemsPage {
 
 	codeChange(article: any) {
 		article.label = null;
-				this.checkPresenceInApi((message: string) => {
+		this.itemService.touchItem(article);
+		this.checkPresenceInApi((message: string, data: any) => {
 			article.label = message;
+			article.data = data;
 		}, article);
 		let foundMessage = this.checkPresenceInList(article, 2);
 		if (foundMessage) {
@@ -245,16 +248,20 @@ export class ArticlesPage extends ItemsPage {
 			}
 		];
 
+		let lab = label + ' ' + this.translate('for') + '<br>' + (article ? article.code : "?");
 		let valuePrompt = this.customService.showAlertForm(
-			label + ' ' + this.translate('for') + ' ' + (article ? article.code : "?"),
+			lab,
 			[{ "label": this.translate('Save'), "callback": callbackSave },
 			{ "label": this.translate('Save & scan'), "callback": callbackSaveScan },
 			{ "label": this.translate('Cancel'), "callback": callbackNok }],
 			values, foundMessage ? this.translate('Values already entered') + ': ' + foundMessage : null);
 
-		this.checkPresenceInApi((message: string) => {
-			valuePrompt.setTitle(message + ' ' + (article ? article.code : "?"));
-			article.label = message;
+		this.checkPresenceInApi((message: string, data: any) => {
+			if (message) {
+				valuePrompt.setTitle(message + '<br>' + lab);
+				article.label = message;
+				article.data = data;
+			}
 		}, article);
 
 
@@ -315,6 +322,10 @@ export class ArticlesPage extends ItemsPage {
 			]
 		});
 		alert.present();
+	}
+
+	valueClicked(article: any) {
+		this.promptValue(article);
 	}
 
 }

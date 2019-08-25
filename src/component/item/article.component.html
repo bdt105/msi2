@@ -7,12 +7,8 @@
 				<img [src]="image" />
 			</span>
 		</ion-avatar>
-		<span>
-			<ion-icon name="barcode"></ion-icon> {{item.code}}<span *ngIf="item.label"><br>{{item.label}}</span><br>
-			<ion-icon name="calculator"></ion-icon> <small>{{item.value}}</small>
-		</span>
-		<small *ngIf="item.comment"><br>{{item.comment}}</small>
-		<div item-end style="height: 100%;margin-top: 30px;">
+		<span (click)="showData = !showData">
+			<span style="font-size: 1.2em">{{item.code}}</span><span *ngIf="item.label"><br>{{item.label}}</span><br>
 			<small>
 				<ion-icon name="create"></ion-icon>&nbsp;{{customService.smartDate(item.modificationDate)}}
 			</small>
@@ -20,7 +16,11 @@
 				<br>
 				<ion-icon name="share"></ion-icon>&nbsp;{{customService.smartDate(item.shareDate)}}
 			</small>
-		</div>
+		</span>
+		<itemComponent *ngIf="showData" [item]="item">	
+		</itemComponent>
+		<small *ngIf="item.comment"><br>{{item.comment}}</small>
+		<span item-end style="font-size: 2em; margin-right: 20px" (click)="onValueClicked()">{{item.value}}</span>
 	</ion-item>
 	<ion-item-options side="left">
 		<button ion-button color="info" (click)="scan(item)">
