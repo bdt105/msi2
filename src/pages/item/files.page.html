@@ -4,25 +4,33 @@
             <ion-icon name="menu"></ion-icon>
         </button>
         <ion-title>
-            {{translate(fileFormat.label)}}&nbsp;<ion-badge *ngIf="items && items.length > 0">{{items.length}}</ion-badge>
+            {{translate(fileFormat.label)}}&nbsp;<ion-badge *ngIf="items && items.length > 0">{{items.length}}
+            </ion-badge>
         </ion-title>
         <ion-buttons end>
             <button *ngIf="items && items.length > 0" ion-button icon-only (click)="confirmDelete()">
                 <ion-icon name="trash"></ion-icon>
+            </button>
+            <button ion-button icon-only (click)="setFavorite()">
+                <ion-icon name="star-outline" *ngIf="!fileFormat.favorite"></ion-icon>
+                <ion-icon name="star" *ngIf="fileFormat.favorite"></ion-icon>
             </button>
         </ion-buttons>
     </ion-navbar>
 </ion-header>
 
 <ion-content>
-    <h4 padding *ngIf="!fileSplited || (fileSplited.sent.length == 0 && fileSplited.notSent.length == 0)" (click)="goToPage('files')">
-        <ion-icon name="information-circle"></ion-icon>&nbsp;{{translate('Sorry no file so far, click on the + button below to create one')}}
+    <h4 padding *ngIf="!fileSplited || (fileSplited.sent.length == 0 && fileSplited.notSent.length == 0)"
+        (click)="goToPage('files')">
+        <ion-icon name="information-circle"></ion-icon>
+        &nbsp;{{translate('Sorry no file so far, click on the + button below to create one')}}
     </h4>
     <ion-card padding *ngIf="fileTypeFilter">
         {{translate('Current filter')}}&nbsp;
         <ion-chip #chip1 color="primary">
             <ion-label>
-                <ion-icon name="{{itemService.getFormat(fileTypeFilter).icon}}"></ion-icon>&nbsp;{{translate(itemService.getFormat(fileTypeFilter).label)}}
+                <ion-icon name="{{itemService.getFormat(fileTypeFilter).icon}}"></ion-icon>
+                &nbsp;{{translate(itemService.getFormat(fileTypeFilter).label)}}
             </ion-label>
             <button ion-button clear color="light" (click)="deleteFilter()">
                 <ion-icon name="close-circle"></ion-icon>
@@ -31,14 +39,15 @@
     </ion-card>
     <ion-list *ngIf="fileSplited">
         <div *ngIf="fileSplited.notSent && fileSplited.notSent.length > 0">
-            <ion-list-header style="color: red">
+            <ion-list-header style="color: red; margin: 0">
                 <ion-icon name="warning"></ion-icon>&nbsp;{{translate('Not sent')}}
             </ion-list-header>
-            <fileComponent [item]="file" [items]="items" *ngFor="let file of fileSplited.notSent" (deleted)="delete(file)"
-                (changed)="save(false, file)" (saved)="save(false, file)" (shared)="save(true, file)"></fileComponent>
+            <fileComponent [item]="file" [items]="items" *ngFor="let file of fileSplited.notSent"
+                (deleted)="delete(file)" (changed)="save(false, file)" (saved)="save(false, file)"
+                (shared)="save(true, file)"></fileComponent>
         </div>
         <div *ngIf="fileSplited.sent && fileSplited.sent.length > 0">
-            <ion-list-header style="color: green">
+            <ion-list-header style="color: green; margin: 0">
                 {{translate('Sent')}}
             </ion-list-header>
             <fileComponent [item]="file" [items]="items" *ngFor="let file of fileSplited.sent" (deleted)="delete(file)"

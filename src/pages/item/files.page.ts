@@ -23,6 +23,7 @@ export class FilesPage extends ItemsPage {
 
 	ionViewDidEnter() {
 		this.ngOnInit();
+		this.updateFavorite();
 	}
 
 	/*
@@ -206,6 +207,27 @@ export class FilesPage extends ItemsPage {
 			],
 			values
 		);
+	}
+
+	setFavorite() {
+		this.fileFormat.favorite = !this.fileFormat.favorite;
+		let fav = this.toolbox.readFromStorage("favoriteFileFormat" + this.customService.getApplicationName());
+		if (!fav) {
+			fav = [];
+		}
+		this.toolbox.deleteObjectsInList(fav, "fileName", this.fileFormat.fileName);
+		if (this.fileFormat.favorite) {
+			fav.push(this.fileFormat);
+		}
+		this.toolbox.writeToStorage("favoriteFileFormat" + this.customService.getApplicationName(), fav, true);
+	}
+
+	updateFavorite() {
+		let fav = this.toolbox.readFromStorage("favoriteFileFormat" + this.customService.getApplicationName());
+		if (fav) {
+			let found = this.toolbox.findIndexArrayOfObjects(fav, "fileName", this.fileFormat.fileName);
+			this.fileFormat.favorite = found > -1;
+		}
 	}
 	/*	
 			deleteFilter(){

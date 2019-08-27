@@ -3,7 +3,7 @@
         <ion-title>{{translate('Enter value')}}</ion-title>
         <ion-buttons end>
             <button ion-button (click)="confirmCancel()">
-                    {{translate('Cancel')}}
+                {{translate('Cancel')}}
             </button>
         </ion-buttons>
     </ion-navbar>
@@ -33,20 +33,27 @@
                 placeholder="{{translate('Value')}}" [(ngModel)]="newValue">
             </ion-input>
         </ion-item>
-        <ion-item *ngIf="!isValueValid()" color="danger">
-            <ion-label style="text-align: center;">
+        <ion-item *ngIf="!isValueValid()">
+            <ion-label>
                 {{translate(fileFormat.valueMessage)+ ' ' +translate(fileFormat.valuePlaceHolder)}}</ion-label>
         </ion-item>
+        <ion-item>
+
+            <button ion-button full [disabled]="canSave()" (click)="onSaveReplace()"
+                style="height: 40px">
+                <ion-icon name="refresh"></ion-icon>&nbsp;{{oldValue ? translate('Replace'):translate('Save')}}
+                {{newValue && oldValue ? (' ('+translate('New value') + ' = ' + newValue+')') : ''}}
+            </button>
+        </ion-item>
+        <ion-item>
+            <button ion-button *ngIf="oldValue" full [disabled]="canSave()" (click)="onSaveAdd()"
+                style="height: 40px">
+                <ion-icon name="add"></ion-icon>&nbsp;{{translate('Add')}} ({{translate('New value')}} =
+                {{getNewValue()}})
+            </button>
+        </ion-item>
     </ion-list>
-    <button ion-button full [disabled]="canSave()" (click)="onSaveReplace()"
-        style="height: 40px; margin-bottom: 20px; margin-top: 20px">
-        <ion-icon name="refresh"></ion-icon>&nbsp;{{oldValue ? translate('Replace'):translate('Save')}}
-        {{newValue && oldValue ? (' ('+translate('New value') + ' = ' + newValue+')') : ''}}
-    </button>
-    <button ion-button *ngIf="oldValue" full [disabled]="canSave()" (click)="onSaveAdd()" style="height: 40px; margin-bottom: 20px">
-        <ion-icon name="add"></ion-icon>&nbsp;{{translate('Add')}} ({{translate('New value')}} =
-        {{getNewValue()}})
-    </button>
+
     <!-- <button ion-button full (click)="onCancel()" style="margin-bottom: 20px">
         <ion-icon name="close"></ion-icon>&nbsp;{{translate('Cancel')}}
     </button> -->

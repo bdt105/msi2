@@ -8,6 +8,7 @@ import { ArticlesPage } from '../item/articles.page';
 import { ItemService } from '../../service/item.service';
 import { CustomService } from '../../service/custom.service';
 import { ExportService } from '../../service/export.service';
+import { ParameterPage } from '../parameter/parameter.page';
 
 @Component({
 	selector: 'page-home',
@@ -18,8 +19,10 @@ export class HomePage extends ItemsPage {
 	refresher: any;
 
 	lastFile: any;
+	params: any = null;
 
 	countFiles: any = [];
+	favorites: any;
 
 	fileInfo: { "directory": string; "fileName": never; };
 	constructor(public miscellaneousService: MiscellaneousService, public storageService: StorageService, public event: Events,
@@ -30,6 +33,27 @@ export class HomePage extends ItemsPage {
 	ionViewDidEnter() {
 		this.load();
 		this.getFileCount();
+		this.loadParams();
+		this.loadFavorites();
+	}
+
+	loadFavorites(){
+		this.favorites = this.toolbox.readFromStorage("favoriteFileFormat" + this.customService.getApplicationName());
+	}
+
+	loadParams() {
+		this.itemService.getParameters((data: any, error: any) => {
+			if (!error) {
+				this.params = data
+			}else{
+				this.params = null;
+			}
+		});
+		this.params = this.customService.getDefaultSetting("parameters");
+	}
+
+	openParam() {
+		this.navController.setRoot(ParameterPage);
 	}
 
 	load(refresher: any = null) {
@@ -66,11 +90,11 @@ export class HomePage extends ItemsPage {
 		)
 	}
 
-	countNotSent(){
+	countNotSent() {
 		let ret = false;
-		if (this.countFiles){
+		if (this.countFiles) {
 			let count = 0;
-			if (this.countFiles.length > 0){
+			if (this.countFiles.length > 0) {
 				this.countFiles.forEach((element: any) => {
 					count += element.data && element.data.notSent ? element.data.notSent.length : 0
 				});
@@ -98,6 +122,10 @@ export class HomePage extends ItemsPage {
 
 	changeTheme() {
 		this.event.publish('theme:toggle');
+	}
+
+	openFileFormat(ff: any){
+		this.navController.setRoot(FilesPage, { fileFormat: ff })
 	}
 
 }

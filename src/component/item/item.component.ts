@@ -74,6 +74,7 @@ export class ItemComponent extends GenericComponent {
 
 	toggleModify() {
 		this.item.modify = !this.item.modify;
+		this.edited.emit(this.item);
 	}
 
 	getDataFields() {

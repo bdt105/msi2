@@ -28,27 +28,28 @@
 </ion-header>
 
 <ion-content>
-    <ion-card padding>
-        <h5 *ngIf="file && file.description">{{file.description}}</h5>
-        <small *ngIf="file">
-            <ion-icon name="create"></ion-icon> {{customService.myFormatDate(file.modificationDate)}}
-        </small>
-        <br>
-        <small *ngIf="file && file.shareDate">
-            <ion-icon name="share"></ion-icon> {{customService.myFormatDate(file.shareDate)}}
-        </small>
-        <span *ngIf="file.modificationDate > file.shareDate">
-            <br>
-            <small style="color: red">
-                <ion-icon name="warning"></ion-icon>
-                &nbsp;{{translate('Modified after shared')}}
-            </small>
-        </span>
-    </ion-card>
     <ion-list>
+        <ion-list-header style="margin: 0">
+            <h5 *ngIf="file && file.description">{{file.description}}</h5>
+            <small *ngIf="file">
+                <ion-icon name="create"></ion-icon> {{customService.myFormatDate(file.modificationDate)}}
+            </small>
+            <br>
+            <small *ngIf="file && file.shareDate">
+                <ion-icon name="share"></ion-icon> {{customService.myFormatDate(file.shareDate)}}
+            </small>
+            <span *ngIf="file.modificationDate > file.shareDate">
+                <br>
+                <small style="color: red">
+                    <ion-icon name="warning"></ion-icon>
+                    &nbsp;{{translate('Modified after shared')}}
+                </small>
+            </span>
+        </ion-list-header>
         <articleComponent #articleComponent [item]="article" [file]="file" *ngFor="let article of items"
-            (deleted)="delete($event)" (changed)="change($event)" (codeChanged)="codeChange($event)"
-            (saved)="clicSave($event)" (valueClicked)="valueClicked($event)"></articleComponent>
+            (edited)="isManual=true" (deleted)="delete($event)" (changed)="change($event)"
+            (codeChanged)="codeChange($event)" (saved)="clicSave($event)" (valueClicked)="valueClicked($event)">
+        </articleComponent>
     </ion-list>
     <ion-fab right top>
         <button ion-fab color="secondary" (click)="newScan()">

@@ -22,12 +22,12 @@ export class ArticlesPage extends ItemsPage {
 	fileFormat: any;
 	rest: Rest = new Rest();
 	autoScan = true;
-
-	@ViewChild('articleComponent') articleComponent: ArticleComponent;
 	isManual: boolean;
 
+	@ViewChild('articleComponent') articleComponent: ArticleComponent;
+
 	constructor(public miscellaneousService: MiscellaneousService, public customService: CustomService, private shareService: ShareService,
-		public navParams: NavParams, public itemService: ItemService, public alertCtrl: AlertController, public navController: NavController, 
+		public navParams: NavParams, public itemService: ItemService, public alertCtrl: AlertController, public navController: NavController,
 		public modalCtrl: ModalController) {
 		super(miscellaneousService);
 	}
@@ -113,8 +113,8 @@ export class ArticlesPage extends ItemsPage {
 						this.itemService.touchFile(this.file);
 						this.promptValue2(article);
 					} else {
-						 this.navController.pop();
-						 this.navController. push(ArticlesPage, { "file": this.file, "files": this.files });
+						this.navController.pop();
+						this.navController.push(ArticlesPage, { "file": this.file, "files": this.files });
 					}
 				}
 			}
@@ -179,6 +179,7 @@ export class ArticlesPage extends ItemsPage {
 	}
 
 	valueClicked(article: any) {
+		this.isManual = true;
 		this.promptValue2(article);
 	}
 

@@ -1,14 +1,14 @@
 <ion-item-sliding>
 	<ion-item *ngIf="item" (press)="allowMenu ? presentActionSheet() : onView()" (click)="onView()"
 		[ngStyle]="{'background-color': selected ? '#fff0f0' : 'transparent'}">
-		<button item-start ion-fab mini style="margin-right: 16px;"
+		<!-- <button item-start ion-fab mini style="margin-right: 16px;"
 			[ngStyle]="{background: customService.getFileFormat(item.type) ? customService.getFileFormat(item.type).color : ''}">
 			<ion-icon *ngIf="customService.getFileFormat(item.type) && customService.getFileFormat(item.type).iconName"
 				name="{{customService.getFileFormat(item.type).iconName}}"></ion-icon>
 			<span *ngIf="!customService.getFileFormat(item.type) || !customService.getFileFormat(item.type).iconName"
 				style="font-size: 1.5em; font-weight: lighter">{{item.name
 			? customService.getFirstLetter(item.name) : '?'}}</span>
-		</button>
+		</button> -->
 		<span style="padding-bottom: 0;padding-top: 0">
 			<span style="font-size: 1.3em">{{item.name}}</span>
 			&nbsp;<ion-badge *ngIf="item.articles">{{item.articles.length}}</ion-badge>

@@ -689,7 +689,7 @@
         "key": "Files not sent only",
         "value": {
             "FR": "Les fichiers non envoyés uniquement",
-            "PT": "Ficheiros nao enviados apenas"
+            "PT": "Ficheiros não enviados apenas"
         }
     },
     {
@@ -703,7 +703,7 @@
         "key": "Files not sent",
         "value": {
             "FR": "Fichiers non envoyés",
-            "PT": "Ficheiros nao enviados"
+            "PT": "Ficheiros não enviados"
         }
     },
     {
@@ -717,7 +717,7 @@
         "key": "Not sent",
         "value": {
             "FR": "Non envoyé",
-            "PT": "Nao enviado"
+            "PT": "Não enviado"
         }
     },
     {
@@ -808,7 +808,7 @@
         "key": "Value already entered",
         "value": {
             "FR": "Valeur déjà saisie",
-            "PT": "Valore jà entrado"
+            "PT": "Valor jà entrado"
         }
     },
     {
@@ -917,10 +917,31 @@
         }
     },
     {
-        "key": "Automatic scan disabled",
+        "key": "No parameters defined",
         "value": {
-            "FR": "Scan automatique désactivé",
-            "PT": "Scan automatico deativado"
+            "FR": "Pas de paramètres définis",
+            "PT": "Não parametros definidos"
+        }
+    },
+    {
+        "key": "Please set parmeters first",
+        "value": {
+            "FR": "Veuillez effectuer le paramétrage",
+            "PT": "Por favor entrar parametragem"
+        }
+    },
+    {
+        "key": "No file to send",
+        "value": {
+            "FR": "Pas de fichier à envoyer",
+            "PT": "Não ficheiro para enviar"
+        }
+    },
+    {
+        "key": "Favorits",
+        "value": {
+            "FR": "Favorits",
+            "PT": "Favoritos"
         }
     }
 ]
