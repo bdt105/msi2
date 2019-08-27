@@ -1,0 +1,53 @@
+<ion-header>
+    <ion-navbar>
+        <ion-title>{{translate('Enter value')}}</ion-title>
+        <ion-buttons end>
+            <button ion-button (click)="confirmCancel()">
+                    {{translate('Cancel')}}
+            </button>
+        </ion-buttons>
+    </ion-navbar>
+</ion-header>
+
+<ion-content>
+    <ion-list>
+        <ion-item *ngIf="article">
+            <h1 text-wrap>
+                <ion-icon name="barcode"></ion-icon>&nbsp;{{article.code}}
+            </h1>
+        </ion-item>
+        <ion-item *ngIf="article && article.label" (click)="showData = !showData">
+            <h1 text-wrap>
+                <ion-icon name="warning" *ngIf="!article.data"></ion-icon>&nbsp;{{article.label}}
+            </h1>
+        </ion-item>
+        <itemComponent *ngIf="showData" [item]="article">
+        </itemComponent>
+        <ion-item *ngIf="oldValue">
+            <ion-label>{{translate('Value already entered')}}</ion-label>
+            <span item-end style="font-size: 2em; margin-right: 20px">{{oldValue}}</span>
+        </ion-item>
+        <ion-item>
+            <ion-label>{{translate(valueLabel)}}</ion-label>
+            <ion-input #valueInput item-end style="font-size: 2em; margin-right: 20px" type="number"
+                placeholder="{{translate('Value')}}" [(ngModel)]="newValue">
+            </ion-input>
+        </ion-item>
+        <ion-item *ngIf="!isValueValid()" color="danger">
+            <ion-label style="text-align: center;">
+                {{translate(fileFormat.valueMessage)+ ' ' +translate(fileFormat.valuePlaceHolder)}}</ion-label>
+        </ion-item>
+    </ion-list>
+    <button ion-button full [disabled]="canSave()" (click)="onSaveReplace()"
+        style="height: 40px; margin-bottom: 20px; margin-top: 20px">
+        <ion-icon name="refresh"></ion-icon>&nbsp;{{oldValue ? translate('Replace'):translate('Save')}}
+        {{newValue && oldValue ? (' ('+translate('New value') + ' = ' + newValue+')') : ''}}
+    </button>
+    <button ion-button *ngIf="oldValue" full [disabled]="canSave()" (click)="onSaveAdd()" style="height: 40px; margin-bottom: 20px">
+        <ion-icon name="add"></ion-icon>&nbsp;{{translate('Add')}} ({{translate('New value')}} =
+        {{getNewValue()}})
+    </button>
+    <!-- <button ion-button full (click)="onCancel()" style="margin-bottom: 20px">
+        <ion-icon name="close"></ion-icon>&nbsp;{{translate('Cancel')}}
+    </button> -->
+</ion-content>

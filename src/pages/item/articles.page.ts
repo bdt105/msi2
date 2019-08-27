@@ -6,8 +6,9 @@ import { ItemService } from '../../service/item.service';
 import { CustomService } from '../../service/custom.service';
 import { ShareService } from '../../service/share.service';
 import { Rest } from 'bdt105toolbox/dist';
-import { timingSafeEqual } from 'crypto';
 import { ArticleComponent } from '../../component/item/article.component';
+import { ModalController } from 'ionic-angular';
+import { ValuePage } from './value.page';
 
 @Component({
 	selector: 'page-articles',
@@ -20,11 +21,14 @@ export class ArticlesPage extends ItemsPage {
 	scan: boolean = false;
 	fileFormat: any;
 	rest: Rest = new Rest();
+	autoScan = true;
 
 	@ViewChild('articleComponent') articleComponent: ArticleComponent;
+	isManual: boolean;
 
 	constructor(public miscellaneousService: MiscellaneousService, public customService: CustomService, private shareService: ShareService,
-		public navParams: NavParams, public itemService: ItemService, public alertCtrl: AlertController, public navController: NavController, private navCtrl: NavController) {
+		public navParams: NavParams, public itemService: ItemService, public alertCtrl: AlertController, public navController: NavController, 
+		public modalCtrl: ModalController) {
 		super(miscellaneousService);
 	}
 
@@ -51,6 +55,7 @@ export class ArticlesPage extends ItemsPage {
 	}
 
 	neww() {
+		this.isManual = true;
 		let article = this.itemService.newArticle();
 		this.items.splice(0, 0, article);
 		this.itemService.touchFile(this.file);
@@ -81,103 +86,10 @@ export class ArticlesPage extends ItemsPage {
 		this.items.splice(0, 0, articleClone);
 	}
 
-	private getValueSumOfArticle(article: any) {
-		let sum: number = Number.parseFloat(article.value);
-		let foundArray = this.findArticleInList(article);
-		if (foundArray && foundArray.length > 0) {
-			sum = 0;
-			foundArray.forEach((art: any) => {
-				sum += Number.parseFloat(art.value);
-			});
-		}
-		return sum;
-	}
-
 	private saveArticle(article: any) {
-		let foundArray = this.findArticleInList(article);
-		let articleClone = this.toolbox.cloneObject(article);
-		this.itemService.touchItem(articleClone);
-		if (foundArray && foundArray.length > 0) {
-			this.itemService.getParameters(
-				(data: any, error: any) => {
-					if (!error && data) {
-						let sumValuesIfInList = data[0].sumValuesIfInList;
-						if (sumValuesIfInList) {
-							articleClone.value = this.getValueSumOfArticle(articleClone);
-						} else {
-							articleClone.value = article.value;
-						}
-					}
-					this.addUpdateArticle(articleClone);
-					this.save();
-				}
-			)
-		}
-	}
-
-	private findArticleInList(article: any) {
-		let foundArray = null;
-		if (article && this.file && this.file.articles && this.file.articles.length > 0) {
-			foundArray = this.toolbox.filterArrayOfObjects(this.file.articles, "code", article.code)
-		}
-		return foundArray;
-	}
-
-	private checkPresenceInList(article: any, occurence: number) {
-		let message = "";
-		let foundArray = this.findArticleInList(article);
-		if (foundArray && foundArray.length >= occurence) {
-			foundArray.forEach((element: any) => {
-				message += (message && element.value ? ", " : "") + (element.value ? element.value : "");
-			});
-		}
-		return message;
-	}
-
-	private checkPresenceInApi(callback: Function, article: any) {
-		this.itemService.getParameters(
-			(data: any, error: any) => {
-				if (!error && data) {
-					let api = data[0].apicheck + '/' + article.code;
-					let checkCode = data[0].apiCheckPresence;
-					let field = data[0].apicheckfield;
-					if (checkCode) {
-						this.rest.call((data1: any, error1: any) => {
-							if (!error1) {
-								if (!data1 || (data1 && data1.json && data1.json.length == 0)) {
-									callback(this.translate('Warning! No data found'), null);
-									//this.customService.callbackToast(null, this.translate('Warning! No data found'), 4000, 'top');
-								} else {
-									if (field && data1 && data1.json && data1.json.length > 0) {
-										callback(data1.json[0][field], data1.json[0]);
-										// this.customService.callbackToast(null, data1.json[0][field], 4000, 'top');
-									}
-								}
-							} else {
-								callback(error1.message, null);
-								// this.customService.callbackToast(data1, error1.message, 4000, 'top');
-							}
-						}, "GET", api)
-					} else {
-						callback(null);
-					}
-				}
-			}
-		)
-	}
-
-	codeChange(article: any) {
-		article.label = null;
 		this.itemService.touchItem(article);
-		this.checkPresenceInApi((message: string, data: any) => {
-			article.label = message;
-			article.data = data;
-		}, article);
-		let foundMessage = this.checkPresenceInList(article, 2);
-		if (foundMessage) {
-			this.customService.callbackToast(null, article.code + ' ' + this.translate('Values already entered') + ': ' + foundMessage, 4000);
-		}
-		this.itemService.touchFile(this.file);
+		this.addUpdateArticle(article);
+		this.save();
 	}
 
 	change() {
@@ -191,6 +103,7 @@ export class ArticlesPage extends ItemsPage {
 	}
 
 	newScan() {
+		this.isManual = false;
 		this.customService.scanSimple(
 			(data: any, error: any) => {
 				if (!error) {
@@ -198,73 +111,14 @@ export class ArticlesPage extends ItemsPage {
 						let article = this.itemService.newArticle();
 						article.code = data.text;
 						this.itemService.touchFile(this.file);
-						this.promptValue(article);
+						this.promptValue2(article);
 					} else {
-						//this.navCtrl.pop();//. push(ArticlesPage, { "file": this.file, "files": this.files });
+						 this.navController.pop();
+						 this.navController. push(ArticlesPage, { "file": this.file, "files": this.files });
 					}
 				}
 			}
 		)
-	}
-
-	promptValue(article: any) {
-		let callbackSave = (data: any) => {
-			article.value = isNaN((data['0'])) ? "" : data['0'];
-			if (data && this.itemService.isArticleValid(this.fileFormat, article)) {
-				article.modify = false;
-				this.items.splice(0, 0, article);
-				this.saveArticle(article);
-			} else {
-				alert(this.translate(this.fileFormat.valueMessage) + ' ' + this.fileFormat.valuePlaceHolder);
-				this.promptValue(article);
-			}
-		}
-
-		let callbackSaveScan = (data: any) => {
-			article.value = isNaN((data['0'])) ? "" : data['0'];
-			if (data && this.itemService.isArticleValid(this.fileFormat, article)) {
-				article.modify = false;
-				this.items.splice(0, 0, article);
-				this.save();
-				this.newScan();
-			} else {
-				alert(this.translate(this.fileFormat.valueMessage) + ' ' + this.fileFormat.valuePlaceHolder);
-				this.promptValue(article);
-			}
-		}
-
-		let callbackNok = (data: any) => {
-		}
-		let foundMessage = this.checkPresenceInList(article, 1);
-
-		let label = this.translate("Value");
-		if (foundMessage) {
-			label = this.translate("New value");
-		}
-
-		let values = [
-			{
-				"type": "number", "value": "1", "label": label, "checked": false, "placeholder": label
-			}
-		];
-
-		let lab = label + ' ' + this.translate('for') + '<br>' + (article ? article.code : "?");
-		let valuePrompt = this.customService.showAlertForm(
-			lab,
-			[{ "label": this.translate('Save'), "callback": callbackSave },
-			{ "label": this.translate('Save & scan'), "callback": callbackSaveScan },
-			{ "label": this.translate('Cancel'), "callback": callbackNok }],
-			values, foundMessage ? this.translate('Values already entered') + ': ' + foundMessage : null);
-
-		this.checkPresenceInApi((message: string, data: any) => {
-			if (message) {
-				valuePrompt.setTitle(message + '<br>' + lab);
-				article.label = message;
-				article.data = data;
-			}
-		}, article);
-
-
 	}
 
 	share() {
@@ -325,7 +179,40 @@ export class ArticlesPage extends ItemsPage {
 	}
 
 	valueClicked(article: any) {
-		this.promptValue(article);
+		this.promptValue2(article);
 	}
 
+	promptValue2(article: any) {
+		const modal = this.modalCtrl.create(ValuePage, { "article": article, "file": this.file, "fileFormat": this.fileFormat });
+		modal.present();
+		let callbackSave = (data: any) => {
+			article.value = data.value;
+			if (data && this.itemService.isArticleValid(this.fileFormat, article)) {
+				article.modify = false;
+				this.saveArticle(article);
+			}
+		}
+		modal.onDidDismiss((data: any) => {
+			if (data) {
+				switch (data.button) {
+					case "cancel":
+
+						break;
+					case "save":
+						callbackSave(data);
+						if (this.autoScan && !this.isManual) {
+							this.newScan();
+						}
+						break;
+					default:
+						break;
+				}
+			}
+		});
+	}
+
+	toggleAutoScan() {
+		this.autoScan = !this.autoScan;
+		this.customService.callbackToast(null, this.autoScan ? this.translate('Automatic scan enabled') : this.translate('Automatic scan disabled'));
+	}
 }

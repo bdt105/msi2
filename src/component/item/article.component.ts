@@ -2,7 +2,6 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { MiscellaneousService } from '../../angularShared/services/miscellaneous.service';
 import { AlertController, NavController, ActionSheetController } from 'ionic-angular';
 import { ItemComponent } from '../item/item.component';
-import { ArticlesPage } from '../../pages/item/articles.page';
 import { CustomService } from '../../service/custom.service';
 import { PhotoViewer } from '@ionic-native/photo-viewer';
 import { Camera } from '@ionic-native/camera';
@@ -39,27 +38,6 @@ export class ArticleComponent extends ItemComponent {
 		}
 	}
 
-	scan(article: any) {
-		if (article) {
-			this.customService.scanSimple((barcodeData: any, error: any) => {
-				if (!error && barcodeData) {
-					if (!barcodeData.cancelled) {
-						article.code = barcodeData.text;
-						this.changed.emit(article);
-					} else {
-						this.customService.callbackToast(null, this.translate("Bar code scanning canceled"));
-						if (this.file && this.file.fileName) {
-							this.navCtrl.push(ArticlesPage, { "fileName": this.file.fileName });
-						}
-						console.log("Scan cancelled");
-					}
-				} else {
-					console.log("Could not Scan");
-				}
-			});
-		}
-	}
-
 	confirmmDelete() {
 		if (this.item && (this.item.code || this.item.value || this.item.comment)) {
 			this.confirmDelete();
@@ -74,15 +52,6 @@ export class ArticleComponent extends ItemComponent {
 			title: this.translate('Choose your action'),
 			buttons: [
 				{
-					text: this.translate('Scan'),
-					icon: 'barcode',
-					handler: () => {
-						this.selected = false;
-
-						this.scan(this.item);
-					}
-				},
-				{
 					text: this.translate('Edit'),
 					icon: 'create',
 					handler: () => {
@@ -92,6 +61,14 @@ export class ArticleComponent extends ItemComponent {
 						} else {
 							this.onSave()
 						}
+					}
+				},
+				{
+					text: this.translate('Take picture'),
+					icon: 'camera',
+					handler: () => {
+						this.selected = false;
+						this.takePicture();
 					}
 				},
 				{
@@ -128,7 +105,7 @@ export class ArticleComponent extends ItemComponent {
 		)
 	}
 
-	takePicture(saveToPhotoAlbum: boolean = true) {
+	takePicture(saveToPhotoAlbum: boolean = true, saveAfter: boolean = false) {
 		this.camera.getPicture({
 			destinationType: this.camera.DestinationType.FILE_URI,
 			encodingType: this.camera.EncodingType.JPEG,
@@ -138,6 +115,9 @@ export class ArticleComponent extends ItemComponent {
 			this.item.imageUri = imageUri;
 			this.loadImage(this.item.imageUri);
 			this.changed.emit(this.item);
+			if (saveAfter){
+				this.saved.emit(this.item);
+			}
 		}, (err) => {
 			console.log(err);
 		});
@@ -227,4 +207,5 @@ export class ArticleComponent extends ItemComponent {
 	onValueClicked() {
 		this.valueClicked.emit(this.item);
 	}
+
 }

@@ -44,6 +44,7 @@ import { ImageUploaderComponent } from '../angularShared/components/imageUploade
 import { FileComponent } from "../component/item/file.component";
 import { ArticleComponent } from "../component/item/article.component";
 import { ItemComponent } from "../component/item/item.component";
+import { ValuePage } from '../pages/item/value.page';
 
 export function init(customService: CustomService) {
 	return () => {
@@ -62,6 +63,7 @@ export function init(customService: CustomService) {
 		ParameterPage,
 		FilesPage,
 		ArticlesPage,
+		ValuePage,
 		FileUploaderComponent,
 		ImageUploaderComponent,
 		ArticleComponent,
@@ -75,8 +77,8 @@ export function init(customService: CustomService) {
 		IonicModule.forRoot(MyApp),
 		IonicStorageModule.forRoot({
 			name: 'msivirtual',
-			   driverOrder: ['websql']
-		  })
+			driverOrder: ['websql']
+		})
 	],
 	bootstrap: [IonicApp],
 	entryComponents: [
@@ -86,6 +88,7 @@ export function init(customService: CustomService) {
 		ParameterPage,
 		FilesPage,
 		ArticlesPage,
+		ValuePage,
 		FileUploaderComponent,
 		ImageUploaderComponent,
 		ArticleComponent,
@@ -98,7 +101,7 @@ export function init(customService: CustomService) {
 			'useFactory': init,
 			'deps': [CustomService],
 			'multi': true
-		},		
+		},
 		StatusBar,
 		SplashScreen,
 		SocialSharing,

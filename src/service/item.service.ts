@@ -201,11 +201,16 @@ export class ItemService {
         )
     }
 
-    isArticleValid(fileFormat: any, article: any) {
+    isValueValid(fileFormat: any, value: any) {
         let ret = true;
         if (fileFormat && fileFormat.valueRegex) {
-            ret = this.customService.checkRegEx(article.value, fileFormat.valueRegex);
+            ret = this.customService.checkRegEx(value, fileFormat.valueRegex);
         }
+        return ret ;
+    }
+
+    isArticleValid(fileFormat: any, article: any) {
+        let ret = this.isValueValid(fileFormat, article.value);
         return ret && (article.code != null && article.code != undefined);
     }
 

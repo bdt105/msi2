@@ -805,10 +805,10 @@
         }
     },
     {
-        "key": "Values already entered",
+        "key": "Value already entered",
         "value": {
-            "FR": "Valeurs déjà saisies",
-            "PT": "Valores jà entradas"
+            "FR": "Valeur déjà saisie",
+            "PT": "Valore jà entrado"
         }
     },
     {
@@ -861,11 +861,66 @@
         }
     },
     {
+        "key": "Enter value",
+        "value": {
+            "FR": "Saisir la valeur",
+            "PT": "Entrar o valor"
+        }
+    },
+    {
         "key": "for",
         "value": {
             "FR": "pour",
             "PT": "para"
         }
+    },
+    {
+        "key": "Add",
+        "value": {
+            "FR": "Ajouter",
+            "PT": "Adicionar"
+        }
+    },
+    {
+        "key": "Replace",
+        "value": {
+            "FR": "Remplacer",
+            "PT": "Substituir"
+        }
+    },
+    {
+        "key": "Confirm cancel",
+        "value": {
+            "FR": "Confirmer l'annulation",
+            "PT": "Confirmar o cancelamento"
+        }
+    },
+    {
+        "key": "Do you want to cancel?",
+        "value": {
+            "FR": "Voulez vous annuler ?",
+            "PT": "Quer cancelar?"
+        }
+    },
+    {
+        "key": "Do you want to cancel?",
+        "value": {
+            "FR": "Voulez vous annuler ?",
+            "PT": "Quer cancelar?"
+        }
+    },
+    {
+        "key": "Automatic scan enabled",
+        "value": {
+            "FR": "Scan automatique activé",
+            "PT": "Scan automatico ativado"
+        }
+    },
+    {
+        "key": "Automatic scan disabled",
+        "value": {
+            "FR": "Scan automatique désactivé",
+            "PT": "Scan automatico deativado"
+        }
     }
-          
 ]

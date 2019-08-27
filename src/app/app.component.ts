@@ -32,6 +32,7 @@ export class MyApp extends GenericComponent {
 		// used for an example of ngFor and navigation
 		platform.ready().then(() => {
 			this.createMenus();
+			this.statusBar.styleLightContent();
 			event.subscribe('theme:toggle', () => {
 				this.toggleTheme();
 			});
