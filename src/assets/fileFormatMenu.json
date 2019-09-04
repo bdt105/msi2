@@ -44,6 +44,11 @@
                 "format": "entry"
             },
             {
+                "name": "steal",
+                "title": "Steal",
+                "format": "steal"
+            },
+            {
                 "name": "waste",
                 "title": "Waste",
                 "format": "waste"

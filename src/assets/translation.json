@@ -630,6 +630,13 @@
         }
     },
     {
+        "key": "Steal",
+        "value": {
+            "FR": "Demarque",
+            "PT": "Furto"
+        }
+    },
+    {
         "key": "Tarif",
         "value": {
             "FR": "Tarif",
@@ -938,7 +945,7 @@
         }
     },
     {
-        "key": "Favorits",
+        "key": "Favorites",
         "value": {
             "FR": "Favorits",
             "PT": "Favoritos"

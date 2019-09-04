@@ -51,26 +51,30 @@ export class ShareService {
         if (fileFormat && params && params.station && params.user) {
             this.exportService.shareFile(
                 (data: any, error: any) => {
-                    if (destinationUrl) {
-                        if (params.identifier) {
-                            // let more = {"fileName": data.fileName, "station": station, "user": user};
-                            var uploadOptions = {
-                                fileKey: "file", // change fileKey
-                                chunkedMode: false, // add chunkedMode
-                                mimeType: "multipart/form-data", // add mimeType
-                                fileName: data.fileName,
-                                params: params
-                            };
-                            this.goSendToUrl(callback, data.dir + data.fileName, uploadOptions, destinationUrl)
+                    if (!error && data) {
+                        if (destinationUrl) {
+                            if (params.identifier) {
+                                // let more = {"fileName": data.fileName, "station": station, "user": user};
+                                var uploadOptions = {
+                                    fileKey: "file", // change fileKey
+                                    chunkedMode: false, // add chunkedMode
+                                    mimeType: "multipart/form-data", // add mimeType
+                                    fileName: data.fileName,
+                                    params: params
+                                };
+                                this.goSendToUrl(callback, data.dir + data.fileName, uploadOptions, destinationUrl)
+                            } else {
+                                callback(null, { "exception": "No identifier found" });
+                            }
                         } else {
-                            callback(null, { "exception": "No identifier found" });
+                            if (!error) {
+                                this.goShare(callback, data.dir + data.fileName);
+                            } else {
+                                callback(null, error);
+                            }
                         }
-                    } else {
-                        if (!error) {
-                            this.goShare(callback, data.dir + data.fileName);
-                        } else {
-                            callback(null, error);
-                        }
+                    }else {
+                        callback(null, { "exception": error });
                     }
                 }, file, params.station, params.user
             );

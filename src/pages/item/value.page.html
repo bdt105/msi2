@@ -38,15 +38,14 @@
                 {{translate(fileFormat.valueMessage)+ ' ' +translate(fileFormat.valuePlaceHolder)}}</ion-label>
         </ion-item>
         <ion-item>
-
             <button ion-button full [disabled]="canSave()" (click)="onSaveReplace()"
                 style="height: 40px">
                 <ion-icon name="refresh"></ion-icon>&nbsp;{{oldValue ? translate('Replace'):translate('Save')}}
                 {{newValue && oldValue ? (' ('+translate('New value') + ' = ' + newValue+')') : ''}}
             </button>
         </ion-item>
-        <ion-item>
-            <button ion-button *ngIf="oldValue" full [disabled]="canSave()" (click)="onSaveAdd()"
+        <ion-item *ngIf="oldValue">
+            <button ion-button full [disabled]="canSave()" (click)="onSaveAdd()"
                 style="height: 40px">
                 <ion-icon name="add"></ion-icon>&nbsp;{{translate('Add')}} ({{translate('New value')}} =
                 {{getNewValue()}})

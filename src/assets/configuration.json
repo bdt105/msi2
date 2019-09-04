@@ -1,7 +1,7 @@
 {
     "uploadServer": {
-        "baseUrl": "http://vps592280.ovh.net/apifileserver/",
-        "baseUrlOld": "http://192.168.1.202:3200/",
+        "baseUrlOld": "http://vps592280.ovh.net/apifileserver/",
+        "baseUr": "http://localhost:4200/",
         "uploadFile": "uploadFile"
     }
 }
